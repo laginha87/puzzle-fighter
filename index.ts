@@ -1,4 +1,6 @@
 import { ClientGame } from "./src/game/client_game";
 
 
-new ClientGame("container")
+const game = new ClientGame("container")
+game.init()
+game.start()

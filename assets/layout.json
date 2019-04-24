@@ -1,0 +1,27 @@
+{ "frames": {
+   "column.ase": {
+    "frame": { "x": 0, "y": 0, "w": 5, "h": 10 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 5, "h": 10 },
+    "sourceSize": { "w": 5, "h": 10 },
+    "duration": 100
+   },
+   "corner.ase": {
+    "frame": { "x": 0, "y": 10, "w": 10, "h": 10 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 10, "h": 10 },
+    "sourceSize": { "w": 10, "h": 10 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.10-beta4",
+  "image": "assets/layout.png",
+  "format": "RGBA8888",
+  "size": { "w": 10, "h": 20 },
+  "scale": "1"
+ }
+}
