@@ -1,4 +1,4 @@
-import { ClientGame } from "./src/game/client_game";
+import { ClientGame } from "./src/game/ClientGame";
 
 
 const game = new ClientGame("container")
