@@ -13,11 +13,11 @@ export class PlayerView implements SceneState {
     }
 
     public preload() {
-        this.board.preload()
+        this.board.preload();
     }
 
     public create() {
-        this.board.create()
+        this.board.create();
     }
 
 }

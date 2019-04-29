@@ -42,7 +42,7 @@ export class BoardView implements SceneState {
 
 
         for (let i = y; i < (y + height * blockHeight); i += 10) {
-            console.log(x * width * blockWidth)
+            console.log(x * width * blockWidth);
             this.scene.add.sprite(x, i, 'layout', 'column.ase');
             let a = this.scene.add.sprite(x + width * blockWidth, i, 'layout', 'column.ase');
             a.setRotation(Math.PI);

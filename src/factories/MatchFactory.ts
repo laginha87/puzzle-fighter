@@ -44,8 +44,8 @@ export class MatchFactory {
         view.logic = logic;
         view.players = players;
         players.forEach(e => {
-            e.scene = view
-            e.board.scene = view
+            e.scene = view;
+            e.board.scene = view;
         });
 
         return view;
