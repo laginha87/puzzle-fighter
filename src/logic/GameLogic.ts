@@ -1,4 +1,4 @@
-import { BaseLogic } from "src/logic/BaseLogic";
+import { BaseLogic } from '~/src/logic/BaseLogic';
 
 export class GameLogic implements BaseLogic {
 

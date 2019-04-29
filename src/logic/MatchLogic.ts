@@ -1,5 +1,5 @@
-import { BaseLogic } from "src/logic/BaseLogic";
-import { PlayerLogic } from "src/logic/PlayerLogic";
+import { BaseLogic } from '~/src/logic/BaseLogic';
+import { PlayerLogic } from '~/src/logic/PlayerLogic';
 
 export class MatchLogic implements BaseLogic {
     constructor(public players: PlayerLogic[]) {

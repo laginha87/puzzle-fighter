@@ -1,6 +1,10 @@
 {
     "compilerOptions": {
-        "strict": true,
-        "baseUrl": "."
+        "baseUrl": ".",
+        "paths": {
+            "~*": [
+                "./*"
+            ]
+        }
     }
 }

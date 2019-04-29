@@ -1,6 +1,10 @@
-import { ClientGame } from "./src/game/ClientGame";
+import { ClientGame } from "~/src/game/ClientGame";
+import { MatchFactory } from "~/src/factories/MatchFactory";
 
 
 const game = new ClientGame("container")
 game.init()
-game.start()
+const match = MatchFactory.BUILD({ game: game.view })
+game.view.phaser.scene.add("match", match)
+// game.start()
+game.view.phaser.scene.start("match")

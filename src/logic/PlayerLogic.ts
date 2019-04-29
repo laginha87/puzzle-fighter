@@ -1,5 +1,5 @@
-import { BaseLogic } from "src/logic/BaseLogic";
-import { BoardLogic } from "src/logic/BoardLogic";
+import { BaseLogic } from '~/src/logic/BaseLogic';
+import { BoardLogic } from '~/src/logic/BoardLogic';
 
 export class PlayerLogic implements BaseLogic {
 

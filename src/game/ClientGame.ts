@@ -1,11 +1,12 @@
-import { GameView } from "src/view/GameView";
-import { GameLogic } from "src/logic/GameLogic";
-import { Game } from "src/game/Game";
+import { GameView } from '~/src/view/GameView';
+import { GameLogic } from '~/src/logic/GameLogic';
+import { Game } from '~/src/game/Game';
 
 export class ClientGame implements Game {
     public selector: string;
+    public view!: GameView;
     private logic!: GameLogic;
-    private view!: GameView;
+
     constructor(selector: string) {
         this.selector = selector;
     }

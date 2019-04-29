@@ -4,7 +4,13 @@
     "jsRules": {
     },
     "rules": {
-        "no-relative-imports": true
+        "no-relative-imports": true,
+        "semicolon": true,
+        "linebreak-style": true,
+        "newline-before-return": true,
+        "newline-per-chained-call": true,
+        "no-string-literal": true,
+        "quotemark": [ true, "single" ]
     },
     "rulesDirectory": []
 }

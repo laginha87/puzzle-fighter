@@ -10,6 +10,7 @@
         "lint-fix": "yarn tslint src/**/*.ts --fix"
     },
     "dependencies": {
+        "assets": "^3.0.1",
         "parcel": "^1.11.0",
         "phaser": "^3.16.1",
         "src": "^1.1.2",
