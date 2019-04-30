@@ -1,9 +1,10 @@
 export interface SceneState {
     scene: Phaser.Scene;
 
-    init();
-    preload();
-    create();
+    init?() : void;
+    preload?() : void;
+    create?() : void;
+    update?(time: number, delta: number) : void;
 }
 
 export type Position = {

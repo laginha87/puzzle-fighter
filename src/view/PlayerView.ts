@@ -20,4 +20,7 @@ export class PlayerView implements SceneState {
         this.board.create();
     }
 
+    update(time: number, delta: number) {
+        this.board.update(time, delta);
+    }
 }

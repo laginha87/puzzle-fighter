@@ -38,8 +38,6 @@ class Temp extends Phaser.Scene {
         this.logic = logic;
     }
     public preload() {
-        const img = document.createElement('img');
-
 
         const tiles = ['chaos.ase', 'elemental.ase', 'nature.ase', 'order.ase', 'willpower.ase'];
         for (let i = 16; i <= 800 - 16; i += 32) {

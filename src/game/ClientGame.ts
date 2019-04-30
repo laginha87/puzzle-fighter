@@ -20,6 +20,7 @@ export class ClientGame implements Game {
 
     public start() {
         this.view.start();
-
     }
+
+
 }
