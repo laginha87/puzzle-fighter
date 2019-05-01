@@ -13,7 +13,7 @@ export class PlayerView implements SceneState {
             const view = new BlockView(logic);
             view.scene = this.scene;
             view.create();
-        })
+        });
 
         this.logic.events.on('piece_added', ( next : PieceLogic, piece : PieceLogic) => {
             this.piece = this.next.piece;
@@ -22,7 +22,7 @@ export class PlayerView implements SceneState {
             nextView.create();
 
             this.next.piece = nextView;
-        })
+        });
     }
 
     public init() {

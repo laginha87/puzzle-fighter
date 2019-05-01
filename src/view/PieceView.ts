@@ -1,6 +1,6 @@
-import { SceneState } from "~src/view";
-import { PieceLogic } from "~src/logic";
-import { BlockView } from "./BlockView";
+import { SceneState } from '~src/view';
+import { PieceLogic } from '~src/logic';
+import { BlockView } from './BlockView';
 
 export class PieceView implements SceneState {
     scene: Phaser.Scene;
@@ -9,9 +9,9 @@ export class PieceView implements SceneState {
     }
 
     create() {
-        this.blocks = this.logic.blocks.map(e => new BlockView(e))
-        this.blocks.forEach(e => e.scene = this.scene)
-        this.blocks.forEach(e => e.create())
+        this.blocks = this.logic.blocks.map(e => new BlockView(e));
+        this.blocks.forEach(e => e.scene = this.scene);
+        this.blocks.forEach(e => e.create());
     }
 
 

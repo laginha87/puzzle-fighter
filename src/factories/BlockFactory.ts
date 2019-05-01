@@ -13,7 +13,7 @@ export class BlockFactory {
     }
 
     buildPiece(): PieceLogic {
-        return new PieceLogic([this.build(), this.build()])
+        return new PieceLogic([this.build(), this.build()]);
     }
 
 }

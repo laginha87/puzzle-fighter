@@ -20,7 +20,7 @@ const LAYOUT = {
         origin: { x: 500, y: 40 }
     },
     blockSize: { width: 30, height: 30 }
-}
+};
 
 
 export class MatchFactory {
@@ -42,7 +42,7 @@ export class MatchFactory {
 
     public static BUILD_PLAYER(board: BoardView) {
         const logic = new PlayerLogic(board.logic);
-        const nextPieceView = new NextPieceView(LAYOUT.next.origin, LAYOUT.blockSize)
+        const nextPieceView = new NextPieceView(LAYOUT.next.origin, LAYOUT.blockSize);
         const view = new PlayerView(logic, board);
 
         view.next = nextPieceView;

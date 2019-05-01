@@ -1,13 +1,13 @@
 import { BlockFactory } from '~src/factories';
 import { BaseLogic, BlockLogic, BoardLogic, PieceLogic } from '~src/logic';
 
-export type PLAYER_LOGIC_EVENTS = 'block_added' | 'piece_added'
+export type PLAYER_LOGIC_EVENTS = 'block_added' | 'piece_added';
 
 export class PlayerLogic implements BaseLogic {
     private blockFactory: BlockFactory;
     public next: PieceLogic;
     public piece: PieceLogic;
-    public events: EventEmitter<PLAYER_LOGIC_EVENTS>
+    public events: EventEmitter<PLAYER_LOGIC_EVENTS>;
 
     constructor(public board: BoardLogic) {
         this.blockFactory = new BlockFactory();
@@ -28,6 +28,6 @@ export class PlayerLogic implements BaseLogic {
         const piece = this.blockFactory.buildPiece();
         this.piece = this.next;
         this.next = piece;
-        this.events.emit('piece_added', this.next, this.piece)
+        this.events.emit('piece_added', this.next, this.piece);
     }
 }

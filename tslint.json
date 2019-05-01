@@ -11,7 +11,7 @@
         "newline-per-chained-call": true,
         "no-string-literal": true,
         "quotemark": [ true, "single" ],
-        "insecure-random": false,
+        "insecure-random": false
     },
     "rulesDirectory": []
 }
