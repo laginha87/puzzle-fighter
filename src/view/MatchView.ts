@@ -7,6 +7,7 @@ import { PlayerView } from '~src/view';
 export class MatchView extends Phaser.Scene {
     public logic!: MatchLogic;
     public players!: PlayerView[];
+    private started = false;
 
     public init() {
         this.players.forEach(e => e.init());
@@ -25,6 +26,10 @@ export class MatchView extends Phaser.Scene {
     }
 
     public update(time: number, delta: number) {
+        if(!this.started) {
+            this.logic.start();
+            this.started = true;
+        }
         this.logic.update(time, delta);
         this.players.forEach(e => e.update(time, delta));
     }

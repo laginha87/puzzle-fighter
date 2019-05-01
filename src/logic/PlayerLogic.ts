@@ -1,11 +1,12 @@
 import { BlockFactory } from '~src/factories';
-import { BaseLogic, BlockLogic, BoardLogic } from '~src/logic';
+import { BaseLogic, BlockLogic, BoardLogic, PieceLogic } from '~src/logic';
 
 export type PLAYER_LOGIC_EVENTS = 'block_added' | 'piece_added'
 
 export class PlayerLogic implements BaseLogic {
     private blockFactory: BlockFactory;
-    public next: BlockLogic[];
+    public next: PieceLogic;
+    public piece: PieceLogic;
     public events: EventEmitter<PLAYER_LOGIC_EVENTS>
 
     constructor(public board: BoardLogic) {
@@ -13,8 +14,10 @@ export class PlayerLogic implements BaseLogic {
         this.events = new Phaser.Events.EventEmitter();
     }
 
-    public init() {
-        this.newPiece()
+    public start() {
+        this.newPiece();
+        this.piece = this.next;
+        this.newPiece();
     }
 
     public update(time: number, delta: number): void {
@@ -22,14 +25,9 @@ export class PlayerLogic implements BaseLogic {
     }
 
     private newPiece() {
-        this.next = [this.newBlock(), this.newBlock()]
-        this.events.emit('piece_added')
-    }
-
-    private newBlock(): BlockLogic {
-        const block = this.blockFactory.build()
-        this.events.emit('block_added', block)
-
-        return block
+        const piece = this.blockFactory.buildPiece();
+        this.piece = this.next;
+        this.next = piece;
+        this.events.emit('piece_added', this.next, this.piece)
     }
 }

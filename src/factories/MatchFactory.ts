@@ -5,10 +5,23 @@ import { BoardView } from '~/src/view/BoardView';
 import { MatchView } from '~/src/view/MatchView';
 import { PlayerView } from '~/src/view/PlayerView';
 import { GameView } from '~/src/view/GameView';
+import { NextPieceView } from '~src/view';
 
 interface MatchConfig {
     game: GameView;
 }
+
+const LAYOUT = {
+    board: {
+        origin: { x: 40, y: 40 },
+        size: { width: 10, height: 15 },
+    },
+    next: {
+        origin: { x: 500, y: 40 }
+    },
+    blockSize: { width: 30, height: 30 }
+}
+
 
 export class MatchFactory {
     public static BUILD(config: MatchConfig) {
@@ -22,17 +35,17 @@ export class MatchFactory {
         const logic = new BoardLogic();
 
         return new BoardView(logic, {
-            origin: { x: 40, y: 40 },
-            size: { width: 10, height: 15 },
-            blockSize: { width: 30, height: 30 }
+            ...LAYOUT.board,
+            blockSize: LAYOUT.blockSize
         });
     }
 
     public static BUILD_PLAYER(board: BoardView) {
         const logic = new PlayerLogic(board.logic);
-
+        const nextPieceView = new NextPieceView(LAYOUT.next.origin, LAYOUT.blockSize)
         const view = new PlayerView(logic, board);
 
+        view.next = nextPieceView;
         view.board = board;
 
         return view;
