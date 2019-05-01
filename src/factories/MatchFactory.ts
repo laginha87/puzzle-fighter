@@ -19,7 +19,7 @@ const LAYOUT = {
     next: {
         origin: { x: 500, y: 40 }
     },
-    blockSize: { width: 30, height: 30 }
+    blockSize: { width: 32, height: 32 }
 };
 
 
