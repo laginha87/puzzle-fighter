@@ -67,13 +67,8 @@ export class BoardView implements SceneState {
 
         a = this.scene.add.sprite(x + 2, y - 2 + height * blockHeight, 'layout', 'corner.ase');
         a.setRotation(Math.PI * 3 / 2);
-
-        const blf = new BlockFactory(this.scene);
-        this.bl = blf.build();
     }
 
     update(time: number, delta: number) {
-        this.bl.logic.update(time, delta);
-        this.bl.update(time, delta);
     }
 }
