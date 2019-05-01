@@ -1,7 +1,5 @@
 import { BlockLogic, PlayerLogic, PieceLogic } from '~src/logic';
-import { BlockView, BoardView, SceneState } from '~src/view';
-import { NextPieceView } from './NextPieceView';
-import { PieceView } from './PieceView';
+import { BlockView, BoardView, SceneState, NextPieceView, PieceView } from '~src/view';
 
 export class PlayerView implements SceneState {
     public scene!: Phaser.Scene;

@@ -1,6 +1,5 @@
-import { SceneState } from '~src/view';
+import { SceneState, BlockView } from '~src/view';
 import { PieceLogic } from '~src/logic';
-import { BlockView } from './BlockView';
 
 export class PieceView implements SceneState {
     scene: Phaser.Scene;
