@@ -1,5 +1,5 @@
-import { SceneState } from '~/src/view/Types';
-import { BlockLogic } from '~src/logic/BlockLogic';
+import { SceneState } from '~src/view';
+import { BlockLogic } from '~src/logic';
 
 
 export class BlockView implements SceneState {

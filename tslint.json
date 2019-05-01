@@ -10,7 +10,8 @@
         "newline-before-return": true,
         "newline-per-chained-call": true,
         "no-string-literal": true,
-        "quotemark": [ true, "single" ]
+        "quotemark": [ true, "single" ],
+        "insecure-random": false,
     },
     "rulesDirectory": []
 }

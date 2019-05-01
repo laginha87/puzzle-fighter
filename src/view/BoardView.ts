@@ -1,8 +1,8 @@
 import layoutJson from '~/assets/layout.json';
 import layoutPng from '~/assets/layout.png';
-import { BoardLogic } from '~/src/logic/BoardLogic';
-import { SceneState, Position, Size } from '~src/view/Types';
-import { BlockFactory } from '~src/factories/BlockFactory';
+import { BlockFactory } from '~src/factories';
+import { BoardLogic } from '~src/logic';
+import { Position, SceneState, Size } from '~src/view';
 
 
 interface BoardConfig {

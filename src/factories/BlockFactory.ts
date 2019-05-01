@@ -1,19 +1,14 @@
-import { BlockView } from '~src/view/BlockView';
-import { BlockLogic, ENERGIES } from '~src/logic/BlockLogic';
+import { BlockLogic, ENERGIES } from '~src/logic';
 
 export class BlockFactory {
-    constructor(private scene: Phaser.Scene) {
+    constructor() {
 
     }
 
-    build(): BlockView {
+    build(): BlockLogic {
         const energy = ENERGIES[Math.floor(Math.random() * ENERGIES.length)];
-        const logic = new BlockLogic(energy, { x: 0, y: 10 });
-        const view = new BlockView(logic);
-        view.scene = this.scene;
-        view.create();
 
-        return view;
+        return new BlockLogic(energy, { x: 0, y: 10 });
     }
 
 }

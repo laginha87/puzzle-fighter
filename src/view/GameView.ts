@@ -1,7 +1,5 @@
 import * as Phaser from 'phaser';
-// import blocksJson from "~/src/assets/blocks.json";
-// import blocksPng from "~/src/assets/blocks.png";
-import { GameLogic } from '~/src/logic/GameLogic';
+import { GameLogic } from '~src/logic';
 
 export class GameView {
     public phaser!: Phaser.Game;

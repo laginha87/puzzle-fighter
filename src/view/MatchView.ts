@@ -1,7 +1,7 @@
-import { MatchLogic } from '~/src/logic/MatchLogic';
-import { PlayerView } from '~/src/view/PlayerView';
 import blocksJson from '~/assets/blocks.json';
 import blocksPng from '~/assets/blocks.png';
+import { MatchLogic } from '~src/logic';
+import { PlayerView } from '~src/view';
 
 
 export class MatchView extends Phaser.Scene {
@@ -29,5 +29,3 @@ export class MatchView extends Phaser.Scene {
         this.players.forEach(e => e.update(time, delta));
     }
 }
-
-// WORKING ON RENDERING THE BOARD ACCORDING TO SIZE
