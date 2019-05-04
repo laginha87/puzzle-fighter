@@ -1,27 +1,38 @@
-import { BlockLogic, PlayerLogic, PieceLogic } from '~src/logic';
-import { BlockView, BoardView, SceneState, NextPieceView, PieceView } from '~src/view';
+import { PlayerLogic, PieceLogic } from '~src/logic';
+import { BoardView, SceneState, PieceView } from '~src/view';
+import { LayoutConfig } from '~src/view/Types';
+import { Position } from '~src/types';
 
 export class PlayerView implements SceneState {
     public scene!: Phaser.Scene;
-    public next: NextPieceView;
+    public nextContainer : Phaser.GameObjects.Container;
+    public next: PieceView;
+    public piece: PieceView;
 
-    constructor(public logic: PlayerLogic, public board: BoardView) {
-        this.logic.events.on('block_added', (logic : BlockLogic) => {
-            const view = new BlockView(logic);
-            view.scene = this.scene;
-            view.create();
+    constructor(public logic: PlayerLogic, public board: BoardView, private layout: LayoutConfig & { next: Position } ) {
+
+        // this.logic.events.on('next_changed', (next : PieceLogic) => {
+        //     this.piece = this.next;
+        //     this.board.container.add(this.piece.container);
+        //     this.next = new PieceView(next, this.layout);
+        //     this.next.view
+        //     this.next.create();
+        //     this.nextContainer.add(this.next.container);
+        // });
+
+        this.logic.events.on('set_piece', () => {
+            this.piece = new PieceView(this.logic.piece, this.layout);
+            this.piece.scene = this.scene;
+            this.piece.create();
+            this.board.container.add(this.piece.container);
         });
 
-        this.logic.events.on('piece_added', ( next : PieceLogic, piece : PieceLogic) => {
-            if(this.next.piece) {
-                this.board.piece = this.next.piece;
-            }
 
-            const nextView = new PieceView(next);
-            nextView.scene = this.scene;
-            nextView.create();
-
-            this.next.piece = nextView;
+        this.logic.events.on('set_next', () => {
+            this.next = new PieceView(this.logic.next, this.layout);
+            this.next.scene = this.scene;
+            this.next.create();
+            this.nextContainer.add(this.next.container);
         });
     }
 
@@ -34,6 +45,7 @@ export class PlayerView implements SceneState {
 
     public create() {
         this.board.create();
+        this.nextContainer = this.scene.add.container(this.layout.next.x, this.layout.next.y);
     }
 
     update(time: number, delta: number) {

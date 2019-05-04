@@ -1,28 +1,20 @@
-import { BaseLogic, PieceLogic } from '~/src/logic';
+import { PieceLogic } from '~/src/logic';
+import { Updatable } from '~src/utils';
+import { Position, Size } from '~src/types';
 
-export class BoardLogic extends BaseLogic {
-    public _piece: PieceLogic;
+export class BoardLogic implements Updatable {
 
-    public set piece(p: PieceLogic) {
-        this._piece = p;
-        if (p) {
-            p.x = 32 * 3;
-            p.y = 0;
-            p.board = this;
-        }
-    }
+    constructor(public size : Size) {
 
-    public get piece() {
-        return this._piece;
     }
 
     public update(time: number, delta: number): void {
-        super.update(time, delta);
-        this._piece.update(time, delta);
     }
 
-    public canMoveTo(x: number, y: number) {
-        if (x < 0 || x > 500 || y < 0 || y > 500) {
+    public canMoveTo(position : Position) {
+        const { x, y } = position;
+        const { width, height } = this.size;
+        if (x < 0 || x > width || y < 0 || y > height) {
             return false;
         }
 

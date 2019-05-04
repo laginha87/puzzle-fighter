@@ -25,9 +25,13 @@ export class MatchView extends Phaser.Scene {
         this.players.forEach(e => e.create());
     }
 
+    public start() {
+        this.logic.start();
+    }
+
     public update(time: number, delta: number) {
         if(!this.started) {
-            this.logic.start();
+            this.start();
             this.started = true;
         }
         this.logic.update(time, delta);

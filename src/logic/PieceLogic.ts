@@ -1,32 +1,21 @@
-import { BaseLogic, BlockLogic, BoardLogic } from '~src/logic';
-import { Position } from '~src/view';
+import { BoardLogic } from '~src/logic';
+import { HasBehaviors, Behavior } from '~src/logic/behavior';
+import { Position, Size } from '~src/types';
+import { Updatable } from '~src/utils';
+import { BlockLogic } from './BlockLogic';
 
-export class PieceLogic extends BaseLogic implements Position {
-
-    public x: number;
-    public y: number;
+export class PieceLogic implements Updatable, HasBehaviors<PieceLogic> {
     public board: BoardLogic;
-    private isMoving: boolean = true;
+    public position : Position;
+    public size : Size;
+    public behavior: Behavior<PieceLogic>;
 
-    constructor(public blocks: BlockLogic[]) {
-        super();
+    constructor(public blocks : BlockLogic[]) {
+        this.position = { x: 0, y: 0 };
+        this.behavior = new Behavior();
     }
 
     update(time: number, delta: number): void {
-        super.update(time, delta);
-
-        if (!this.isMoving) {
-            return;
-        }
-        const increase = delta / 10;
-        this.y += increase;
-        const { x: originX, y: originY } = this;
-        const canMove = this.blocks.every(({ x, y }) => this.board.canMoveTo(x + originX, y + originY));
-        if(!canMove) {
-            this.y -= increase;
-            this.isMoving = false;
-        } else {
-
-        }
+        this.behavior.update(time, delta);
     }
 }

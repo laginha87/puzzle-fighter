@@ -1,6 +1,4 @@
-import { BaseLogic } from '~/src/logic';
-
-export class GameLogic extends BaseLogic {
+export class GameLogic {
 
     public init() {}
 

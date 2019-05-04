@@ -5,21 +5,33 @@ import { BoardView } from '~/src/view/BoardView';
 import { MatchView } from '~/src/view/MatchView';
 import { PlayerView } from '~/src/view/PlayerView';
 import { GameView } from '~/src/view/GameView';
-import { NextPieceView } from '~src/view';
+import { NextPieceView, PieceView } from '~src/view';
+import { PieceLogic } from '~src/logic';
 
 interface MatchConfig {
     game: GameView;
 }
 
-const LAYOUT = {
-    board: {
-        origin: { x: 40, y: 40 },
-        size: { width: 10, height: 15 },
+const blockSize = { width: 32, height: 32 };
+
+const CONFIG = {
+    layout: {
+        board: {
+            blockSize,
+            origin: { x: 40, y: 40 }
+        },
+        player: {
+            blockSize,
+            origin: { x: 0, y: 0 },
+            next: { x: 500, y: 40 }
+        },
+        piece: {
+            blockSize
+        }
     },
-    next: {
-        origin: { x: 500, y: 40 }
+    boardLogic: {
+        width: 10, height: 15
     },
-    blockSize: { width: 32, height: 32 }
 };
 
 
@@ -32,20 +44,14 @@ export class MatchFactory {
     }
 
     public static BUILD_BOARD() {
-        const logic = new BoardLogic();
+        const logic = new BoardLogic(CONFIG.boardLogic);
 
-        return new BoardView(logic, {
-            ...LAYOUT.board,
-            blockSize: LAYOUT.blockSize
-        });
+        return new BoardView(logic, CONFIG.layout.board);
     }
 
     public static BUILD_PLAYER(board: BoardView) {
         const logic = new PlayerLogic(board.logic);
-        const nextPieceView = new NextPieceView(LAYOUT.next.origin, LAYOUT.blockSize);
-        const view = new PlayerView(logic, board);
-
-        view.next = nextPieceView;
+        const view = new PlayerView(logic, board, CONFIG.layout.player);
         view.board = board;
 
         return view;

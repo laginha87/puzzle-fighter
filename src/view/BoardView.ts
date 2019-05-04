@@ -1,21 +1,14 @@
 import layoutJson from '~/assets/layout.json';
 import layoutPng from '~/assets/layout.png';
 import { BoardLogic } from '~src/logic';
-import { Position, SceneState, Size, PieceView } from '~src/view';
-
-
-interface BoardConfig {
-    origin: Position;
-    size: Size;
-    blockSize: Size;
-}
+import { SceneState } from '~src/view';
+import { LayoutConfig } from '~src/view/types';
 
 export class BoardView implements SceneState {
     public scene!: Phaser.Scene;
-    public _piece: PieceView;
-    private container = Phaser.GameObjects.Container;
+    public container: Phaser.GameObjects.Container;
 
-    constructor(public logic: BoardLogic, private config: BoardConfig) {
+    constructor(public logic: BoardLogic, private config: LayoutConfig) {
     }
 
     public init() {
@@ -28,25 +21,6 @@ export class BoardView implements SceneState {
         this.scene.textures.addAtlasJSONHash('layout', img, layoutJson);
     }
 
-    public set piece(p : PieceView) {
-        this.container.add(p.container);
-        this._piece = p;
-
-        const {
-            config: {
-                blockSize: {
-                    width, height
-                }
-            }
-        } = this;
-
-        // p.setPosition(3 * width, 0);
-    }
-
-    public get piece() {
-        return this._piece;
-    }
-
     public create() {
         const {
             config: {
@@ -54,15 +28,13 @@ export class BoardView implements SceneState {
                     width: blockWidth,
                     height: blockHeight
                 },
-                size: {
-                    width, height
-                },
                 origin: {
                     x, y
                 }
             }
         } = this;
 
+        const { height, width } = this.logic.size;
 
         for (let i = y; i < (y + height * blockHeight); i += 10) {
             this.scene.add.sprite(x, i, 'layout', 'column.ase');
@@ -74,7 +46,7 @@ export class BoardView implements SceneState {
             let a = this.scene.add.sprite(i, y - 10, 'layout', 'column.ase');
             a.setRotation(Math.PI / 2);
             a = this.scene.add.sprite(i, (y + height * blockHeight), 'layout', 'column.ase');
-            a.setRotation(Math.PI * 3/2);
+            a.setRotation(Math.PI * 3 / 2);
         }
 
         this.scene.add.sprite(x + 2, y - 8, 'layout', 'corner.ase');
@@ -88,11 +60,9 @@ export class BoardView implements SceneState {
         a = this.scene.add.sprite(x + 2, y - 2 + height * blockHeight, 'layout', 'corner.ase');
         a.setRotation(Math.PI * 3 / 2);
 
-        // TODO: Type annotation is messed up
-        this.container = <any>this.scene.add.container(x, y);
+        this.container = this.scene.add.container(x, y);
     }
 
     update(time: number, delta: number) {
-        this.piece.update(time, delta);
     }
 }
