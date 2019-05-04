@@ -20,6 +20,10 @@ export class BlockView implements SceneState {
     }
 
     update(time: number, delta: number) {
+        this.refresh();
+    }
+
+    refresh() {
         const { x, y } = this.logic.position;
         const { width, height } = this.size;
         this.sprite.setPosition(x * width, y * height);

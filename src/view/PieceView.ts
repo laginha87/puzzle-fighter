@@ -17,7 +17,7 @@ export class PieceView implements SceneState {
             view.scene = this.scene;
             view.create();
             this.container.add(view.sprite);
-            view.update(0,0);
+            view.refresh();
 
             return view;
         });
@@ -25,7 +25,8 @@ export class PieceView implements SceneState {
 
     update(time, delta) {
         const { x, y } = this.logic.position;
-        this.container.setPosition(x, y);
+        const { width, height } = this.config.blockSize;
+        this.container.setPosition(x * width, y * height);
     }
 
 

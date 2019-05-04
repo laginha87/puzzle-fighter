@@ -50,6 +50,6 @@ export class PlayerView implements SceneState {
 
     update(time: number, delta: number) {
         this.board.update(time, delta);
-
+        this.piece.update(time,delta);
     }
 }

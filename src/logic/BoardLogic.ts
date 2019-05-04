@@ -11,10 +11,10 @@ export class BoardLogic implements Updatable {
     public update(time: number, delta: number): void {
     }
 
-    public canMoveTo(position : Position) {
+    public canMoveTo(position : Position, size : Size) {
         const { x, y } = position;
         const { width, height } = this.size;
-        if (x < 0 || x > width || y < 0 || y > height) {
+        if (x < 0 || x > width || y < 0 || y + size.height >= height) {
             return false;
         }
 

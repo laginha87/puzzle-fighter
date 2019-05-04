@@ -1,21 +1,23 @@
 import { Updatable } from '~src/utils';
 
-export interface IBehavior<T> extends Updatable {
+export interface IBehavior extends Updatable {
     key: string;
-    parent: T;
+    parent: any;
 }
 
-export interface HasBehaviors<T> extends Updatable {
-    behavior: Behavior<T>;
+export interface HasBehaviors extends Updatable {
+    behavior: Behavior;
 }
 
-export class Behavior<T> implements Updatable {
-    behaviors = <IBehavior<T>[]>[];
+export class Behavior implements Updatable {
+    behaviors = <IBehavior[]>[];
 
+    constructor(private parent) {
+    }
 
-
-    add(key: string, behavior: IBehavior<T>) {
+    add(key: string, behavior: IBehavior) {
         behavior.key = key;
+        behavior.parent = this.parent;
         this.behaviors.push(behavior);
     }
 

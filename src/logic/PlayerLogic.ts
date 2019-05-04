@@ -1,6 +1,7 @@
 import { BlockFactory } from '~src/factories';
 import { BoardLogic, PieceLogic, BlockLogic } from '~src/logic';
 import { EventEmitter, Updatable } from '~src/utils';
+import { FallingBlockBehavior } from '~src/logic/behavior';
 
 export type PLAYER_LOGIC_EVENTS =  'set_piece' | 'set_next';
 
@@ -18,12 +19,14 @@ export class PlayerLogic implements Updatable {
     public start() {
         this.piece = new PieceLogic([this.blockFactory.build(), this.blockFactory.build()]);
         this.next =  new PieceLogic([this.blockFactory.build(), this.blockFactory.build()]);
+        this.piece.behavior.add('falling', new FallingBlockBehavior(0.002, this.board));
         this.events.emit('set_piece');
         this.events.emit('set_next');
     }
 
     public update(time: number, delta: number): void {
         this.board.update(time, delta);
+        this.piece.update(time,delta);
     }
 
     // private newPiece() {

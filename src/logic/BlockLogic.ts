@@ -1,4 +1,4 @@
-import { Position } from '~src/types';
+import { Position, Size } from '~src/types';
 
 
 export const ENERGIES = <const>[ 'chaos', 'elemental', 'nature', 'order', 'willpower'];
@@ -6,6 +6,8 @@ export const ENERGIES = <const>[ 'chaos', 'elemental', 'nature', 'order', 'willp
 export type EnergyType = typeof ENERGIES[number];
 
 export class BlockLogic {
+    size: Size = { width: 1, height: 1};
+
     constructor(public energy_type: EnergyType, public position: Position) {
     }
 
