@@ -6,8 +6,8 @@
     "scripts": {
         "serve": "parcel index.html",
         "gen-assets": "/Applications/Aseprite.app/Contents/MacOS/aseprite *.ase  --sheet tiles.png  --data tiles.json",
-        "lint": "yarn tslint src/**/*.ts",
-        "lint-fix": "yarn tslint src/**/*.ts --fix"
+        "lint": "yarn tslint src/**/*.ts index.ts",
+        "lint-fix": "yarn tslint src/**/*.ts index.ts --fix"
     },
     "dependencies": {
         "assets": "^3.0.1",
