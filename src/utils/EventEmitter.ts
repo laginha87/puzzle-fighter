@@ -1,4 +1,4 @@
-interface EventEmitter<T extends string> extends Phaser.Events.EventEmitter {
+export interface EventEmitter<T extends string> extends Phaser.Events.EventEmitter {
     shutdown(): void;
     destroy(): void;
     eventNames(): any[];
@@ -11,5 +11,4 @@ interface EventEmitter<T extends string> extends Phaser.Events.EventEmitter {
     removeListener(event: T, fn?: Function, context?: any, once?: boolean): Phaser.Events.EventEmitter;
     off(event: T, fn?: Function, context?: any, once?: boolean): Phaser.Events.EventEmitter;
     removeAllListeners(event?: T): Phaser.Events.EventEmitter;
-
 }

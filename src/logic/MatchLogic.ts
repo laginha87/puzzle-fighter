@@ -1,11 +1,12 @@
 import { BaseLogic, PlayerLogic } from '~src/logic';
+import { EventEmitter } from '~src/utils';
 
 type EVENTS = 'a';
 
-export class MatchLogic implements BaseLogic {
+export class MatchLogic extends BaseLogic {
     public events : EventEmitter<EVENTS>;
     constructor(public players: PlayerLogic[]) {
-
+        super();
     }
 
     public start() {
