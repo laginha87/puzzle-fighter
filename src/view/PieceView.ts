@@ -27,6 +27,7 @@ export class PieceView implements SceneState {
         const { x, y } = this.logic.position;
         const { width, height } = this.config.blockSize;
         this.container.setPosition(x * width, y * height);
+        this.blocks.forEach((e) => e.update(time, delta));
     }
 
 

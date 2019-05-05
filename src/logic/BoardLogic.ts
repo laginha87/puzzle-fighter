@@ -18,11 +18,11 @@ export class BoardLogic implements Updatable {
     public canMoveTo(position: Position) {
         const { x, y } = position;
         const { width, height } = this.size;
-        if (x < 0 || x > width || y < 0 || y >= height) {
+        if (x < 0 || x > width || y < 0 || y >= height - 1) {
             return false;
         }
 
-        if (this.blocks[Math.floor(x)][Math.floor(y)]) {
+        if (this.blocks[Math.ceil(x)][Math.ceil(y)]) {
             return false;
         }
 
@@ -31,6 +31,6 @@ export class BoardLogic implements Updatable {
 
     public addBlock(b: BlockLogic) {
         const { x,y } = b.position;
-        this.blocks[Math.floor(x)][Math.floor(y)] = b;
+        this.blocks[Math.ceil(x)][Math.ceil(y)] = b;
     }
 }
