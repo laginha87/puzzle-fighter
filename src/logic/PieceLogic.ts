@@ -24,6 +24,6 @@ export class PieceLogic implements Updatable, HasBehaviors {
         this.blocks.forEach(e => {
             e.position.x += x;
             e.position.y += y;
-        })
+        });
     }
 }
