@@ -8,7 +8,7 @@ export class FallingBlockBehavior implements IBehavior {
     parent: Parent;
     moving = true;
 
-    constructor(private speed: number, private board: BoardLogic) {
+    constructor(private speed: number, private board: BoardLogic, private callback: () => void ) {
 
     }
 
@@ -16,13 +16,19 @@ export class FallingBlockBehavior implements IBehavior {
         if (!this.moving) {
             return;
         }
-        const { position } = this.parent;
-        position.y += delta * this.speed;
-        if (!this.board.canMoveTo(position, this.parent.size)) {
-            position.y -= delta * this.speed;
-            position.y = Math.ceil(position.y);
-            this.moving = false;
+        const { position, size: { height } } = this.parent;
+        const y = (position.y + delta * this.speed) + height;
+        for (let x = 0; x < this.parent.size.width; x++) {
+            if(!this.board.canMoveTo({x: x + position.x, y })){
+                position.y = Math.ceil(position.y);
+                this.moving = false;
+                this.callback();
+
+                return;
+            }
         }
+        position.y = y - height;
+
     }
 
 }

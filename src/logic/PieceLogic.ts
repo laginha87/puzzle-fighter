@@ -18,4 +18,12 @@ export class PieceLogic implements Updatable, HasBehaviors {
     update(time: number, delta: number): void {
         this.behavior.update(time, delta);
     }
+
+    prepBlocks() {
+        const { position: { x, y } } = this;
+        this.blocks.forEach(e => {
+            e.position.x += x;
+            e.position.y += y;
+        })
+    }
 }

@@ -34,6 +34,15 @@ export class PlayerView implements SceneState {
             this.next.create();
             this.nextContainer.add(this.next.container);
         });
+
+        this.logic.events.on('break_piece', () => {
+            this.piece.blocks.forEach(e => {
+                this.board.container.add(e.sprite);
+                e.update(0, 0);
+            });
+            this.piece.container.destroy();
+            delete this.piece;
+        });
     }
 
     public init() {
