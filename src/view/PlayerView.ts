@@ -2,14 +2,15 @@ import { PlayerLogic, PieceLogic } from '~src/logic';
 import { BoardView, SceneState, PieceView } from '~src/view';
 import { LayoutConfig } from '~src/view/Types';
 import { Position } from '~src/types';
+import { PlayerController } from '~src/controllers/PlayerController';
 
 export class PlayerView implements SceneState {
     public scene!: Phaser.Scene;
-    public nextContainer : Phaser.GameObjects.Container;
+    public nextContainer: Phaser.GameObjects.Container;
     public next: PieceView;
     public piece: PieceView;
 
-    constructor(public logic: PlayerLogic, public board: BoardView, private layout: LayoutConfig & { next: Position } ) {
+    constructor(public logic: PlayerLogic, public board: BoardView, private layout: LayoutConfig & { next: Position }) {
 
         // this.logic.events.on('next_changed', (next : PieceLogic) => {
         //     this.piece = this.next;
@@ -59,6 +60,6 @@ export class PlayerView implements SceneState {
 
     update(time: number, delta: number) {
         this.board.update(time, delta);
-        this.piece.update(time,delta);
+        this.piece.update(time, delta);
     }
 }

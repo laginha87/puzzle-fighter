@@ -1,5 +1,6 @@
 import { BoardLogic, MatchLogic, PlayerLogic } from '~/src/logic';
 import { BoardView, GameView, MatchView, PlayerView } from '~/src/view';
+import { KeyboardController } from '~src/controllers';
 
 interface MatchConfig {
     game: GameView;
@@ -53,6 +54,7 @@ export class MatchFactory {
     public static BUILD_MATCH(game: GameView, players: PlayerView[]) {
         const logic = new MatchLogic(players.map(({ logic }) => logic));
         const view = new MatchView('match');
+
         view.logic = logic;
         view.players = players;
         players.forEach(e => {

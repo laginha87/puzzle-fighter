@@ -4,13 +4,21 @@ import { Updatable, EventEmitter } from '~src/utils';
 
 type EVENTS = 'on_fallen';
 
+const POSITIONS = [
+    { x: 0, y: 1 },
+    { x: 1, y: 0 },
+    { x: 0, y: -1 },
+    { x: -1, y: 0 },
+]
+
 export class PieceLogic implements Updatable {
     public position: Position;
     public events: EventEmitter<EVENTS>;
     private moving = true;
     private speed = 0.007;
+    private currentPosition = 0;
 
-    constructor(public blocks: BlockLogic[], private board : BoardLogic) {
+    constructor(public blocks: BlockLogic[], private board: BoardLogic) {
         this.position = { x: 0, y: 0 };
         this.events = new Phaser.Events.EventEmitter();
     }
@@ -37,5 +45,57 @@ export class PieceLogic implements Updatable {
         }
 
         position.y = nextY;
+    }
+
+    moveRight() {
+        this.moveH(1);
+    }
+
+    moveLeft() {
+        this.moveH(-1);
+    }
+
+    rotate() {
+        const { position } = this;
+        const nextPosition = (this.currentPosition + 1) % POSITIONS.length;
+        const nextY = (position.y + POSITIONS[nextPosition].y);
+        const nextX = (position.x + POSITIONS[nextPosition].x);
+        const block = this.blocks[1];
+        if (this.board.canMoveTo({ x: nextX, y: nextY })) {
+            this.currentPosition = nextPosition;
+            block.position.x = POSITIONS[nextPosition].x;
+            block.position.y = POSITIONS[nextPosition].y;
+        }
+
+
+    }
+
+    moveDown() {
+        const { position } = this;
+        const nextY = (position.y + 1);
+
+        for (const { position: { x, y } } of this.blocks) {
+            if (!this.board.canMoveTo({ x: x + position.x, y: y + nextY })) {
+                return;
+            }
+        }
+        position.y = nextY;
+    }
+
+
+    fall() {
+
+    }
+
+    private moveH(inc: number) {
+        const { position } = this;
+        const nextX = (position.x + inc);
+
+        for (const { position: { x, y } } of this.blocks) {
+            if (!this.board.canMoveTo({ x: x + nextX, y: y + position.y })) {
+                return;
+            }
+        }
+        position.x = nextX;
     }
 }

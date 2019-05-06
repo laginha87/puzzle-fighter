@@ -2,6 +2,7 @@ import blocksJson from '~/assets/blocks.json';
 import blocksPng from '~/assets/blocks.png';
 import { MatchLogic } from '~src/logic';
 import { PlayerView } from '~src/view';
+import { KeyboardController } from '~src/controllers';
 
 
 export class MatchView extends Phaser.Scene {
@@ -17,6 +18,10 @@ export class MatchView extends Phaser.Scene {
         const img = document.createElement('img');
         img.src = blocksPng;
         this.textures.addAtlasJSONHash('blocks', img, blocksJson);
+        this.players.forEach((e) => {
+            const controller = new KeyboardController(this.input);
+            e.logic.controller = controller;
+        });
 
         this.players.forEach(e => e.preload());
     }

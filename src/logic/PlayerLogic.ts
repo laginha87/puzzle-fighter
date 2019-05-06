@@ -1,6 +1,7 @@
 import { BlockFactory } from '~src/factories';
 import { BoardLogic, PieceLogic } from '~src/logic';
 import { EventEmitter, Updatable } from '~src/utils';
+import { PlayerController } from '~src/controllers';
 
 export type PLAYER_LOGIC_EVENTS = 'set_piece' | 'set_next' | 'break_piece';
 
@@ -9,6 +10,7 @@ export class PlayerLogic implements Updatable {
     public next: PieceLogic;
     public events: EventEmitter<PLAYER_LOGIC_EVENTS>;
     public piece: PieceLogic;
+    public _controller: PlayerController;
 
     constructor(public board: BoardLogic) {
         this.blockFactory = new BlockFactory();
@@ -41,6 +43,16 @@ export class PlayerLogic implements Updatable {
         this.events.emit('set_next');
 
     }
+
+    public set controller(_controller: PlayerController) {
+        this._controller = _controller;
+        _controller.onMoveRight(() => this.piece.moveRight());
+        _controller.onMoveLeft(() => this.piece.moveLeft());
+        _controller.onMoveDown(() => this.piece.moveDown());
+        _controller.onFall(() => this.piece.fall());
+        _controller.onRotate(() => this.piece.rotate());
+    }
+
     // private newPiece() {
     //     const piece = this.blockFactory.buildPiece();
     //     this.board.piece = this.next;
