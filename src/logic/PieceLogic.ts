@@ -9,7 +9,7 @@ const POSITIONS = [
     { x: 1, y: 0 },
     { x: 0, y: -1 },
     { x: -1, y: 0 },
-]
+];
 
 export class PieceLogic implements Updatable {
     public position: Position;
