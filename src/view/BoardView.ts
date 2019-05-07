@@ -1,14 +1,32 @@
 import layoutJson from '~/assets/layout.json';
 import layoutPng from '~/assets/layout.png';
 import { BoardLogic } from '~src/logic';
-import { SceneState } from '~src/view';
+import { SceneState, PieceView, BlockView } from '~src/view';
 import { LayoutConfig } from '~src/view/types';
 
 export class BoardView implements SceneState {
     public scene!: Phaser.Scene;
     public container: Phaser.GameObjects.Container;
+    public piece: PieceView;
+    private blocks: BlockView[] = [];
 
-    constructor(public logic: BoardLogic, private config: LayoutConfig) {
+    constructor(public logic: BoardLogic, private layout: LayoutConfig) {
+        this.logic.events.on('set_piece', () => {
+            this.piece = new PieceView(this.logic.piece, this.layout);
+            this.piece.scene = this.scene;
+            this.piece.create();
+            this.container.add(this.piece.container);
+        });
+
+        this.logic.events.on('break_piece', () => {
+            this.piece.blocks.forEach(e => {
+                this.container.add(e.sprite);
+                e.update(0, 0);
+                this.blocks.push(e);
+            });
+            this.piece.container.destroy();
+            delete this.piece;
+        });
     }
 
     public init() {
@@ -23,7 +41,7 @@ export class BoardView implements SceneState {
 
     public create() {
         const {
-            config: {
+            layout: {
                 blockSize: {
                     width: blockWidth,
                     height: blockHeight
@@ -64,5 +82,9 @@ export class BoardView implements SceneState {
     }
 
     update(time: number, delta: number) {
+        if (this.piece) {
+            this.piece.update(time, delta);
+        }
+        this.blocks.forEach((e) => e.update(time, delta));
     }
 }

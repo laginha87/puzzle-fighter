@@ -3,10 +3,10 @@
 # Roadmap
 ## 0.1 - simple puzzle mechanics
 
-- [ ] pieces control
-- [ ] blocks falling
+- [x] pieces control
+- [x] blocks falling
 - [x] create block sprites
-- [ ] show next piece
+- [x] show next piece
 
 ## 0.2 add destroy mechanics
 - [ ] breaker sprite

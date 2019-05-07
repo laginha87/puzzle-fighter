@@ -18,6 +18,7 @@ export class PieceView implements SceneState {
             view.create();
             this.container.add(view.sprite);
             view.refresh();
+            e.view = view;
 
             return view;
         });

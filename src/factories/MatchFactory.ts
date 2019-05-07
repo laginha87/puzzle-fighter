@@ -37,7 +37,7 @@ interface MatchConfig {
 
 
 export class MatchFactory {
-    public static BUILD(config: MatchConfig) : MatchView {
+    public static BUILD(config: MatchConfig): MatchView {
         const logic = this.BUILD_LOGIC(config);
 
         return this.BUILD_VIEW(config, logic);
@@ -46,8 +46,10 @@ export class MatchFactory {
     static BUILD_LOGIC(config: MatchConfig) {
         const players = config.players.map((e) => {
             const board = new BoardLogic(config.boardSize);
+            const player = new PlayerLogic(board);
+            board.player = player;
 
-            return new PlayerLogic(board);
+            return player;
         });
 
         return new MatchLogic(players);
