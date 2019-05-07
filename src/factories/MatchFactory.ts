@@ -1,67 +1,78 @@
 import { BoardLogic, MatchLogic, PlayerLogic } from '~/src/logic';
 import { BoardView, GameView, MatchView, PlayerView } from '~/src/view';
-import { KeyboardController } from '~src/controllers';
 
 interface MatchConfig {
     game: GameView;
+    layout: {
+        players: {
+            board: {
+                origin: {
+                    x: number;
+                    y: number;
+                };
+            };
+            player: {
+                origin: {
+                    x: number;
+                    y: number;
+                };
+                next: {
+                    x: number;
+                    y: number;
+                };
+            };
+        }[];
+        blockSize: {
+            width: number;
+            height: number;
+        };
+    };
+    boardSize: {
+        width: number;
+        height: number;
+    };
+    players: {}[];
 }
 
-const blockSize = { width: 32, height: 32 };
-
-const CONFIG = {
-    layout: {
-        board: {
-            blockSize,
-            origin: { x: 40, y: 40 }
-        },
-        player: {
-            blockSize,
-            origin: { x: 0, y: 0 },
-            next: { x: 500, y: 40 }
-        },
-        piece: {
-            blockSize
-        }
-    },
-    boardLogic: {
-        width: 10, height: 15
-    },
-};
 
 
 export class MatchFactory {
-    public static BUILD(config: MatchConfig) {
-        const board = this.BUILD_BOARD();
-        const player = this.BUILD_PLAYER(board);
+    public static BUILD(config: MatchConfig) : MatchView {
+        const logic = this.BUILD_LOGIC(config);
 
-        return this.BUILD_MATCH(config.game, [player]);
+        return this.BUILD_VIEW(config, logic);
     }
 
-    public static BUILD_BOARD() {
-        const logic = new BoardLogic(CONFIG.boardLogic);
+    static BUILD_LOGIC(config: MatchConfig) {
+        const players = config.players.map((e) => {
+            const board = new BoardLogic(config.boardSize);
 
-        return new BoardView(logic, CONFIG.layout.board);
-    }
-
-    public static BUILD_PLAYER(board: BoardView) {
-        const logic = new PlayerLogic(board.logic);
-        const view = new PlayerView(logic, board, CONFIG.layout.player);
-        view.board = board;
-
-        return view;
-    }
-
-    public static BUILD_MATCH(game: GameView, players: PlayerView[]) {
-        const logic = new MatchLogic(players.map(({ logic }) => logic));
-        const view = new MatchView('match');
-
-        view.logic = logic;
-        view.players = players;
-        players.forEach(e => {
-            e.scene = view;
-            e.board.scene = view;
+            return new PlayerLogic(board);
         });
 
-        return view;
+        return new MatchLogic(players);
+    }
+
+    static BUILD_VIEW(config: MatchConfig, logic: MatchLogic) {
+        const { layout: { players: playerLayouts, blockSize } } = config;
+
+        const match = new MatchView('match');
+
+        const players = logic.players.map((e, i) => {
+            const playerConfig = playerLayouts[i];
+
+            const board = new BoardView(e.board, { ...playerConfig.board, blockSize });
+            const player = new PlayerView(e, board, { ...playerConfig.player, blockSize });
+
+            player.scene = match;
+            player.board.scene = match;
+
+            return player;
+        });
+
+        match.players = players;
+        match.logic = logic;
+
+        return match;
     }
 }
