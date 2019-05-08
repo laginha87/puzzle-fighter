@@ -12,15 +12,18 @@ export class BoardLogic implements Updatable {
 
     private blocks: BlockLogic[][];
     private state: 'piece_falling' | 'blocks_falling';
+    private startPoint: Position;
 
     constructor(public size: Size) {
         this.blocks = [];
         for (let x = 0; x < size.width; x++) {
             this.blocks[x] = [];
         }
+
         this.state = 'piece_falling';
         this.events = new Phaser.Events.EventEmitter();
         this.onPieceHit = this.onPieceHit.bind(this);
+        this.startPoint = { x: size.width / 2, y: 0 };
     }
 
     public get piece() {
@@ -29,6 +32,7 @@ export class BoardLogic implements Updatable {
 
     public set piece(p: PieceLogic) {
         this._piece = p;
+        p.position = { ...this.startPoint };
         this.events.emit('set_piece');
         p.events.once('on_fallen', this.onPieceHit);
     }
@@ -51,7 +55,7 @@ export class BoardLogic implements Updatable {
 
                     return true;
                 });
-                if(this.fallingBlocks.length == 0) {
+                if (this.fallingBlocks.length == 0) {
                     this.player.nextPiece();
                     this.state = 'piece_falling';
                 }
@@ -83,7 +87,7 @@ export class BoardLogic implements Updatable {
 
     public onPieceHit(): void {
         this.fallingBlocks.push(...this.piece.blocks);
-        this.fallingBlocks.sort(({position: {y: y1}}, {position: {y: y2}}) => y2 - y1);
+        this.fallingBlocks.sort(({ position: { y: y1 } }, { position: { y: y2 } }) => y2 - y1);
         this.state = 'blocks_falling';
         this.events.emit('break_piece');
         // this.piece = this.next;
