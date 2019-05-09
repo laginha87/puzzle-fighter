@@ -39,4 +39,24 @@ window.game = game;
 
 const debug = new Debug();
 debug.layers.push(new BlockLayer(match));
-setTimeout( debug.create, 4000);
+const _update = match.update;
+
+let created = false;
+
+let paused = false;
+
+match.update = (time, delta) => {
+    if(!paused) {
+        _update.bind(match)(time, delta);
+    }
+    if (!created) {
+        debug.create();
+        created = true;
+    }
+    debug.update(time, delta);
+};
+
+const a : HTMLDivElement = document.querySelector('#pause-btn');
+a.onclick = () => {
+    paused = !paused
+}

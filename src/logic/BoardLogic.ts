@@ -8,6 +8,7 @@ export class BoardLogic implements Updatable {
     public _piece: PieceLogic;
     public player: PlayerLogic;
     public events: EventEmitter<BOARD_LOGIC_EVENTS>;
+
     private fallingBlocks: BlockLogic[] = [];
 
     private blocks: BlockLogic[][];
