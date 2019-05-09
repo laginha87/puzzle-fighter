@@ -1,6 +1,6 @@
-import { BoardLogic, BlockLogic } from '~src/logic';
-import { Position } from '~src/types';
-import { Updatable, EventEmitter } from '~src/utils';
+import { BoardLogic, BlockLogic } from 'src/logic';
+import { Position } from 'src/types';
+import { Updatable, EventEmitter } from 'src/utils';
 
 type EVENTS = 'on_fallen';
 

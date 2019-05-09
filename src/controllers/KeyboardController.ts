@@ -1,4 +1,4 @@
-import { PlayerController } from '~src/controllers';
+import { PlayerController } from 'src/controllers';
 
 export class KeyboardController implements PlayerController {
     constructor(private input: Phaser.Input.InputPlugin) {

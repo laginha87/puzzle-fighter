@@ -1,5 +1,5 @@
-import { PlayerLogic } from '~src/logic';
-import { EventEmitter, Updatable } from '~src/utils';
+import { PlayerLogic } from 'src/logic';
+import { EventEmitter, Updatable } from 'src/utils';
 
 type EVENTS = 'a';
 

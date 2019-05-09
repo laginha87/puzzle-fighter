@@ -1,7 +1,7 @@
-import { PlayerLogic } from '~src/logic';
-import { BoardView, SceneState, PieceView } from '~src/view';
-import { LayoutConfig } from '~src/view/Types';
-import { Position } from '~src/types';
+import { PlayerLogic } from 'src/logic';
+import { BoardView, SceneState, PieceView } from 'src/view';
+import { LayoutConfig } from 'src/view/Types';
+import { Position } from 'src/types';
 
 export class PlayerView implements SceneState {
     public scene!: Phaser.Scene;

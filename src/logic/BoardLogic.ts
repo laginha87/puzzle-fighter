@@ -1,6 +1,6 @@
-import { BlockLogic, PlayerLogic, PieceLogic } from '~/src/logic';
-import { Updatable, EventEmitter } from '~src/utils';
-import { Position, Size } from '~src/types';
+import { BlockLogic, PlayerLogic, PieceLogic } from 'src/logic';
+import { Updatable, EventEmitter } from 'src/utils';
+import { Position, Size } from 'src/types';
 
 export type BOARD_LOGIC_EVENTS = 'set_piece' | 'break_piece';
 

@@ -1,7 +1,7 @@
-import { BlockFactory } from '~src/factories';
-import { BoardLogic, PieceLogic } from '~src/logic';
-import { EventEmitter, Updatable } from '~src/utils';
-import { PlayerController } from '~src/controllers';
+import { BlockFactory } from 'src/factories';
+import { BoardLogic, PieceLogic } from 'src/logic';
+import { EventEmitter, Updatable } from 'src/utils';
+import { PlayerController } from 'src/controllers';
 
 export type PLAYER_LOGIC_EVENTS = 'set_next';
 

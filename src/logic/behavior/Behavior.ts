@@ -1,4 +1,4 @@
-import { Updatable } from '~src/utils';
+import { Updatable } from 'src/utils';
 
 export interface IBehavior extends Updatable {
     key: string;

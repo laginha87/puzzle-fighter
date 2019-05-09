@@ -1,4 +1,4 @@
-import { Size, Position } from '~src/types';
+import { Size, Position } from 'src/types';
 
 export interface SceneState {
     scene: Phaser.Scene;

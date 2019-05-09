@@ -1,8 +1,8 @@
-import blocksJson from '~/assets/blocks.json';
-import blocksPng from '~/assets/blocks.png';
-import { MatchLogic } from '~src/logic';
-import { PlayerView } from '~src/view';
-import { KeyboardController } from '~src/controllers';
+import blocksJson from 'assets/blocks.json';
+import blocksPng from 'assets/blocks.png';
+import { MatchLogic } from 'src/logic';
+import { PlayerView } from 'src/view';
+import { KeyboardController } from 'src/controllers';
 
 
 export class MatchView extends Phaser.Scene {

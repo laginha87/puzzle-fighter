@@ -1,5 +1,5 @@
-import { IBehavior } from '~src/logic/behavior';
-import { BlockLogic, PieceLogic, BoardLogic } from '~src/logic';
+import { IBehavior } from 'src/logic/behavior';
+import { BlockLogic, PieceLogic, BoardLogic } from 'src/logic';
 
 type Parent = BlockLogic | PieceLogic;
 

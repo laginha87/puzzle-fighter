@@ -1,5 +1,5 @@
-import { Position, Size } from '~src/types';
-import { BlockView } from '~src/view';
+import { Position, Size } from 'src/types';
+import { BlockView } from 'src/view';
 
 
 export const ENERGIES = <const>[ 'chaos', 'elemental', 'nature', 'order', 'willpower'];

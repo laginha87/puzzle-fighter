@@ -7,7 +7,8 @@
         "serve": "parcel index.html",
         "gen-assets": "/Applications/Aseprite.app/Contents/MacOS/aseprite *.ase  --sheet tiles.png  --data tiles.json",
         "lint": "yarn tslint src/**/*.ts index.ts",
-        "lint-fix": "yarn tslint src/**/*.ts index.ts --fix"
+        "lint-fix": "yarn tslint src/**/*.ts index.ts --fix",
+        "debug": "parcel debug/index.html"
     },
     "dependencies": {
         "assets": "^3.0.1",
@@ -15,6 +16,10 @@
         "phaser": "^3.16.1",
         "src": "^1.1.2",
         "view": "^1.1.1"
+    },
+    "alias": {
+        "src": "./src",
+        "assets": "./assets"
     },
     "devDependencies": {
         "tslint": "^5.16.0",

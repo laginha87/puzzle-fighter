@@ -1,4 +1,4 @@
-import { BlockLogic, ENERGIES } from '~src/logic';
+import { BlockLogic, ENERGIES } from 'src/logic';
 
 export class BlockFactory {
     constructor() {

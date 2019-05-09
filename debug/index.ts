@@ -1,5 +1,7 @@
 import { ClientGame } from 'src/game/ClientGame';
 import { MatchFactory } from 'src/factories/MatchFactory';
+import { Debug } from './debug';
+import { BlockLayer } from './layer';
 
 
 
@@ -30,8 +32,11 @@ const config = {
 
 const match = MatchFactory.BUILD(config);
 game.view.phaser.scene.add('match', match);
-// game.start()
 game.view.phaser.scene.start('match');
 
 window.match = match;
 window.game = game;
+
+const debug = new Debug();
+debug.layers.push(new BlockLayer(match));
+setTimeout( debug.create, 4000);

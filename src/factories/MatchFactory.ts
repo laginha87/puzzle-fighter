@@ -1,5 +1,5 @@
-import { BoardLogic, MatchLogic, PlayerLogic } from '~/src/logic';
-import { BoardView, GameView, MatchView, PlayerView } from '~/src/view';
+import { BoardLogic, MatchLogic, PlayerLogic } from 'src/logic';
+import { BoardView, GameView, MatchView, PlayerView } from 'src/view';
 
 interface MatchConfig {
     game: GameView;
