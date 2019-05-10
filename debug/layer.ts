@@ -18,9 +18,12 @@ export class Layer implements Updatable {
 }
 
 export class BlockLayer extends Layer {
-    private board: BoardLogic;
-    private graphics: Phaser.GameObjects.Graphics;
-    private origin: Phaser.GameObjects.Container;
+    private board!: BoardLogic;
+    private graphics!: Phaser.GameObjects.Graphics;
+    private origin!: Phaser.GameObjects.Container;
+    public showBlocks = true;
+    public showGrid = true;
+    public showFalling = true;
 
     create() {
         const board = this.match.players[0].board;
@@ -32,22 +35,27 @@ export class BlockLayer extends Layer {
     update(time, delta) {
 
         this.graphics.clear();
-        this.board['blocks'].forEach((l) => {
-            l.forEach((b) => {
+        this.board['blocks'].forEach((l, x) => {
+            l.forEach((b, y) => {
                 if (b) {
-                    this.drawBlock(b, 0x00ff00);
+                    if (this.showBlocks) { this.drawBlock(b, 0x00ff00); }
+                    if (this.showGrid) { this.drawGridBlock(x, y, 0x0000ff); }
                 }
             });
         });
 
         this.board['fallingBlocks'].forEach((b) => {
-            this.drawBlock(b, 0xff0000);
+            if (this.showFalling) { this.drawBlock(b, 0xff0000); }
         });
     }
 
-    drawBlock(b: BlockLogic, color: Color) {
+    drawBlock({ position: { x, y } }: BlockLogic, color: Color) {
+        this.drawGridBlock(x, y, color);
+    }
+
+    drawGridBlock(x: number, y: number, color: Color) {
         this.graphics.fillStyle(color, 0.7);
-        const rect = new Phaser.Geom.Rectangle(this.origin.x + b.position.x * 32, this.origin.y + b.position.y * 32, 32, 32);
+        const rect = new Phaser.Geom.Rectangle(this.origin.x + x * 32, this.origin.y + y * 32, 32, 32);
         this.graphics.fillRectShape(rect);
     }
 }

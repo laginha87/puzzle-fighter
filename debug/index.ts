@@ -38,7 +38,8 @@ window.match = match;
 window.game = game;
 
 const debug = new Debug();
-debug.layers.push(new BlockLayer(match));
+const blockLayer = new BlockLayer(match);
+debug.layers.push(blockLayer);
 const _update = match.update;
 
 let created = false;
@@ -76,3 +77,10 @@ pieceBlock.onchange = (e) => {
     match.players[0].board.piece.logic.FALLING_SPEED = e.currentTarget.value;
     localStorage.setItem('piece-speed', e.currentTarget.value);
 }
+
+['showGrid', 'showBlocks', 'showFalling'].forEach((e) => {
+    document.querySelector(`#${e}`).onchange = (ee) => {
+        const checked = ee.currentTarget.checked;
+        blockLayer[e] = checked;
+    }
+})
