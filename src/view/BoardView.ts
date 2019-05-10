@@ -1,17 +1,23 @@
 import layoutJson from 'assets/layout.json';
 import layoutPng from 'assets/layout.png';
-import { BoardLogic } from 'src/logic';
-import { SceneState, PieceView, BlockView } from 'src/view';
+import { BoardLogic, BlockLogic } from 'src/logic';
+import { SceneState, PieceView, BlockView, PlayerView } from 'src/view';
 import { LayoutConfig } from 'src/view/types';
 
 export class BoardView implements SceneState {
     public scene!: Phaser.Scene;
-    public container: Phaser.GameObjects.Container;
-    public piece: PieceView;
+    public container!: Phaser.GameObjects.Container;
+    public piece!: PieceView;
+    public player!: PlayerView;
     private blocks: BlockView[] = [];
 
     constructor(public logic: BoardLogic, private layout: LayoutConfig) {
         this.logic.events.on('set_piece', () => {
+            this.piece = this.player.next;
+            this.container.add(this.piece.container);
+        });
+
+        this.logic.events.on('init_piece', () => {
             this.piece = new PieceView(this.logic.piece, this.layout);
             this.piece.scene = this.scene;
             this.piece.create();
@@ -26,6 +32,12 @@ export class BoardView implements SceneState {
             });
             this.piece.container.destroy();
             delete this.piece;
+        });
+
+        this.logic.events.on('destroy_blocks', (blocks : BlockLogic[]) => {
+            blocks.forEach((e) => {
+                e.view!.sprite.destroy();
+            });
         });
     }
 

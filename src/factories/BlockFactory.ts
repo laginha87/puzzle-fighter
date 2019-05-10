@@ -7,7 +7,7 @@ export class BlockFactory {
 
     build(): BlockLogic {
         const energy = ENERGIES[Math.floor(Math.random() * ENERGIES.length)];
-        const type: BlockType = Math.random() > 0.9 ? 'regular' : 'breaker';
+        const type: BlockType = Math.random() > 0.5 ? 'breaker' : 'regular';
 
         return new BlockLogic(energy, { x: 0, y: 0 }, type);
     }

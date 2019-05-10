@@ -68,6 +68,7 @@ export class MatchFactory {
 
             player.scene = match;
             player.board.scene = match;
+            board.player = player;
 
             return player;
         });

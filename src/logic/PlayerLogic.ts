@@ -19,6 +19,8 @@ export class PlayerLogic implements Updatable {
 
     public start() {
         this.board.piece = new PieceLogic(this.blockFactory.buildN(2), this.board);
+        this.board.events.emit('init_piece');
+
         this.next = new PieceLogic(this.blockFactory.buildN(2), this.board);
 
         this.events.emit('set_next');
@@ -40,6 +42,7 @@ export class PlayerLogic implements Updatable {
 
     public nextPiece() {
         this.board.piece = this.next;
+        this.board.events.emit('set_piece');
         this.next = new PieceLogic(this.blockFactory.buildN(2), this.board);
         this.events.emit('set_next');
     }

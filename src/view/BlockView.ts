@@ -13,6 +13,7 @@ export class BlockView implements SceneState {
         const { x, y } = this.logic.position;
         this.sprite = this.scene.add.sprite(x, y, 'blocks', `${this.logic.type}_${this.logic.energy_type}.ase`);
         this.sprite.setOrigin(0, 0);
+        this.logic.view = this;
     }
 
     setPosition(x: number, y: number) {

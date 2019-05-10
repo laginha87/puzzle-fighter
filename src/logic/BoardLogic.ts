@@ -2,7 +2,7 @@ import { BlockLogic, PlayerLogic, PieceLogic } from 'src/logic';
 import { Updatable, EventEmitter } from 'src/utils';
 import { Position, Size } from 'src/types';
 
-export type BOARD_LOGIC_EVENTS = 'set_piece' | 'break_piece';
+export type BOARD_LOGIC_EVENTS = 'set_piece' | 'break_piece' | 'init_piece' | 'destroy_blocks';
 
 export class BoardLogic implements Updatable {
     public _piece: PieceLogic;
@@ -11,9 +11,10 @@ export class BoardLogic implements Updatable {
     public FALLING_BLOCK_SPEED = 0.04;
 
     private fallingBlocks: BlockLogic[] = [];
+    private breakers: BlockLogic[] = [];
 
     private blocks: BlockLogic[][];
-    private state: 'piece_falling' | 'blocks_falling';
+    private state: 'piece_falling' | 'blocks_falling' | 'destroying_blocks';
     private startPoint: Position;
 
     constructor(public size: Size) {
@@ -35,7 +36,6 @@ export class BoardLogic implements Updatable {
     public set piece(p: PieceLogic) {
         this._piece = p;
         p.position = { ...this.startPoint };
-        this.events.emit('set_piece');
         p.events.once('on_fallen', this.onPieceHit);
     }
 
@@ -58,11 +58,59 @@ export class BoardLogic implements Updatable {
                     return true;
                 });
                 if (this.fallingBlocks.length == 0) {
-                    this.player.nextPiece();
-                    this.state = 'piece_falling';
+                    this.state = 'destroying_blocks';
                 }
 
                 return;
+            case 'destroying_blocks':
+                const breakersToDestroy = this.breakers.filter(({ position: { x, y }, energy_type }) =>
+                    this.neighbours(x, y)
+                        .some((e) => energy_type === (e || {}).energy_type));
+
+                if (breakersToDestroy.length > 0) {
+                    const blocksToDestroy = [];
+                    const visited: Boolean[][] = [];
+                    for (let x = 0; x < this.size.width; x++) {
+                        visited[x] = [];
+                    }
+                    this.breakers.filter((e) => !breakersToDestroy.includes(e));
+
+                    while (breakersToDestroy.length !== 0) {
+                        const next = <BlockLogic>breakersToDestroy.pop();
+                        blocksToDestroy.push(next);
+                        this.blocks[next.position.x][next.position.y] = undefined;
+                        visited[next.position.x][next.position.y] = true;
+                        this.neighbours(next.position.x, next.position.y)
+                            .forEach((e) => {
+                                visited[e.position.x][e.position.y] = true;
+                                if (e.energy_type === next.energy_type) {
+                                    breakersToDestroy.push(e);
+                                }
+                            });
+                    }
+
+                    this.events.emit('destroy_blocks', blocksToDestroy);
+
+                    this.blocks.forEach((line) => {
+                        let falling = false;
+                        for (let y = this.size.height - 1; y >= 0; y--) {
+                            const element = line[y];
+                            if (element) {
+                                if (falling) {
+                                    this.fallingBlocks.push(element);
+                                }
+                            } else {
+                                falling = true;
+                            }
+
+                        }
+                    });
+
+                    this.state = 'blocks_falling';
+                } else {
+                    this.player.nextPiece();
+                    this.state = 'piece_falling';
+                }
 
         }
 
@@ -83,8 +131,11 @@ export class BoardLogic implements Updatable {
     }
 
     public addBlock(b: BlockLogic) {
-        const { x, y } = b.position;
+        const { position: { x, y }, type } = b;
         this.blocks[Math.ceil(x)][Math.ceil(y)] = b;
+        if (type == 'breaker') {
+            this.breakers.push(b);
+        }
     }
 
     public onPieceHit(): void {
@@ -92,10 +143,9 @@ export class BoardLogic implements Updatable {
         this.fallingBlocks.sort(({ position: { y: y1 } }, { position: { y: y2 } }) => y2 - y1);
         this.state = 'blocks_falling';
         this.events.emit('break_piece');
-        // this.piece = this.next;
-        // this.board.piece = this.next;
-        // this.next = new PieceLogic(this.blockFactory.buildN(2), this.board);
-        // this.piece.events.once('on_fallen', this.onPieceHit);
-        // this.events.emit('set_piece');
+    }
+
+    private neighbours(x: number, y: number): BlockLogic[] {
+        return [(this.blocks[x - 1] || [])[y], (this.blocks[x + 1] || [])[y], this.blocks[x][y + 1], this.blocks[x][y - 1]].filter((e) => e !== undefined);
     }
 }

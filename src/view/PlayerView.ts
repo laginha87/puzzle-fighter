@@ -7,7 +7,6 @@ export class PlayerView implements SceneState {
     public scene!: Phaser.Scene;
     public nextContainer: Phaser.GameObjects.Container;
     public next: PieceView;
-    public piece: PieceView;
 
     constructor(public logic: PlayerLogic,
             public board: BoardView,
