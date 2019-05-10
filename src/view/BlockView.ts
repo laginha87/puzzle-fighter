@@ -11,7 +11,7 @@ export class BlockView implements SceneState {
 
     create() {
         const { x, y } = this.logic.position;
-        this.sprite = this.scene.add.sprite(x, y, 'blocks', `regular_${this.logic.energy_type}.ase`);
+        this.sprite = this.scene.add.sprite(x, y, 'blocks', `${this.logic.type}_${this.logic.energy_type}.ase`);
         this.sprite.setOrigin(0, 0);
     }
 
