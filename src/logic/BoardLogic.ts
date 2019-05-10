@@ -8,6 +8,7 @@ export class BoardLogic implements Updatable {
     public _piece: PieceLogic;
     public player: PlayerLogic;
     public events: EventEmitter<BOARD_LOGIC_EVENTS>;
+    public FALLING_BLOCK_SPEED = 0.04;
 
     private fallingBlocks: BlockLogic[] = [];
 
@@ -45,7 +46,7 @@ export class BoardLogic implements Updatable {
             case 'blocks_falling':
                 this.fallingBlocks = this.fallingBlocks.filter((block) => {
                     const { position } = block;
-                    const y = (position.y + delta * 0.04);
+                    const y = (position.y + delta * this.FALLING_BLOCK_SPEED);
                     if (!this.canMoveTo({ x: position.x, y })) {
                         position.y = Math.ceil(position.y);
                         this.addBlock(block);

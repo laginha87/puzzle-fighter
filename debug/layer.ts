@@ -1,6 +1,9 @@
 import { Updatable } from 'src/utils';
 import { MatchView } from 'src/view';
-import { BoardLogic } from 'src/logic';
+import { BoardLogic, BlockLogic } from 'src/logic';
+
+
+type Color = 0xff0000 | 0x00ff00 | 0x0000ff;
 
 export class Layer implements Updatable {
     constructor(protected match: MatchView) {
@@ -29,22 +32,22 @@ export class BlockLayer extends Layer {
     update(time, delta) {
 
         this.graphics.clear();
-        this.graphics.fillStyle(0x900101, 0.7);
         this.board['blocks'].forEach((l) => {
             l.forEach((b) => {
                 if (b) {
-                    const rect = new Phaser.Geom.Rectangle(this.origin.x + b.position.x * 32, this.origin.y + b.position.y * 32, 32, 32);
-                    this.graphics.fillRectShape(rect);
+                    this.drawBlock(b, 0x00ff00);
                 }
-            })
-        })
-
-        this.graphics.fillStyle(0x000090, 0.7);
-        this.board['fallingBlocks'].forEach((b) => {
-            const rect = new Phaser.Geom.Rectangle(this.origin.x + b.position.x * 32, this.origin.y + b.position.y * 32, 32, 32);
-            this.graphics.fillRectShape(rect);
+            });
         });
 
+        this.board['fallingBlocks'].forEach((b) => {
+            this.drawBlock(b, 0xff0000);
+        });
+    }
 
+    drawBlock(b: BlockLogic, color: Color) {
+        this.graphics.fillStyle(color, 0.7);
+        const rect = new Phaser.Geom.Rectangle(this.origin.x + b.position.x * 32, this.origin.y + b.position.y * 32, 32, 32);
+        this.graphics.fillRectShape(rect);
     }
 }

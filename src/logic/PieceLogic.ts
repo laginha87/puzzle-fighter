@@ -15,7 +15,7 @@ export class PieceLogic implements Updatable {
     public position: Position;
     public events: EventEmitter<EVENTS>;
     private moving = true;
-    private speed = 0.007;
+    public FALLING_SPEED = 0.007;
     private currentPosition = 0;
 
     constructor(public blocks: BlockLogic[], private board: BoardLogic) {
@@ -28,7 +28,7 @@ export class PieceLogic implements Updatable {
             return;
         }
         const { position } = this;
-        const nextY = (position.y + delta * this.speed);
+        const nextY = (position.y + delta * this.FALLING_SPEED);
 
         for (const { position: { x, y } } of this.blocks) {
             if (!this.board.canMoveTo({ x: x + position.x, y: y + nextY })) {

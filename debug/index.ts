@@ -46,7 +46,7 @@ let created = false;
 let paused = false;
 
 match.update = (time, delta) => {
-    if(!paused) {
+    if (!paused) {
         _update.bind(match)(time, delta);
     }
     if (!created) {
@@ -56,7 +56,23 @@ match.update = (time, delta) => {
     debug.update(time, delta);
 };
 
-const a : HTMLDivElement = document.querySelector('#pause-btn');
+const a: HTMLDivElement = document.querySelector('#pause-btn');
 a.onclick = () => {
-    paused = !paused
+    paused = !paused;
+}
+
+//  TODO
+const blockSpeed = document.querySelector('#blockSpeed');
+blockSpeed.value = localStorage.getItem('block-speed') || 0.04;
+
+blockSpeed.onchange = (e) => {
+    match.players[0].board.logic.FALLING_BLOCK_SPEED = e.currentTarget.value;
+    localStorage.setItem('block-speed', e.currentTarget.value);
+}
+
+const pieceBlock = document.querySelector('#pieceSpeed');
+pieceBlock.value = localStorage.getItem('piece-speed') || 0.007;
+pieceBlock.onchange = (e) => {
+    match.players[0].board.piece.logic.FALLING_SPEED = e.currentTarget.value;
+    localStorage.setItem('piece-speed', e.currentTarget.value);
 }
