@@ -68,7 +68,7 @@ export class BoardLogic implements Updatable {
                         .some((e) => energy_type === (e || {}).energy_type));
 
                 if (breakersToDestroy.length > 0) {
-                    const blocksToDestroy = [];
+                    const blocksToDestroy: BlockLogic[] = [];
                     const visited: Boolean[][] = [];
                     for (let x = 0; x < this.size.width; x++) {
                         visited[x] = [];
@@ -105,6 +105,12 @@ export class BoardLogic implements Updatable {
 
                         }
                     });
+
+                    this.fallingBlocks.forEach(({ position: { x, y } }) => {
+                        this.blocks[x][y] = undefined;
+                    });
+
+                    this.fallingBlocks.sort(({ position: { y: y1 } }, { position: { y: y2 } }) => y2 - y1);
 
                     this.state = 'blocks_falling';
                 } else {

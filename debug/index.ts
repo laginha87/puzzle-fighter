@@ -2,6 +2,7 @@ import { ClientGame } from 'src/game/ClientGame';
 import { MatchFactory } from 'src/factories/MatchFactory';
 import { Debug } from './debug';
 import { BlockLayer } from './layer';
+import { PieceLogic } from 'src/logic';
 
 
 
@@ -74,7 +75,7 @@ blockSpeed.onchange = (e) => {
 const pieceBlock = document.querySelector('#pieceSpeed');
 pieceBlock.value = localStorage.getItem('piece-speed') || 0.007;
 pieceBlock.onchange = (e) => {
-    match.players[0].board.piece.logic.FALLING_SPEED = e.currentTarget.value;
+    PieceLogic.prototype.FALLING_SPEED = e.currentTarget.value;
     localStorage.setItem('piece-speed', e.currentTarget.value);
 }
 
