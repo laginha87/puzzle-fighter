@@ -32,11 +32,15 @@ interface MatchConfig {
         height: number;
     };
     players: {}[];
+    meta: {
+        matchClass: typeof MatchView
+    }
 }
 
 
 
 export class MatchFactory {
+
     public static BUILD(config: MatchConfig): MatchView {
         const logic = this.BUILD_LOGIC(config);
 
@@ -58,7 +62,7 @@ export class MatchFactory {
     static BUILD_VIEW(config: MatchConfig, logic: MatchLogic) {
         const { layout: { players: playerLayouts, blockSize } } = config;
 
-        const match = new MatchView('match');
+        const match = new config.meta.matchClass('match');
 
         const players = logic.players.map((e, i) => {
             const playerConfig = playerLayouts[i];

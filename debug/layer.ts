@@ -6,6 +6,8 @@ import { BoardLogic, BlockLogic } from 'src/logic';
 type Color = 0xff0000 | 0x00ff00 | 0x0000ff;
 
 export class Layer implements Updatable {
+    public name!: string;
+
     constructor(protected match: MatchView) {
 
     }
@@ -24,6 +26,7 @@ export class BlockLayer extends Layer {
     public showBlocks = true;
     public showGrid = true;
     public showFalling = true;
+    public name = 'BlockLayer';
 
     create() {
         const board = this.match.players[0].board;

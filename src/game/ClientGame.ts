@@ -15,6 +15,7 @@ export class ClientGame implements Game {
         this.logic = new GameLogic();
         this.view = new GameView(this.logic);
         const el = <HTMLElement>document.querySelector(this.selector);
+        console.log(el)
         this.view.init(el);
     }
 

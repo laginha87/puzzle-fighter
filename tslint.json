@@ -11,7 +11,9 @@
         "newline-per-chained-call": true,
         "no-string-literal": true,
         "quotemark": [ true, "single" ],
-        "insecure-random": false
+        "insecure-random": false,
+        "react-a11y-role-has-required-aria-props": false,
+        "react-a11y-input-elements": false
     },
     "rulesDirectory": []
 }
