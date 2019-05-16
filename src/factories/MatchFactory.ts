@@ -34,7 +34,7 @@ interface MatchConfig {
     players: {}[];
     meta: {
         matchClass: typeof MatchView
-    }
+    };
 }
 
 
