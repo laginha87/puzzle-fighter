@@ -1,3 +1,4 @@
+// global match
 import * as React from 'react';
 import { PieceLogic } from 'src/logic';
 
@@ -15,10 +16,10 @@ export class SpeedControls extends React.Component<any, State> {
         this.onPieceSpeedChange = this.onPieceSpeedChange.bind(this);
         this.onClick = this.onClick.bind(this);
         this.state = {
-            blockSpeed: 0.04,
-            pieceSpeed: 0.007,
+            blockSpeed: parseFloat(localStorage.getItem('blockSpeed') || '0.04'),
+            pieceSpeed: parseFloat(localStorage.getItem('pieceSpeed') || '0.007'),
             paused: false
-        }
+        };
     }
 
     render() {
@@ -29,7 +30,7 @@ export class SpeedControls extends React.Component<any, State> {
 
         return <div className='row'>
             <div className='col-4'>
-                <button className='btn btn-primary' onClick={this.onClick}>{ !paused ? 'Pause' : 'Play'}</button>
+                <button className='btn btn-primary' onClick={this.onClick}>{!paused ? 'Pause' : 'Play'}</button>
             </div>
             <div className='form-group col-4'>
                 <div>Block Speed </div>
@@ -46,12 +47,14 @@ export class SpeedControls extends React.Component<any, State> {
     onBlockSpeedChange(e: React.ChangeEvent<HTMLInputElement>) {
         const speed = parseFloat(e.currentTarget.value);
         window.match.players[0].board.logic.FALLING_BLOCK_SPEED = speed;
+        localStorage.setItem('blockSpeed', speed.toString());
         this.setState({ blockSpeed: speed });
     }
 
     onPieceSpeedChange(e: React.ChangeEvent<HTMLInputElement>) {
         const speed = parseFloat(e.currentTarget.value);
         PieceLogic.FALLING_SPEED = speed;
+        localStorage.setItem('pieceSpeed', speed.toString());
         this.setState({ pieceSpeed: speed });
     }
 

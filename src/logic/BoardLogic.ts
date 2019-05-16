@@ -73,7 +73,7 @@ export class BoardLogic implements Updatable {
                     for (let x = 0; x < this.size.width; x++) {
                         visited[x] = [];
                     }
-                    this.breakers.filter((e) => !breakersToDestroy.includes(e));
+                    this.breakers = this.breakers.filter((e) => !breakersToDestroy.includes(e));
 
                     while (breakersToDestroy.length !== 0) {
                         const next = <BlockLogic>breakersToDestroy.pop();

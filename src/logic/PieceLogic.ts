@@ -15,12 +15,14 @@ export class PieceLogic implements Updatable {
     public position: Position;
     public events: EventEmitter<EVENTS>;
     private moving = true;
-    public FALLING_SPEED = 0.007;
+    public static FALLING_SPEED = 0.007;
     private currentPosition = 0;
+    public fallingSpeed : number;
 
     constructor(public blocks: BlockLogic[], private board: BoardLogic) {
         this.position = { x: 0, y: 0 };
         this.events = new Phaser.Events.EventEmitter();
+        this.fallingSpeed = PieceLogic.FALLING_SPEED;
     }
 
     update(time: number, delta: number): void {
@@ -28,7 +30,7 @@ export class PieceLogic implements Updatable {
             return;
         }
         const { position } = this;
-        const nextY = (position.y + delta * this.FALLING_SPEED);
+        const nextY = (position.y + delta * this.fallingSpeed);
 
         for (const { position: { x, y } } of this.blocks) {
             if (!this.board.canMoveTo({ x: x + position.x, y: y + nextY })) {

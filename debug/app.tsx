@@ -1,7 +1,7 @@
 import * as ReactDOM from 'react-dom';
 import * as React from 'react';
 import { Phaser } from 'debug/Phaser';
-import { LayerControls, SpeedControls } from 'debug/debug';
+import { LayerControls, SpeedControls, SessionControls } from 'debug/debug';
 
 class App extends React.Component {
 
@@ -13,6 +13,7 @@ class App extends React.Component {
             <div className='col-5'>
                 <SpeedControls />
                 <LayerControls />
+                <SessionControls />
             </div>
 
         </div>;
