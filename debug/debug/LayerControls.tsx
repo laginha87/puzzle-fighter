@@ -1,10 +1,16 @@
 import * as React from 'react';
+import { MatchView } from 'src/view';
+import { BoardState } from 'src/logic';
 
 type State = {
     showGrid: boolean,
     showBlocks: boolean,
     showFalling: boolean,
+    boardState: BoardState
 }
+
+
+const getState = () => window.match && (window.match as MatchView).logic.players[0].board.state;
 
 export class LayerControls extends React.Component<any, State> {
     constructor(props: any) {
@@ -13,12 +19,19 @@ export class LayerControls extends React.Component<any, State> {
         this.state = {
             showGrid: true,
             showBlocks: true,
-            showFalling: true
-        }
+            showFalling: true,
+            boardState: getState()
+        };
+    }
+
+    componentDidMount() {
+        setInterval(() => {
+            this.setState({ boardState: getState() });
+        }, 100);
     }
 
     render() {
-        const { showGrid, showBlocks, showFalling } = this.state;
+        const { showGrid, showBlocks, showFalling, boardState } = this.state;
 
         return <div>
             <div className='form-check'>
@@ -39,6 +52,9 @@ export class LayerControls extends React.Component<any, State> {
                     Show Falling
                 </label>
             </div>
+
+            <div>{boardState}</div>
+
         </div>;
     }
     onChange(e: React.ChangeEvent<HTMLInputElement>) {

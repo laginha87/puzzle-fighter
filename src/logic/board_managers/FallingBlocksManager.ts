@@ -31,9 +31,8 @@ export class FallingBlocksManager extends BoardManager {
 
                 return;
             }
-            this.fallingBlocks.forEach(({ position: { x, y } }) => {
-                this.board.blocks[x][y] = undefined;
-            });
+
+            this.board.loosenBlocks(this.fallingBlocks);
 
             this.fallingBlocks.sort(({ position: { y: y1 } }, { position: { y: y2 } }) => y2 - y1);
 

@@ -7,10 +7,12 @@ export type BOARD_LOGIC_EVENTS =
     'set_piece'
     | 'break_piece'
     | 'init_piece'
+    | 'land_block' // Triggered when a block lands
+    | 'loosen_blocks' // Triggered when a landed block starts falling
     | 'destroy_blocks';
 
 
-type BoardState =
+export type BoardState =
     'piece_falling'
     | 'blocks_falling'
     | 'destroying_blocks';
@@ -56,8 +58,6 @@ export class BoardLogic implements Updatable {
 
     public update(time: number, delta: number): void {
         this.stateManagers[this.state].update(time, delta);
-        // this.player.nextPiece();
-        // this.state = 'piece_falling';
     }
 
     public canMoveTo(position: Position) {
@@ -77,13 +77,26 @@ export class BoardLogic implements Updatable {
     public addBlock(b: BlockLogic) {
         const { position: { x, y }, type } = b;
         this.blocks[Math.ceil(x)][Math.ceil(y)] = b;
-        if (type == 'breaker') {
-            this.breakers.push(b);
-        }
+        this.events.emit('land_block', b);
+    }
+
+    public loosenBlocks(bs: BlockLogic[]) {
+        bs.forEach(({ position: { x, y } }) => {
+            this.blocks[x][y] = undefined;
+        });
+        this.events.emit('loosen_blocks', bs);
+
+    }
+
+    public destroyBlocks(bs: BlockLogic[]) {
+        bs.forEach(({ position: { x, y } }) => {
+            this.blocks[x][y] = undefined;
+        });
+        this.events.emit('destroy_blocks', bs);
     }
 
     public onPieceHit(): void {
-        this.events.emit('break_piece');
+        this.events.emit('break_piece', this.piece);
     }
 
     public neighbours(x: number, y: number): BlockLogic[] {

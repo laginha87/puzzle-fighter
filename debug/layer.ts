@@ -47,9 +47,9 @@ export class BlockLayer extends Layer {
             });
         });
 
-        this.board['fallingBlocks'].forEach((b) => {
-            if (this.showFalling) { this.drawBlock(b, 0xff0000); }
-        });
+        // this.board['fallingBlocks'].forEach((b) => {
+        //     if (this.showFalling) { this.drawBlock(b, 0xff0000); }
+        // });
     }
 
     drawBlock({ position: { x, y } }: BlockLogic, color: Color) {
