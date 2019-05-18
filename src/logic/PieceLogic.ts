@@ -19,7 +19,7 @@ export class PieceLogic implements Updatable {
     private currentPosition = 0;
     public fallingSpeed : number;
 
-    constructor(public blocks: BlockLogic[], private board: BoardLogic) {
+    constructor(public blocks: BlockLogic[], public board: BoardLogic) {
         this.position = { x: 0, y: 0 };
         this.events = new Phaser.Events.EventEmitter();
         this.fallingSpeed = PieceLogic.FALLING_SPEED;
