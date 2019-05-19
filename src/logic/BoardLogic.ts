@@ -43,7 +43,7 @@ export class BoardLogic implements Updatable {
             destroying_blocks: new DestroyManager(this),
             blocks_falling: new FallingBlocksManager(this),
             piece_falling: new PieceManager(this)
-        }
+        };
     }
 
     public get piece() {
