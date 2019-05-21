@@ -1,12 +1,13 @@
 import { ClientGame } from 'src/game/ClientGame';
-import { MatchFactory } from 'src/factories/MatchFactory';
+import { MatchFactory, MatchConfig } from 'src/factories/MatchFactory';
+import { MatchView } from 'src/view';
 
 
 
 const game = new ClientGame('container');
 game.init();
 
-const config = {
+const config : MatchConfig = {
     layout: {
         players: [
             {
@@ -25,7 +26,10 @@ const config = {
     players: [
         {}
     ],
-    game: game.view
+    game: game.view,
+    meta: {
+        matchClass: MatchView
+    }
 };
 
 const match = MatchFactory.BUILD(config);

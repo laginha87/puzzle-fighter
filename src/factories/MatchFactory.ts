@@ -1,7 +1,7 @@
 import { BoardLogic, MatchLogic, PlayerLogic } from 'src/logic';
 import { BoardView, GameView, MatchView, PlayerView } from 'src/view';
 
-interface MatchConfig {
+export interface MatchConfig {
     game: GameView;
     layout: {
         players: {
