@@ -35,9 +35,9 @@ export class BoardView implements SceneState {
         });
 
         this.logic.events.on('destroy_blocks', (blocks : BlockLogic[]) => {
-            blocks.forEach((e) => {
-                e.view!.sprite.destroy();
-            });
+            const views = blocks.map((e) => e.view!);
+            views.forEach((e) => e.sprite.destroy());
+            this.blocks = this.blocks.filter((e) => !views.includes(e));
         });
     }
 
