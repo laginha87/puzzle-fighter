@@ -24,18 +24,19 @@ export class DestroyManager extends BoardManager {
 
         if (breakersToDestroy.length > 0) {
             const blocksToDestroy: BlockLogic[] = [];
-            const visited: Boolean[][] = [];
-            for (let x = 0; x < this.board.size.width; x++) {
-                visited[x] = [];
-            }
+            const visited = new Set();
 
             while (breakersToDestroy.length !== 0) {
                 const next = <BlockLogic>breakersToDestroy.pop();
                 blocksToDestroy.push(next);
-                visited[next.position.x][next.position.y] = true;
+                visited.add(next.id);
                 this.board.neighbours(next.position.x, next.position.y)
                     .forEach((e) => {
-                        visited[e.position.x][e.position.y] = true;
+                        if(visited.has(e.id)) {
+                            return;
+                        }
+
+                        visited.add(e.id);
                         if (e.energy_type === next.energy_type) {
                             breakersToDestroy.push(e);
                         }

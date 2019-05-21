@@ -27,6 +27,7 @@ export class FallingBlocksManager extends BoardManager {
                 }
             });
             if(this.fallingBlocks.length  === 0) {
+                this.board.player.nextPiece();
                 this.board.state = 'piece_falling';
 
                 return;

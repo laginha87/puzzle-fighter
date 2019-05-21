@@ -10,7 +10,7 @@ export class BlockLogic {
     size: Size = { width: 1, height: 1 };
     view?: BlockView;
 
-    constructor(public energy_type: EnergyType, public position: Position, public type : Type) {
+    constructor(public energy_type: EnergyType, public position: Position, public type : Type, public id: number) {
     }
 
 }
