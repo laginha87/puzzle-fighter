@@ -4,7 +4,7 @@ import { MatchView } from 'src/view';
 
 
 
-const game = new ClientGame('container');
+const game = new ClientGame('#container');
 game.init();
 
 const config : MatchConfig = {
