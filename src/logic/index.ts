@@ -4,3 +4,4 @@ export * from './BlockLogic';
 export * from './GameLogic';
 export * from './MatchLogic';
 export * from './PieceLogic';
+export * from './EnergyPoolLogic';

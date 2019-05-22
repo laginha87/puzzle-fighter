@@ -3,7 +3,7 @@ import { BlockView } from 'src/view';
 
 
 export const ENERGIES = <const>['chaos', 'elemental', 'nature', 'order', 'willpower'];
-export type Type = 'regular' | 'breaker';
+export type Type = 'regular' | 'breaker' | 'energy';
 export type EnergyType = typeof ENERGIES[number];
 
 export class BlockLogic {

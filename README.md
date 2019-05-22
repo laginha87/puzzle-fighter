@@ -9,8 +9,8 @@
 - [x] show next piece
 
 ## 0.2 add destroy mechanics
-- [ ] breaker sprite
-- [ ] add destroy algorithm
+- [x] breaker sprite
+- [x] add destroy algorithm
 
 ## 0.3 spell casting
 - [ ] add mana pool

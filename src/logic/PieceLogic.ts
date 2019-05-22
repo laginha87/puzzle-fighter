@@ -34,13 +34,7 @@ export class PieceLogic implements Updatable {
 
         for (const { position: { x, y } } of this.blocks) {
             if (!this.board.canMoveTo({ x: x + position.x, y: y + nextY })) {
-                position.y = Math.ceil(position.y);
-                this.moving = false;
-                this.blocks.forEach(e => {
-                    e.position.x += position.x;
-                    e.position.y += position.y;
-                });
-                this.events.emit('on_fallen');
+                this.fall();
 
                 return;
             }
@@ -98,7 +92,16 @@ export class PieceLogic implements Updatable {
 
 
     fall() {
-
+        if (!this.moving) {
+            return;
+        }
+        this.position.y = Math.ceil(this.position.y);
+        this.moving = false;
+        this.blocks.forEach(e => {
+            e.position.x += this.position.x;
+            e.position.y += this.position.y;
+        });
+        this.events.emit('on_fallen');
     }
 
     private moveH(inc: number) {

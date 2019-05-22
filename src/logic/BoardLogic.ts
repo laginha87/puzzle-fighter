@@ -21,7 +21,7 @@ export class BoardLogic implements Updatable {
     public _piece!: PieceLogic;
     public player!: PlayerLogic;
     public events: EventEmitter<BOARD_LOGIC_EVENTS>;
-    public FALLING_BLOCK_SPEED = 0.01;
+    public FALLING_BLOCK_SPEED = 0.04;
     public state: BoardState;
 
 
