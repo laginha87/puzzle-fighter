@@ -4,4 +4,5 @@ export interface PlayerController {
     onMoveRight(cb : () => void) : void;
     onFall(cb : () => void) : void;
     onMoveDown(cb : () => void) : void;
+    onSpell(cb : (i : number) => void) : void;
 }

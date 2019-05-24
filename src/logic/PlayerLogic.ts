@@ -40,6 +40,7 @@ export class PlayerLogic implements Updatable {
         _controller.onMoveDown(() => board.piece.moveDown());
         _controller.onFall(() => board.piece.fall());
         _controller.onRotate(() => board.piece.rotate());
+        _controller.onSpell((i) => board.castSpell(i));
     }
 
     public nextPiece() {
@@ -48,10 +49,5 @@ export class PlayerLogic implements Updatable {
         this.next = new PieceLogic(this.blockFactory.buildPiece(), this.board);
         this.events.emit('set_next');
     }
-    // private newPiece() {
-    //     const piece = board.blockFactory.buildPiece();
-    //     this.board.piece = this.next;
-    //     this.next = piece;
-    //     this.events.emit('piece_added', this.next);
-    // }
+
 }

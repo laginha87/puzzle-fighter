@@ -12,21 +12,22 @@ export type BOARD_LOGIC_EVENTS =
     | 'destroy_blocks';
 
 
-export type BoardState =
-    'piece_falling'
-    | 'blocks_falling'
-    | 'destroying_blocks';
+export type BoardManagerName =
+    'piece'
+    | 'falling'
+    | 'destroy'
+    | 'spells';
 
 export class BoardLogic implements Updatable {
     public _piece!: PieceLogic;
     public player!: PlayerLogic;
     public events: EventEmitter<BOARD_LOGIC_EVENTS>;
     public FALLING_BLOCK_SPEED = 0.01;
-    public state: BoardState;
+    public activeManager: BoardManagerName;
 
 
     public blocks: (BlockLogic | undefined)[][];
-    private stateManagers: { [s in BoardState]: BoardManager };
+    private managers: { [s in BoardManagerName]: BoardManager };
     private startPoint: Position;
 
     constructor(public size: Size) {
@@ -35,14 +36,15 @@ export class BoardLogic implements Updatable {
             this.blocks[x] = [];
         }
 
-        this.state = 'piece_falling';
+        this.activeManager = 'piece';
         this.events = new Phaser.Events.EventEmitter();
         this.onPieceHit = this.onPieceHit.bind(this);
         this.startPoint = { x: size.width / 2, y: 0 };
-        this.stateManagers = {
-            destroying_blocks: new DestroyManager(this),
-            blocks_falling: new FallingBlocksManager(this),
-            piece_falling: new PieceManager(this)
+        this.managers = {
+            destroy: new DestroyManager(this),
+            falling: new FallingBlocksManager(this),
+            piece: new PieceManager(this),
+            spells: new PieceManager(this)
         };
     }
 
@@ -57,7 +59,7 @@ export class BoardLogic implements Updatable {
     }
 
     public update(time: number, delta: number): void {
-        this.stateManagers[this.state].update(time, delta);
+        this.managers[this.activeManager].update(time, delta);
     }
 
     public canMoveTo(position: Position) {
@@ -101,5 +103,9 @@ export class BoardLogic implements Updatable {
 
     public neighbours(x: number, y: number): BlockLogic[] {
         return [(this.blocks[x - 1] || [])[y], (this.blocks[x + 1] || [])[y], this.blocks[x][y + 1], this.blocks[x][y - 1]].filter((e) => e !== undefined);
+    }
+
+    public castSpell(i : number) {
+        console.log(`Cast Spell ${i}`);
     }
 }

@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { MatchView } from 'src/view';
-import { BoardState } from 'src/logic';
+import { BoardManagerName } from 'src/logic';
 
 type State = {
     showGrid: boolean,
     showBlocks: boolean,
     showFalling: boolean,
-    boardState: BoardState
+    boardState: BoardManagerName
 }
 
 
-const getState = () => window.match && (window.match as MatchView).logic.players[0].board.state;
+const getState = () => window.match && (window.match as MatchView).logic.players[0].board.activeManager;
 
 export class LayerControls extends React.Component<any, State> {
     constructor(props: any) {

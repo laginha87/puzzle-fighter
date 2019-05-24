@@ -9,7 +9,7 @@ export class FallingBlocksManager extends BoardManager {
         board.events.on('break_piece', (piece: PieceLogic) => {
             this.fallingBlocks.push(...piece.blocks);
             this.fallingBlocks.sort(({ position: { y: y1 } }, { position: { y: y2 } }) => y2 - y1);
-            this.board.state = 'blocks_falling';
+            this.board.activeManager = 'falling';
         });
 
         board.events.on('destroy_blocks', () => {
@@ -26,9 +26,9 @@ export class FallingBlocksManager extends BoardManager {
                     }
                 }
             });
-            if(this.fallingBlocks.length  === 0) {
+            if (this.fallingBlocks.length === 0) {
                 this.board.player.nextPiece();
-                this.board.state = 'piece_falling';
+                this.board.activeManager = 'piece';
 
                 return;
             }
@@ -37,7 +37,7 @@ export class FallingBlocksManager extends BoardManager {
 
             this.fallingBlocks.sort(({ position: { y: y1 } }, { position: { y: y2 } }) => y2 - y1);
 
-            this.board.state = 'blocks_falling';
+            this.board.activeManager = 'falling';
         })
     }
 
@@ -56,7 +56,7 @@ export class FallingBlocksManager extends BoardManager {
             return true;
         });
         if (this.fallingBlocks.length === 0) {
-            this.board.state = 'destroying_blocks';
+            this.board.activeManager = 'destroy';
         }
     }
 

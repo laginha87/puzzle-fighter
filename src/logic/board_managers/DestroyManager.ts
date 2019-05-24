@@ -46,7 +46,7 @@ export class DestroyManager extends BoardManager {
             this.board.destroyBlocks(blocksToDestroy);
         } else {
             this.board.player.nextPiece();
-            this.board.state = 'piece_falling';
+            this.board.activeManager = 'piece';
         }
 
     }
