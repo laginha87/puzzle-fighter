@@ -8,7 +8,8 @@
         "gen-assets": "/Applications/Aseprite.app/Contents/MacOS/aseprite *.ase  --sheet tiles.png  --data tiles.json",
         "lint": "yarn tsc --noEmit && yarn tslint src/**/*.ts index.ts",
         "lint-fix": "yarn tslint src/**/*.ts index.ts --fix",
-        "debug": "parcel debug/index.html"
+        "debug": "parcel debug/index.html",
+        "test": "jest"
     },
     "dependencies": {
         "@types/react": "^16.8.17",
@@ -25,6 +26,9 @@
         "debug": "./debug"
     },
     "devDependencies": {
+        "@types/jest": "^24.0.13",
+        "jest": "^24.8.0",
+        "ts-jest": "^24.0.2",
         "tslint": "^5.16.0",
         "tslint-microsoft-contrib": "^6.1.1",
         "typescript": "^3.3.3"
