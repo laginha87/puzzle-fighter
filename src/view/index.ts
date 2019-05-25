@@ -3,5 +3,5 @@ export * from './BoardView';
 export * from './GameView';
 export * from './MatchView';
 export * from './PlayerView';
-export * from './Types';
+export * from './types';
 export * from './PieceView';

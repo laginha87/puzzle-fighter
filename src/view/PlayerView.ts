@@ -1,6 +1,6 @@
 import { PlayerLogic } from 'src/logic';
 import { BoardView, SceneState, PieceView } from 'src/view';
-import { LayoutConfig } from 'src/view/Types';
+import { LayoutConfig } from '~src/view/types';
 import { Position } from 'src/types';
 
 export class PlayerView implements SceneState {
