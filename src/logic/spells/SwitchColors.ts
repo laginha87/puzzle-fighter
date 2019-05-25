@@ -1,25 +1,19 @@
+import { EnergyType, BlockLogic } from 'src/logic';
 import { Spell } from 'src/logic/spells';
-import { EnergyType, PlayerLogic } from 'src/logic';
-import { BlockLogic } from '../BlockLogic';
 
 export class SwitchColors extends Spell {
     cost: EnergyType[] = ['nature'];
 
-    private numberOfBlocks: number;
-
     private time = 0;
     private effects: Effect[] = [];
 
-    public constructor(args: { level: number, player: PlayerLogic }) {
-        super(args);
-
-        this.numberOfBlocks = 4;
-    }
-
     public cast() {
-        const blocks = Object.values(this.player.board.blocks);
 
-        while (this.effects.length < this.numberOfBlocks || blocks.length !== 0) {
+        const numberOfBlocks = this.level * 2;
+
+        const blocks = Object.values(this.owner.board.blocks);
+
+        while (this.effects.length < numberOfBlocks || blocks.length !== 0) {
             const i = Math.floor(Math.random() * blocks.length);
             const block = blocks[i];
             blocks.splice(i, 1);

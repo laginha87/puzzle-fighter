@@ -1,8 +1,7 @@
-import { BlockLogic, PlayerLogic, PieceLogic } from 'src/logic';
+import { BlockLogic, PlayerLogic, PieceLogic, BlockId } from 'src/logic';
 import { DestroyManager, FallingBlocksManager, PieceManager } from 'src/logic/board_managers';
 import { Updatable, EventEmitter } from 'src/utils';
 import { Position, Size } from 'src/types';
-import { BlockId } from './BlockLogic';
 
 export type BOARD_LOGIC_EVENTS =
     'set_piece'
