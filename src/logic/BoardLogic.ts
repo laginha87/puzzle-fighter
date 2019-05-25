@@ -66,7 +66,7 @@ export class BoardLogic implements Updatable {
 
         this.events = new Phaser.Events.EventEmitter();
         this.onPieceHit = this.onPieceHit.bind(this);
-        this.startPoint = { x: size.width / 2, y: 0 };
+        this.startPoint = { x: size.width / 2, y: -2 };
         this.managers = {
             destroy: new DestroyManager(this),
             falling: new FallingBlocksManager(this),
@@ -110,15 +110,8 @@ export class BoardLogic implements Updatable {
     public canMoveTo(position: Position) {
         const { x, y } = position;
         const { width, height } = this.size;
-        if (x < 0 || x > width || y < 0 || y >= height - 1) {
-            return false;
-        }
 
-        if (this.blocks[Math.ceil(x)][Math.ceil(y)]) {
-            return false;
-        }
-
-        return true;
+        return !(x < 0 || x > width || y >= height - 1 || this.blocks[Math.ceil(x)][Math.ceil(y)])
     }
 
     public addBlock(b: BlockLogic) {
