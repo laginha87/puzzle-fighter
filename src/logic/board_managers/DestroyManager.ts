@@ -17,7 +17,7 @@ export class DestroyManager extends BoardManager {
         });
     }
 
-    update(time: number, delta: number): void {
+    update(time: number, delta: number): boolean {
         const breakersToDestroy = this.breakers.filter(({ position: { x, y }, energy_type }) =>
             this.board.neighbours(x, y)
                 .some((e) => energy_type === (e || {}).energy_type));
@@ -44,10 +44,8 @@ export class DestroyManager extends BoardManager {
             }
 
             this.board.destroyBlocks(blocksToDestroy);
-        } else {
-            this.board.player.nextPiece();
-            this.board.activeManager = 'piece';
         }
 
+        return true;
     }
 }

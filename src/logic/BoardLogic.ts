@@ -1,5 +1,5 @@
 import { BlockLogic, PlayerLogic, PieceLogic } from 'src/logic';
-import { BoardManager, DestroyManager, FallingBlocksManager, PieceManager } from 'src/logic/board_managers';
+import { DestroyManager, FallingBlocksManager, PieceManager } from 'src/logic/board_managers';
 import { Updatable, EventEmitter } from 'src/utils';
 import { Position, Size } from 'src/types';
 
@@ -12,22 +12,47 @@ export type BOARD_LOGIC_EVENTS =
     | 'destroy_blocks';
 
 
-export type BoardManagerName =
-    'piece'
-    | 'falling'
-    | 'destroy'
-    | 'spells';
+export type BoardManagerName = keyof BoardManagers;
+
+type BoardState =
+    'piece_falling'
+    | 'blocks_falling'
+    | 'destroy_blocks'
+    | 'casting_spells';
+
+type StateToManagerMap = {
+    [k in BoardState]: BoardManagerName
+};
+
+type StateMachine = {
+    [k in BoardState]: BoardState | (() => BoardState)
+};
+
+const STATE_TO_MANAGER_MAP: StateToManagerMap = {
+    'blocks_falling': 'falling',
+    'casting_spells': 'spells',
+    'destroy_blocks': 'destroy',
+    'piece_falling': 'piece'
+};
+interface BoardManagers {
+    piece: PieceManager;
+    falling: FallingBlocksManager;
+    destroy: DestroyManager;
+    spells: PieceManager;
+}
 
 export class BoardLogic implements Updatable {
     public _piece!: PieceLogic;
     public player!: PlayerLogic;
     public events: EventEmitter<BOARD_LOGIC_EVENTS>;
     public FALLING_BLOCK_SPEED = 0.01;
-    public activeManager: BoardManagerName;
-
-
     public blocks: (BlockLogic | undefined)[][];
-    private managers: { [s in BoardManagerName]: BoardManager };
+    public managers: BoardManagers;
+
+
+    private activeManager: BoardManagerName;
+    private state: BoardState;
+    private stateMachine: StateMachine;
     private startPoint: Position;
 
     constructor(public size: Size) {
@@ -36,7 +61,9 @@ export class BoardLogic implements Updatable {
             this.blocks[x] = [];
         }
 
-        this.activeManager = 'piece';
+        this.state = 'piece_falling';
+        this.activeManager = STATE_TO_MANAGER_MAP[this.state];
+
         this.events = new Phaser.Events.EventEmitter();
         this.onPieceHit = this.onPieceHit.bind(this);
         this.startPoint = { x: size.width / 2, y: 0 };
@@ -45,6 +72,21 @@ export class BoardLogic implements Updatable {
             falling: new FallingBlocksManager(this),
             piece: new PieceManager(this),
             spells: new PieceManager(this)
+        };
+
+        this.stateMachine = {
+            'blocks_falling': 'destroy_blocks',
+            'piece_falling': 'blocks_falling',
+            'destroy_blocks': () => {
+                if(this.managers.falling.isActive){
+                    return 'blocks_falling';
+                } else {
+                    this.player.nextPiece();
+
+                    return 'piece_falling';
+                }
+            },
+            'casting_spells': 'blocks_falling'
         };
     }
 
@@ -59,7 +101,10 @@ export class BoardLogic implements Updatable {
     }
 
     public update(time: number, delta: number): void {
-        this.managers[this.activeManager].update(time, delta);
+        const shouldChange = this.managers[this.activeManager].update(time, delta);
+        if(shouldChange) {
+            this.transition();
+        }
     }
 
     public canMoveTo(position: Position) {
@@ -86,26 +131,41 @@ export class BoardLogic implements Updatable {
         bs.forEach(({ position: { x, y } }) => {
             this.blocks[x][y] = undefined;
         });
-        this.events.emit('loosen_blocks', bs);
 
+        this.events.emit('loosen_blocks', bs);
     }
 
     public destroyBlocks(bs: BlockLogic[]) {
         bs.forEach(({ position: { x, y } }) => {
             this.blocks[x][y] = undefined;
         });
+
+        this.managers.falling.destroyBlocks(bs);
+
         this.events.emit('destroy_blocks', bs);
     }
 
     public onPieceHit(): void {
         this.events.emit('break_piece', this.piece);
+        this.managers.falling.breakPiece(this.piece);
     }
 
     public neighbours(x: number, y: number): BlockLogic[] {
         return [(this.blocks[x - 1] || [])[y], (this.blocks[x + 1] || [])[y], this.blocks[x][y + 1], this.blocks[x][y - 1]].filter((e) => e !== undefined);
     }
 
-    public castSpell(i : number) {
+    public transition() {
+        const nextState = this.stateMachine[this.state];
+        if(nextState instanceof Function){
+            this.state = nextState();
+        } else {
+            this.state = nextState;
+        }
+
+        this.activeManager = STATE_TO_MANAGER_MAP[this.state];
+    }
+
+    public castSpell(i: number) {
         console.log(`Cast Spell ${i}`);
     }
 }

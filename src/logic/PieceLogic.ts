@@ -25,7 +25,7 @@ export class PieceLogic implements Updatable {
         this.fallingSpeed = PieceLogic.FALLING_SPEED;
     }
 
-    update(time: number, delta: number): void {
+    update(time: number, delta: number): boolean {
         const { position } = this;
         const nextY = (position.y + delta * this.fallingSpeed);
 
@@ -39,11 +39,13 @@ export class PieceLogic implements Updatable {
                 });
                 this.events.emit('on_fallen');
 
-                return;
+                return true;
             }
         }
 
         position.y = nextY;
+
+        return false;
     }
 
     moveRight() {
