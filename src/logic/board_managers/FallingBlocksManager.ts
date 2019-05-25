@@ -32,7 +32,7 @@ export class FallingBlocksManager extends BoardManager {
     }
 
     checkForFallingBlocks() {
-        this.board.blocks.forEach((line) => {
+        this.board.grid.forEach((line) => {
             let falling = false;
             for (let y = this.board.size.height - 1; y >= 0; y--) {
                 const element = line[y];

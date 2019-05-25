@@ -2,6 +2,7 @@ import { BlockLogic, PlayerLogic, PieceLogic } from 'src/logic';
 import { DestroyManager, FallingBlocksManager, PieceManager } from 'src/logic/board_managers';
 import { Updatable, EventEmitter } from 'src/utils';
 import { Position, Size } from 'src/types';
+import { BlockId } from './BlockLogic';
 
 export type BOARD_LOGIC_EVENTS =
     'set_piece'
@@ -46,7 +47,8 @@ export class BoardLogic implements Updatable {
     public player!: PlayerLogic;
     public events: EventEmitter<BOARD_LOGIC_EVENTS>;
     public FALLING_BLOCK_SPEED = 0.01;
-    public blocks: (BlockLogic | undefined)[][];
+    public grid: (BlockLogic | undefined)[][];
+    public blocks: { [k in BlockId]: BlockLogic };
     public managers: BoardManagers;
 
 
@@ -56,10 +58,12 @@ export class BoardLogic implements Updatable {
     private startPoint: Position;
 
     constructor(public size: Size) {
-        this.blocks = [];
+        this.grid = [];
         for (let x = 0; x < size.width; x++) {
-            this.blocks[x] = [];
+            this.grid[x] = [];
         }
+
+        this.blocks = {};
 
         this.state = 'piece_falling';
         this.activeManager = STATE_TO_MANAGER_MAP[this.state];
@@ -111,26 +115,29 @@ export class BoardLogic implements Updatable {
         const { x, y } = position;
         const { width, height } = this.size;
 
-        return !(x < 0 || x > width || y >= height - 1 || this.blocks[Math.ceil(x)][Math.ceil(y)]);
+        return !(x < 0 || x > width || y >= height - 1 || this.grid[Math.ceil(x)][Math.ceil(y)]);
     }
 
     public addBlock(b: BlockLogic) {
         const { position: { x, y }, type } = b;
-        this.blocks[Math.ceil(x)][Math.ceil(y)] = b;
+        this.grid[Math.ceil(x)][Math.ceil(y)] = b;
+        this.blocks[b.id] = b;
         this.events.emit('land_block', b);
     }
 
     public loosenBlocks(bs: BlockLogic[]) {
-        bs.forEach(({ position: { x, y } }) => {
-            this.blocks[x][y] = undefined;
+        bs.forEach(({ position: { x, y }, id }) => {
+            this.grid[x][y] = undefined;
+            delete this.blocks[id];
         });
 
         this.events.emit('loosen_blocks', bs);
     }
 
     public destroyBlocks(bs: BlockLogic[]) {
-        bs.forEach(({ position: { x, y } }) => {
-            this.blocks[x][y] = undefined;
+        bs.forEach(({ position: { x, y }, id}) => {
+            this.grid[x][y] = undefined;
+            delete this.blocks[id];
         });
 
         this.managers.falling.checkForFallingBlocks();
@@ -144,7 +151,7 @@ export class BoardLogic implements Updatable {
     }
 
     public neighbours(x: number, y: number): BlockLogic[] {
-        return <BlockLogic[]>[(this.blocks[x - 1] || [])[y], (this.blocks[x + 1] || [])[y], this.blocks[x][y + 1], this.blocks[x][y - 1]].filter((e) => e !== undefined);
+        return <BlockLogic[]>[(this.grid[x - 1] || [])[y], (this.grid[x + 1] || [])[y], this.grid[x][y + 1], this.grid[x][y - 1]].filter((e) => e !== undefined);
     }
 
     public transition() {
