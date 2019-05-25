@@ -4,7 +4,7 @@ import { EventEmitter, Updatable } from 'src/utils';
 type EVENTS = 'a';
 
 export class MatchLogic implements Updatable {
-    public events : EventEmitter<EVENTS>;
+    public events! : EventEmitter<EVENTS>;
     constructor(public players: PlayerLogic[]) {
 
     }

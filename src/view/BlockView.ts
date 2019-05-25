@@ -4,8 +4,8 @@ import { Size } from 'src/types';
 
 
 export class BlockView implements SceneState {
-    scene: Phaser.Scene;
-    sprite: Phaser.GameObjects.Sprite;
+    scene!: Phaser.Scene;
+    sprite!: Phaser.GameObjects.Sprite;
 
     constructor(private logic: BlockLogic, public size : Size) { }
 

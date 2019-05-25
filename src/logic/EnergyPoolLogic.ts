@@ -11,7 +11,7 @@ export class EnergyPoolLogic {
     constructor(private player: PlayerLogic) {
         player.board.events.on('destroy_blocks', this.onBlocksDestroyed.bind(this));
         this.blockFactory = player.blockFactory;
-        this.pool = <Pool>(ENERGIES.reduce((acc, energy) => ({ ...acc, [energy]: 0 }), {}));
+        this.pool = ENERGIES.reduce((acc : Pool, energy : EnergyType) => ({ ...acc, [energy]: 0 }), <Pool>{});
     }
 
     onBlocksDestroyed(blocks: BlockLogic[]) {
@@ -22,7 +22,7 @@ export class EnergyPoolLogic {
             this.pool[energy_type] += 0.25;
         });
 
-        ENERGIES.forEach((e) => {
+        ENERGIES.forEach((e : EnergyType) => {
             const val = this.pool[e];
             if (val < 1) {
                 return;

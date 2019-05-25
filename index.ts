@@ -37,5 +37,6 @@ game.view.phaser.scene.add('match', match);
 // game.start()
 game.view.phaser.scene.start('match');
 
-window.match = match;
-window.game = game;
+const global = <any>window;
+global.match = match;
+global.game = game;

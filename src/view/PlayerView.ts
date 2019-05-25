@@ -5,8 +5,8 @@ import { Position } from 'src/types';
 
 export class PlayerView implements SceneState {
     public scene!: Phaser.Scene;
-    public nextContainer: Phaser.GameObjects.Container;
-    public next: PieceView;
+    public nextContainer!: Phaser.GameObjects.Container;
+    public next!: PieceView;
 
     constructor(public logic: PlayerLogic,
             public board: BoardView,

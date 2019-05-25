@@ -2,9 +2,9 @@ import { SceneState, BlockView, LayoutConfig } from 'src/view';
 import { PieceLogic } from 'src/logic';
 
 export class PieceView implements SceneState {
-    scene: Phaser.Scene;
-    container: Phaser.GameObjects.Container;
-    blocks: BlockView[];
+    scene!: Phaser.Scene;
+    container!: Phaser.GameObjects.Container;
+    blocks!: BlockView[];
 
     constructor(public logic: PieceLogic, private config: LayoutConfig) {
     }
@@ -24,7 +24,7 @@ export class PieceView implements SceneState {
         });
     }
 
-    update(time, delta) {
+    update(time : number, delta : number) {
         const { x, y } = this.logic.position;
         const { width, height } = this.config.blockSize;
         this.container.setPosition(x * width, y * height);

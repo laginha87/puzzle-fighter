@@ -31,7 +31,7 @@ export class FallingBlocksManager extends BoardManager {
         this.fallingBlocks.sort(({ position: { y: y1 } }, { position: { y: y2 } }) => y2 - y1);
     }
 
-    destroyBlocks() {
+    checkForFallingBlocks() {
         this.board.blocks.forEach((line) => {
             let falling = false;
             for (let y = this.board.size.height - 1; y >= 0; y--) {

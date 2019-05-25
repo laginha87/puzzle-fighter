@@ -78,7 +78,7 @@ export class BoardLogic implements Updatable {
             'blocks_falling': 'destroy_blocks',
             'piece_falling': 'blocks_falling',
             'destroy_blocks': () => {
-                if(this.managers.falling.isActive){
+                if (this.managers.falling.isActive) {
                     return 'blocks_falling';
                 } else {
                     this.player.nextPiece();
@@ -102,7 +102,7 @@ export class BoardLogic implements Updatable {
 
     public update(time: number, delta: number): void {
         const shouldChange = this.managers[this.activeManager].update(time, delta);
-        if(shouldChange) {
+        if (shouldChange) {
             this.transition();
         }
     }
@@ -111,7 +111,7 @@ export class BoardLogic implements Updatable {
         const { x, y } = position;
         const { width, height } = this.size;
 
-        return !(x < 0 || x > width || y >= height - 1 || this.blocks[Math.ceil(x)][Math.ceil(y)])
+        return !(x < 0 || x > width || y >= height - 1 || this.blocks[Math.ceil(x)][Math.ceil(y)]);
     }
 
     public addBlock(b: BlockLogic) {
@@ -133,7 +133,7 @@ export class BoardLogic implements Updatable {
             this.blocks[x][y] = undefined;
         });
 
-        this.managers.falling.destroyBlocks(bs);
+        this.managers.falling.checkForFallingBlocks();
 
         this.events.emit('destroy_blocks', bs);
     }
@@ -144,12 +144,12 @@ export class BoardLogic implements Updatable {
     }
 
     public neighbours(x: number, y: number): BlockLogic[] {
-        return [(this.blocks[x - 1] || [])[y], (this.blocks[x + 1] || [])[y], this.blocks[x][y + 1], this.blocks[x][y - 1]].filter((e) => e !== undefined);
+        return <BlockLogic[]>[(this.blocks[x - 1] || [])[y], (this.blocks[x + 1] || [])[y], this.blocks[x][y + 1], this.blocks[x][y - 1]].filter((e) => e !== undefined);
     }
 
     public transition() {
         const nextState = this.stateMachine[this.state];
-        if(nextState instanceof Function){
+        if (nextState instanceof Function) {
             this.state = nextState();
         } else {
             this.state = nextState;
