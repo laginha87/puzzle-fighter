@@ -6,21 +6,18 @@
     "scripts": {
         "serve": "parcel index.html",
         "gen-assets": "/Applications/Aseprite.app/Contents/MacOS/aseprite *.ase  --sheet tiles.png  --data tiles.json",
-        "lint": "yarn tslint src/**/*.ts index.ts",
+        "lint": "yarn tsc --noEmit && yarn tslint src/**/*.ts index.ts",
         "lint-fix": "yarn tslint src/**/*.ts index.ts --fix",
         "debug": "parcel debug/index.html"
     },
     "dependencies": {
         "@types/react": "^16.8.17",
         "@types/react-dom": "^16.8.4",
-        "assets": "^3.0.1",
         "bootstrap": "^4.3.1",
         "parcel": "^1.11.0",
         "phaser": "^3.16.1",
         "react": "^16.8.6",
-        "react-dom": "^16.8.6",
-        "src": "^1.1.2",
-        "view": "^1.1.1"
+        "react-dom": "^16.8.6"
     },
     "alias": {
         "src": "./src",
