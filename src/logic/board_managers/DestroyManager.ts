@@ -19,7 +19,7 @@ export class DestroyManager extends BoardManager {
 
     update(time: number, delta: number): boolean {
         const breakersToDestroy = this.breakers.filter(({ position: { x, y }, energy_type }) =>
-            this.board.neighbours(x, y)
+            this.board.neighbors(x, y)
                 .some((e) => energy_type === (e || {}).energy_type));
 
         if (breakersToDestroy.length > 0) {
@@ -30,7 +30,7 @@ export class DestroyManager extends BoardManager {
                 const next = <BlockLogic>breakersToDestroy.pop();
                 blocksToDestroy.push(next);
                 visited.add(next.id);
-                this.board.neighbours(next.position.x, next.position.y)
+                this.board.neighbors(next.position.x, next.position.y)
                     .forEach((e) => {
                         if(visited.has(e.id)) {
                             return;

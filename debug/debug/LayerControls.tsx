@@ -1,12 +1,16 @@
 import * as React from 'react';
 import { MatchView } from 'src/view';
 import { BoardManagerName } from 'src/logic';
+import { EnergyChain } from '~src/logic/board_managers';
+import { BlockLayer } from '~debug/layer';
 
 type State = {
     showGrid: boolean,
     showBlocks: boolean,
     showFalling: boolean,
-    boardState: BoardManagerName
+    boardState: BoardManagerName,
+    chains: EnergyChain[],
+    showChains: boolean[]
 }
 
 
@@ -20,18 +24,22 @@ export class LayerControls extends React.Component<any, State> {
             showGrid: true,
             showBlocks: true,
             showFalling: true,
-            boardState: getState()
+            boardState: getState(),
+            chains: [],
+            showChains: [],
         };
     }
 
     componentDidMount() {
         setInterval(() => {
-            this.setState({ boardState: getState() });
+            const layer = (window.debug.layers.filter((e) => e.name === 'BlockLayer')[0]) as BlockLayer;
+            this.setState({ boardState: getState(), chains: layer.chains, showChains: layer.showChains});
         }, 100);
     }
 
     render() {
-        const { showGrid, showBlocks, showFalling, boardState } = this.state;
+        const { showGrid, showBlocks, showFalling, boardState, chains, showChains } = this.state;
+
 
         return <div>
             <div className='form-check'>
@@ -46,6 +54,13 @@ export class LayerControls extends React.Component<any, State> {
                     Show Blocks
                 </label>
             </div>
+            <div className='form-check'>
+                <label className='form-check-label'>
+                    <input type='checkbox' className='form-check-input' data-prop='showFalling' checked={showFalling} onChange={this.onChange} />
+                    Show Falling
+                </label>
+            </div>
+
             <div className='form-check'>
                 <label className='form-check-label'>
                     <input type='checkbox' className='form-check-input' data-prop='showFalling' checked={showFalling} onChange={this.onChange} />

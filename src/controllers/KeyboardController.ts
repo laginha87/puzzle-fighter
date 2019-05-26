@@ -33,7 +33,7 @@ export class KeyboardController implements PlayerController {
             Phaser.Input.Keyboard.KeyCodes.FOUR,
             Phaser.Input.Keyboard.KeyCodes.FIVE
         ].forEach((e, i) => {
-            callback(i);
+            this.setUp(e, () => callback(i));
         });
     }
 

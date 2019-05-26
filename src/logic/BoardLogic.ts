@@ -1,5 +1,5 @@
 import { BlockLogic, PlayerLogic, PieceLogic, BlockId } from 'src/logic';
-import { DestroyManager, FallingBlocksManager, PieceManager } from 'src/logic/board_managers';
+import { DestroyManager, FallingBlocksManager, PieceManager, SpellManager } from 'src/logic/board_managers';
 import { Updatable, EventEmitter } from 'src/utils';
 import { Position, Size } from 'src/types';
 
@@ -38,7 +38,7 @@ interface BoardManagers {
     piece: PieceManager;
     falling: FallingBlocksManager;
     destroy: DestroyManager;
-    spells: PieceManager;
+    spells: SpellManager;
 }
 
 export class BoardLogic implements Updatable {
@@ -74,7 +74,7 @@ export class BoardLogic implements Updatable {
             destroy: new DestroyManager(this),
             falling: new FallingBlocksManager(this),
             piece: new PieceManager(this),
-            spells: new PieceManager(this)
+            spells: new SpellManager(this)
         };
 
         this.stateMachine = {
@@ -134,6 +134,8 @@ export class BoardLogic implements Updatable {
     }
 
     public destroyBlocks(bs: BlockLogic[]) {
+        this.events.emit('destroy_blocks', bs);
+
         bs.forEach(({ position: { x, y }, id}) => {
             this.grid[x][y] = undefined;
             delete this.blocks[id];
@@ -141,7 +143,6 @@ export class BoardLogic implements Updatable {
 
         this.managers.falling.checkForFallingBlocks();
 
-        this.events.emit('destroy_blocks', bs);
     }
 
     public onPieceHit(): void {
@@ -149,7 +150,7 @@ export class BoardLogic implements Updatable {
         this.managers.falling.breakPiece(this.piece);
     }
 
-    public neighbours(x: number, y: number): BlockLogic[] {
+    public neighbors(x: number, y: number): BlockLogic[] {
         return <BlockLogic[]>[(this.grid[x - 1] || [])[y], (this.grid[x + 1] || [])[y], this.grid[x][y + 1], this.grid[x][y - 1]].filter((e) => e !== undefined);
     }
 

@@ -1,9 +1,10 @@
 import { Updatable } from 'src/utils';
 import { MatchView } from 'src/view';
 import { BoardLogic, BlockLogic } from 'src/logic';
+import { EnergyChain } from 'src/logic/board_managers';
 
 
-type Color = 0xff0000 | 0x00ff00 | 0x0000ff;
+type Color = 0xff0000 | 0x00ff00 | 0x0000ff | 0xf0f000;
 
 export class Layer implements Updatable {
     public name!: string;
@@ -27,10 +28,12 @@ export class BlockLayer extends Layer {
     public showGrid = true;
     public showFalling = true;
     public name = 'BlockLayer';
+    public chains: EnergyChain[] = [];
+    public showChains: boolean[] = [];
 
     create() {
         const board = this.match.players[0].board;
-        this.board = board.logic;
+        this.board = <BoardLogic>(board.logic);
         this.graphics = board.scene.add.graphics();
         this.origin = board.container;
     }
@@ -38,7 +41,7 @@ export class BlockLayer extends Layer {
     update(time, delta) {
 
         this.graphics.clear();
-        this.board['blocks'].forEach((l, x) => {
+        this.board.grid.forEach((l, x) => {
             l.forEach((b, y) => {
                 if (b) {
                     if (this.showBlocks) { this.drawBlock(b, 0x00ff00); }
@@ -47,6 +50,22 @@ export class BlockLayer extends Layer {
             });
         });
 
+        this.chains = Array.from(this.board.managers.spells['energyChains']);
+        if(this.chains.length != this.showChains.length) {
+            this.showChains = new Array(this.chains.length);
+            this.showChains.fill(true);
+        }
+        this.chains.forEach((e, i) => {
+            if (this.showChains[i]) {
+                e.forEach(ee => {
+                    const block = this.board.blocks[ee];
+                    this.drawBlock(block, 0xf0f000);
+                });
+            }
+        });
+        // <Set<EnergyChain>>(this.board.managers.spells['energyChains']).forEach((e) => {
+
+        // })
         // this.board['fallingBlocks'].forEach((b) => {
         //     if (this.showFalling) { this.drawBlock(b, 0xff0000); }
         // });
