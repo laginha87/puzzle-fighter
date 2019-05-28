@@ -127,7 +127,6 @@ export class BoardLogic implements Updatable {
     public loosenBlocks(bs: BlockLogic[]) {
         bs.forEach(({ position: { x, y }, id }) => {
             this.grid[x][y] = undefined;
-            delete this.blocks[id];
         });
 
         this.events.emit('loosen_blocks', bs);
