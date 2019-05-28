@@ -21,9 +21,9 @@ export class LayerControls extends React.Component<any, State> {
         super(props);
         this.onChange = this.onChange.bind(this);
         this.state = {
-            showGrid: true,
-            showBlocks: true,
-            showFalling: true,
+            showGrid: JSON.parse(localStorage.getItem('showGrid') || 'true'),
+            showBlocks: JSON.parse(localStorage.getItem('showBlocks') || 'true'),
+            showFalling: JSON.parse(localStorage.getItem('showFalling') || 'true'),
             boardState: getState(),
             chains: [],
             showChains: [],
@@ -33,8 +33,12 @@ export class LayerControls extends React.Component<any, State> {
     componentDidMount() {
         setInterval(() => {
             const layer = (window.debug.layers.filter((e) => e.name === 'BlockLayer')[0]) as BlockLayer;
-            this.setState({ boardState: getState(), chains: layer.chains, showChains: layer.showChains});
+            this.setState({ boardState: getState(), chains: layer.chains, showChains: layer.showChains });
         }, 100);
+
+        this.setValue('showGrid', this.state.showGrid);
+        this.setValue('showBlocks', this.state.showBlocks);
+        this.setValue('showFalling', this.state.showFalling);
     }
 
     render() {
@@ -74,9 +78,14 @@ export class LayerControls extends React.Component<any, State> {
     }
     onChange(e: React.ChangeEvent<HTMLInputElement>) {
         const prop = e.currentTarget.getAttribute('data-prop') as 'showGrid' | 'showFalling' | 'showBlocks';
-        const newValue = !((this.state as any)[prop]);
+        const value = !((this.state as any)[prop]);
+        this.setValue(prop, value);
+        this.setState({ [prop]: value });
+    }
+
+    setValue(prop: 'showGrid' | 'showFalling' | 'showBlocks', value) {
         const layer = window.debug.layers.filter((e) => e.name === 'BlockLayer')[0];
-        layer[prop] = newValue;
-        this.setState({ [prop]: newValue });
+        localStorage.setItem(prop, JSON.stringify(value));
+        layer[prop] = value;
     }
 }
