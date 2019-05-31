@@ -1,3 +1,5 @@
 export * from './Layer';
 export * from './BlockLayer';
-export * from './FallingBlockLayerControl';
+export * from './FallingBlockLayer';
+export * from './GridLayer';
+export * from './BlocksLayer';

@@ -1,7 +1,8 @@
-// global match
 import * as React from 'react';
 import { PieceLogic } from 'src/logic';
+import { DebugMatchView } from '~debug/game/DebugMatchView';
 
+type Props = { match: DebugMatchView;  };
 type State = {
 
     blockSpeed: number;
@@ -9,7 +10,7 @@ type State = {
     paused: boolean;
 }
 
-export class SpeedControls extends React.Component<any, State> {
+export class SpeedControls extends React.Component<Props, State> {
     constructor(props: any) {
         super(props);
         this.onBlockSpeedChange = this.onBlockSpeedChange.bind(this);
@@ -46,7 +47,7 @@ export class SpeedControls extends React.Component<any, State> {
 
     onBlockSpeedChange(e: React.ChangeEvent<HTMLInputElement>) {
         const speed = parseFloat(e.currentTarget.value);
-        window.match.players[0].board.logic.FALLING_BLOCK_SPEED = speed;
+        this.props.match.players[0].board.logic.FALLING_BLOCK_SPEED = speed;
         localStorage.setItem('blockSpeed', speed.toString());
         this.setState({ blockSpeed: speed });
     }
@@ -59,7 +60,7 @@ export class SpeedControls extends React.Component<any, State> {
     }
 
     onClick() {
-        window.match.debugPaused = !this.state.paused;
+        this.props.match.debugPaused = !this.state.paused;
         this.setState({ paused: !this.state.paused });
     }
 

@@ -7,6 +7,7 @@ export class BlockLayer extends Layer {
     protected board!: BoardLogic;
     protected graphics!: Phaser.GameObjects.Graphics;
     protected origin!: Phaser.GameObjects.Container;
+    public showing!: boolean;
 
     create() {
         const board = this.match.players[0].board;

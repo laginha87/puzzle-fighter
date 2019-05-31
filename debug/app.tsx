@@ -57,10 +57,10 @@ class App extends React.Component<any, State> {
     render() {
         return <div className='row'>
             <div className='col-7'>
-                <div id="container"></div>
+                <div id='container'></div>
             </div>
             {this.state.match && <div className='col-5'>
-                <SpeedControls />
+                <SpeedControls match={this.state.match}/>
                 <LayerControls match={this.state.match} />
                 <SessionControls />
             </div>}

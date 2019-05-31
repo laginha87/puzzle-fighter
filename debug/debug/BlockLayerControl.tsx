@@ -1,38 +1,27 @@
 import * as React from 'react';
-import { BlockLayer } from 'debug/layers';
 import { DebugMatchView } from 'debug/game/DebugMatchView';
+import { BlockLayer } from 'debug/layers';
 
 interface Props {
     match: DebugMatchView;
+    layer: BlockLayer;
+    name: string;
 }
 
 interface State {
     showing: boolean;
 };
 
-class FallingBlockLayer extends BlockLayer {
-    name = 'FallingBlockLayer';
-    showing = JSON.parse(localStorage.getItem('showFalling') || 'true');
-    update() {
-        this.graphics.clear();
-        if (!this.showing) { return; }
-        // tslint:disable-next-line: no-string-literal
-        this.board.managers.falling['fallingBlocks'].forEach((b) => {
-            this.drawBlock(b, 0xff0000);
-        });
-    }
-}
 
-export class FallingBlockLayerControl extends React.Component<Props, State> {
-    layer: FallingBlockLayer;
+export class BlockLayerControl extends React.Component<Props, State> {
 
     constructor(props: Props) {
         super(props);
-        this.layer = new FallingBlockLayer(props.match);
-        props.match.debug.layers.push(this.layer);
-        setTimeout(() => this.layer.create(), 500);
+
+        props.match.debug.layers.push(props.layer);
+        setTimeout(() => this.props.layer.create(), 500);
         this.state = {
-            showing: this.layer.showing
+            showing: props.layer.showing
         };
 
         this.onChange = this.onChange.bind(this);
@@ -46,17 +35,16 @@ export class FallingBlockLayerControl extends React.Component<Props, State> {
                     <input
                         type='checkbox'
                         className='form-check-input'
-                        data-prop='showFalling'
                         checked={showing}
                         onChange={this.onChange} />
-                    Show Falling
+                    {this.props.name}
             </label>
         </div>;
     }
 
     onChange() {
         const showing = !this.state.showing;
-        this.layer.showing = showing;
+        this.props.layer.showing = showing;
         localStorage.setItem('', JSON.stringify(showing));
         this.setState({ showing });
     }
