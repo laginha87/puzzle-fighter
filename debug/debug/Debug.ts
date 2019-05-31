@@ -1,5 +1,5 @@
 import { Updatable } from 'src/utils';
-import { Layer } from '../layer';
+import { Layer } from 'debug/layer';
 
 export class Debug  implements Updatable {
     public layers : Layer[] = [];

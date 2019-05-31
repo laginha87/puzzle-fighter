@@ -6,25 +6,13 @@ import { EnergyChain } from 'src/logic/board_managers';
 
 type Color = 0xff0000 | 0x00ff00 | 0x0000ff | 0xf0f000;
 
-export class Layer implements Updatable {
-    public name!: string;
-
-    constructor(protected match: MatchView) {
-
-    }
-    update(time: number, delta: number): void {
-    }
-
-    create() {
-
-    }
-}
 
 export class BlockLayer extends Layer {
     private board!: BoardLogic;
     private graphics!: Phaser.GameObjects.Graphics;
     private origin!: Phaser.GameObjects.Container;
     public showBlocks = true;
+    public showNumbers = true;
     public showGrid = true;
     public showFalling = true;
     public name = 'BlockLayer';
