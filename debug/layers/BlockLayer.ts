@@ -3,8 +3,8 @@ import { BoardLogic, BlockLogic } from 'src/logic';
 
 type Color = 0xff0000 | 0x00ff00 | 0x0000ff | 0xf0f000;
 
-export class BlockLayer extends Layer {
-    protected board!: BoardLogic;
+export class BlockLayer<C extends Color = Color> extends Layer {
+    public board!: BoardLogic;
     protected graphics!: Phaser.GameObjects.Graphics;
     protected origin!: Phaser.GameObjects.Container;
     public showing!: boolean;
@@ -18,11 +18,11 @@ export class BlockLayer extends Layer {
         this.created = true;
     }
 
-    drawBlock({ position: { x, y } }: BlockLogic, color: Color) {
+    drawBlock({ position: { x, y } }: BlockLogic, color: C) {
         this.drawGridBlock(x, y, color);
     }
 
-    drawGridBlock(x: number, y: number, color: Color) {
+    drawGridBlock(x: number, y: number, color: C) {
         this.graphics.fillStyle(color, 0.7);
         const rect = new Phaser.Geom.Rectangle(this.origin.x + x * 32, this.origin.y + y * 32, 32, 32);
         this.graphics.fillRectShape(rect);

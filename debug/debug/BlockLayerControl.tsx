@@ -1,7 +1,12 @@
 import * as React from 'react';
 import { DebugMatchView } from 'debug/game/DebugMatchView';
 import { Layer } from 'debug/layers';
+import { MatchView } from 'src/view';
 
+
+interface ILayerClass {
+    new (match : MatchView): ShowableLayer;
+}
 
 interface ShowableLayer extends Layer {
     showing: boolean;
@@ -9,7 +14,7 @@ interface ShowableLayer extends Layer {
 
 interface Props {
     match: DebugMatchView;
-    layer: ShowableLayer;
+    layerClass: ILayerClass;
     name: string;
 }
 
@@ -19,22 +24,23 @@ interface State {
 
 
 export class BlockLayerControl extends React.Component<Props, State> {
+    layer : ShowableLayer;
 
     constructor(props: Props) {
         super(props);
-
-        props.layer.showing = JSON.parse(localStorage.getItem(this.layerLocalStorageKey) || 'false');
-        props.match.debug.layers.push(props.layer);
-        setTimeout(() => this.props.layer.create(), 2000);
+        this.layer = new props.layerClass(props.match);
+        this.layer.showing = JSON.parse(localStorage.getItem(this.layerLocalStorageKey) || 'false');
+        props.match.debug.layers.push(this.layer);
+        setTimeout(() => this.layer.create(), 2000);
         this.state = {
-            showing: props.layer.showing
+            showing: this.layer.showing
         };
 
         this.onChange = this.onChange.bind(this);
     }
 
     get layerLocalStorageKey() {
-        return `show${this.props.layer.name}`;
+        return `show${this.layer.name}`;
     }
 
     render() {
@@ -54,7 +60,7 @@ export class BlockLayerControl extends React.Component<Props, State> {
 
     onChange() {
         const showing = !this.state.showing;
-        this.props.layer.showing = showing;
+        this.layer.showing = showing;
         localStorage.setItem(this.layerLocalStorageKey, JSON.stringify(showing));
         this.setState({ showing });
     }
