@@ -23,6 +23,7 @@ export class BlockLayerControl extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
 
+        props.layer.showing = JSON.parse(localStorage.getItem(this.layerLocalStorageKey) || 'false');
         props.match.debug.layers.push(props.layer);
         setTimeout(() => this.props.layer.create(), 2000);
         this.state = {
@@ -30,6 +31,10 @@ export class BlockLayerControl extends React.Component<Props, State> {
         };
 
         this.onChange = this.onChange.bind(this);
+    }
+
+    get layerLocalStorageKey() {
+        return `show${this.props.layer.name}`;
     }
 
     render() {
@@ -50,7 +55,7 @@ export class BlockLayerControl extends React.Component<Props, State> {
     onChange() {
         const showing = !this.state.showing;
         this.props.layer.showing = showing;
-        localStorage.setItem('', JSON.stringify(showing));
+        localStorage.setItem(this.layerLocalStorageKey, JSON.stringify(showing));
         this.setState({ showing });
     }
 }
