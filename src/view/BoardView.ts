@@ -38,6 +38,7 @@ export class BoardView implements SceneState {
             views.forEach((e) => e.sprite.destroy());
             this.blocks = this.blocks.filter((e) => !views.includes(e));
         });
+
     }
 
     public init() {

@@ -7,6 +7,8 @@ export type EnergyChain = Set<BlockId>;
 export class SpellManager extends BoardManager {
     private energyChains: Set<EnergyChain> = new Set();
     private blockIdByChains: { [k in BlockId]: EnergyChain } = {};
+    private activeSpell! : Spell;
+    public queue : Spell[];
 
     constructor(board: BoardLogic) {
         super(board);
@@ -17,16 +19,23 @@ export class SpellManager extends BoardManager {
 
             this.addBlock(b);
         });
+
+        this.queue = [];
         board.events.on('destroy_blocks', this.removeBlocks.bind(this));
         board.events.on('loosen_blocks', this.removeBlocks.bind(this));
     }
 
     cast(s : Spell) {
-        alert(`Casting Spell ${s}`);
+        this.queue.push(s);
     }
 
     update(time: number, delta: number): boolean {
-        return true;
+        return this.activeSpell.update(time, delta);
+    }
+
+    unqueue() {
+        this.activeSpell = this.queue.pop()!;
+        this.activeSpell.cast();
     }
 
     private addBlock(b: BlockLogic) {

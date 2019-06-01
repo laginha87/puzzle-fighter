@@ -83,6 +83,9 @@ export class BoardLogic implements Updatable {
             'destroy_blocks': () => {
                 if (this.managers.falling.isActive) {
                     return 'blocks_falling';
+                } else if(this.managers.spells.queue.length > 0) {
+                    this.managers.spells.unqueue();
+                    return 'casting_spells';
                 } else {
                     this.player.nextPiece();
 

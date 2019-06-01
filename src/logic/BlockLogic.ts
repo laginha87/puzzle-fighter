@@ -14,4 +14,10 @@ export class BlockLogic {
     constructor(public energy_type: EnergyType, public position: Position, public type : Type, public id: BlockId) {
     }
 
+    notifyChange(){
+        if(this.view) {
+            this.view.refreshAll();
+        }
+    }
+
 }

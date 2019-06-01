@@ -10,10 +10,19 @@ export class BlockView implements SceneState {
     constructor(private logic: BlockLogic, public size : Size) { }
 
     create() {
+        this.createSprite();
+        this.logic.view = this;
+    }
+
+
+    private createSprite() {
         const { x, y } = this.logic.position;
         this.sprite = this.scene.add.sprite(x, y, 'blocks', `${this.logic.type}_${this.logic.energy_type}.ase`);
         this.sprite.setOrigin(0, 0);
-        this.logic.view = this;
+    }
+
+    get spriteName(){
+        return `${this.logic.type}_${this.logic.energy_type}.ase`;
     }
 
     setPosition(x: number, y: number) {
@@ -30,5 +39,11 @@ export class BlockView implements SceneState {
         this.sprite.setPosition(x * width, y * height);
     }
 
+    refreshAll(){
+        const container = this.sprite.parentContainer;
+        this.sprite.destroy();
+        this.createSprite();
+        container.add(this.sprite);
+    }
 
 }

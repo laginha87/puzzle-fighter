@@ -18,6 +18,7 @@ export class SpellControls extends React.Component<Props> {
         this.player = props.match.players[0].logic;
         this.spellManager = this.player.board.managers.spells;
     }
+
     render() {
 
 
@@ -35,7 +36,7 @@ export class SpellControls extends React.Component<Props> {
 
     onClick() {
         this.spellManager.cast(new SwitchColors({
-            level: 0,
+            level: 3,
             adversary: this.player,
             owner: this.player
         }));
