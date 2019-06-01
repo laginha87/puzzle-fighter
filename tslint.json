@@ -13,7 +13,8 @@
         "quotemark": [ true, "single" ],
         "insecure-random": false,
         "react-a11y-role-has-required-aria-props": false,
-        "react-a11y-input-elements": false
+        "react-a11y-input-elements": false,
+        "react-a11y-event-has-role": false
     },
     "rulesDirectory": []
 }

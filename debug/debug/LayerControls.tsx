@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FallingBlockLayer, GridLayer, BlocksLayer, BlockIdLayer } from 'debug/layers';
 import { DebugMatchView } from 'debug/game/DebugMatchView';
 import { BlockLayerControl } from 'debug/debug/BlockLayerControl';
-import { EnergyChainLayerControl } from './EnergyChainLayerControl';
+import { EnergyChainLayerControl } from 'debug/debug/EnergyChainLayerControl';
 
 interface Props {
     match: DebugMatchView;

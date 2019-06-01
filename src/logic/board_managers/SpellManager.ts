@@ -1,5 +1,6 @@
 import { BoardManager } from 'src/logic/board_managers';
 import { BlockLogic, BoardLogic, BlockId } from 'src/logic';
+import { Spell } from 'src/logic/spells';
 
 export type EnergyChain = Set<BlockId>;
 
@@ -18,6 +19,10 @@ export class SpellManager extends BoardManager {
         });
         board.events.on('destroy_blocks', this.removeBlocks.bind(this));
         board.events.on('loosen_blocks', this.removeBlocks.bind(this));
+    }
+
+    cast(s : Spell) {
+        alert(`Casting Spell ${s}`);
     }
 
     update(time: number, delta: number): boolean {

@@ -4,6 +4,7 @@ import { LayerControls, SpeedControls, SessionControls } from 'debug/debug';
 import { ClientGame } from 'src/game/ClientGame';
 import { MatchFactory } from 'src/factories';
 import { DebugMatchView } from 'debug/game/DebugMatchView';
+import { SpellControls } from 'debug/debug/SpellControls';
 
 interface State {
     game?: ClientGame;
@@ -63,6 +64,7 @@ class App extends React.Component<any, State> {
                 <SpeedControls match={this.state.match}/>
                 <LayerControls match={this.state.match} />
                 <SessionControls />
+                <SpellControls match={this.state.match} />
             </div>}
 
         </div>;

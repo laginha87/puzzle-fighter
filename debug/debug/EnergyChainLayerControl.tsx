@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DebugMatchView } from 'debug/game/DebugMatchView';
 import { EnergyChainLayer } from 'debug/layers';
-import { EnergyChain } from '~src/logic/board_managers';
+import { EnergyChain } from 'src/logic/board_managers';
 
 interface Props {
     match: DebugMatchView;
