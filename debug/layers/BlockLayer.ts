@@ -8,12 +8,14 @@ export class BlockLayer extends Layer {
     protected graphics!: Phaser.GameObjects.Graphics;
     protected origin!: Phaser.GameObjects.Container;
     public showing!: boolean;
+    public created : boolean = false;
 
     create() {
         const board = this.match.players[0].board;
         this.board = <BoardLogic>(board.logic);
         this.graphics = board.scene.add.graphics();
         this.origin = board.container;
+        this.created = true;
     }
 
     drawBlock({ position: { x, y } }: BlockLogic, color: Color) {

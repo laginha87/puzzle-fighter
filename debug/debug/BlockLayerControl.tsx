@@ -1,10 +1,15 @@
 import * as React from 'react';
 import { DebugMatchView } from 'debug/game/DebugMatchView';
-import { BlockLayer } from 'debug/layers';
+import { Layer } from 'debug/layers';
+
+
+interface ShowableLayer extends Layer {
+    showing: boolean;
+}
 
 interface Props {
     match: DebugMatchView;
-    layer: BlockLayer;
+    layer: ShowableLayer;
     name: string;
 }
 
@@ -19,7 +24,7 @@ export class BlockLayerControl extends React.Component<Props, State> {
         super(props);
 
         props.match.debug.layers.push(props.layer);
-        setTimeout(() => this.props.layer.create(), 500);
+        setTimeout(() => this.props.layer.create(), 2000);
         this.state = {
             showing: props.layer.showing
         };
