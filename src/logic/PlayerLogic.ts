@@ -1,13 +1,15 @@
-import { BlockFactory } from 'src/factories';
+import { BlockFactory } from 'src/factories/BlockFactory';
 import { BoardLogic, PieceLogic, EnergyPoolLogic } from 'src/logic';
-import { EventEmitter, Updatable } from 'src/utils';
+import { Updatable } from 'src/utils';
+import * as EventEmitterType from 'eventemitter3';
+import { EventEmitter } from 'eventemitter3';
 import { PlayerController } from 'src/controllers';
 
 export type PLAYER_LOGIC_EVENTS = 'set_next' | 'cast_spell';
 
 export class PlayerLogic implements Updatable {
     public blockFactory: BlockFactory;
-    public events: EventEmitter<PLAYER_LOGIC_EVENTS>;
+    public events: EventEmitterType<PLAYER_LOGIC_EVENTS>;
     public next!: PieceLogic;
     public _piece!: PieceLogic;
     public _controller!: PlayerController;
@@ -16,7 +18,7 @@ export class PlayerLogic implements Updatable {
     constructor(public board: BoardLogic) {
         this.blockFactory = new BlockFactory();
         this.energyPool = new EnergyPoolLogic(this);
-        this.events = new Phaser.Events.EventEmitter();
+        this.events = new EventEmitter();
     }
 
     public start() {

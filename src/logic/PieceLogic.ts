@@ -1,6 +1,9 @@
 import { BoardLogic, BlockLogic } from 'src/logic';
 import { Position } from 'src/types';
-import { Updatable, EventEmitter } from 'src/utils';
+import { Updatable } from 'src/utils';
+
+import * as EventEmitterType from 'eventemitter3';
+import { EventEmitter } from 'eventemitter3';
 
 type EVENTS = 'on_fallen';
 
@@ -13,7 +16,7 @@ const POSITIONS = [
 
 export class PieceLogic implements Updatable {
     public position: Position;
-    public events: EventEmitter<EVENTS>;
+    public events: EventEmitterType<EVENTS>;
     private moving = true;
     public static FALLING_SPEED = 0.007;
     private currentPosition = 0;
@@ -21,7 +24,7 @@ export class PieceLogic implements Updatable {
 
     constructor(public blocks: BlockLogic[], public board: BoardLogic) {
         this.position = { x: 0, y: 0 };
-        this.events = new Phaser.Events.EventEmitter();
+        this.events = new EventEmitter();
         this.fallingSpeed = PieceLogic.FALLING_SPEED;
     }
 

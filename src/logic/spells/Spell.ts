@@ -1,4 +1,6 @@
-import { Updatable, EventEmitter } from 'src/utils';
+import { Updatable } from 'src/utils';
+import * as EventEmitterType from 'eventemitter3';
+import { EventEmitter } from 'eventemitter3';
 import { EnergyType, PlayerLogic } from 'src/logic';
 
 export interface MatchContext {
@@ -14,7 +16,7 @@ export type SPELL_EVENTS = 'spell_finished';
 
 export class Spell implements Updatable {
     public cost!: EnergyType[];
-    public events: EventEmitter<SPELL_EVENTS>;
+    public events: EventEmitterType<SPELL_EVENTS>;
     protected level!: number;
     protected adversary!: PlayerLogic;
     protected owner!: PlayerLogic;
@@ -23,7 +25,7 @@ export class Spell implements Updatable {
 
     constructor(context: SpellContext) {
         Object.assign(this, context);
-        this.events = new Phaser.Events.EventEmitter();
+        this.events = new EventEmitter();
     }
 
     public update(time: number, delta: number): boolean {
