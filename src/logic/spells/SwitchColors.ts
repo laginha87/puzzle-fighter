@@ -9,13 +9,16 @@ export class SwitchColors extends Spell {
     public cast() {
 
         const numberOfBlocks = this.level * 2;
-        debugger;
         const blocks = Object.values(this.owner.board.blocks);
 
-        while (this.effects.length < numberOfBlocks || blocks.length !== 0) {
+        while (this.effects.length < numberOfBlocks && blocks.length !== 0) {
             const i = Math.floor(Math.random() * blocks.length);
             const block = blocks[i];
             blocks.splice(i, 1);
+            if(block.energy_type === 'willpower') {
+                continue;
+            }
+
             this.effects.push({
                 duration: 300,
                 startTime: 200 * this.effects.length,
