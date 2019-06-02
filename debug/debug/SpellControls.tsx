@@ -3,7 +3,7 @@ import { SpellManager } from 'src/logic/board_managers';
 import { SwitchColors } from 'src/logic/spells';
 import { PlayerLogic } from 'src/logic';
 import { MatchView } from 'src/view';
-import { NumberInputComponent } from 'debug/components';
+import { NumberInputComponent, Col } from 'debug/components';
 
 interface Props {
     match: MatchView;
@@ -29,7 +29,9 @@ export class SpellControls extends React.Component<Props, State> {
         return <div className='card mt-2'>
             <div className='card-body'>
                 <h5>Spells</h5>
-                <NumberInputComponent min={1} max={5} onChange={this.setLevel} />
+                <Col size={2}>
+                    <NumberInputComponent min={1} max={5} onChange={this.setLevel} label='Level' />
+                </Col>
                 <button
                     className='btn btn-outline-primary'
                     onClick={this.onClick}>

@@ -4,6 +4,7 @@ interface Props {
     onChange: (e: number) => void;
     min?: number;
     max?: number;
+    label: string;
 }
 
 interface State {
@@ -18,11 +19,12 @@ export class NumberInputComponent extends React.Component<Props, State> {
         this.onChange = this.onChange.bind(this);
     }
     render() {
-        const { min, max } = this.props;
+        const { min, max, label } = this.props;
         const inputAttrs = { min, max, onChange: this.onChange };
 
-        return <div>
-            <input type='number' {...inputAttrs} />
+        return <div className='form-group'>
+            <div>{label}</div>
+            <input type='number' className='form-control' {...inputAttrs} />
         </div>;
     }
 
