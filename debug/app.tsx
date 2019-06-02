@@ -27,6 +27,12 @@ class App extends React.Component<any, State> {
 
         const config = {
             layout: {
+                effects: {
+                    origin: {
+                        x: 80,
+                        y: 80
+                    }
+                },
                 players: [
                     {
                         board: {

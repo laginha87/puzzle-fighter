@@ -5,3 +5,4 @@ export * from './MatchView';
 export * from './PlayerView';
 export * from './types';
 export * from './PieceView';
+export * from './SpellEffectsView';

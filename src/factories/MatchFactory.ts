@@ -1,36 +1,34 @@
 import { BoardLogic, MatchLogic, PlayerLogic } from 'src/logic';
-import { BoardView, GameView, MatchView, PlayerView } from 'src/view';
+import { BoardView, GameView, MatchView, PlayerView, SpellEffectsView } from 'src/view';
+
+type Position = {
+    x: number,
+    y: number
+};
+
+type Size = {
+    width: number,
+    height: number
+};
 
 export interface MatchConfig {
     game: GameView;
     layout: {
+        effects: {
+            origin: Position
+        },
         players: {
             board: {
-                origin: {
-                    x: number;
-                    y: number;
-                };
+                origin: Position
             };
             player: {
-                origin: {
-                    x: number;
-                    y: number;
-                };
-                next: {
-                    x: number;
-                    y: number;
-                };
+                origin: Position
+                next: Position
             };
         }[];
-        blockSize: {
-            width: number;
-            height: number;
-        };
+        blockSize: Size;
     };
-    boardSize: {
-        width: number;
-        height: number;
-    };
+    boardSize: Size;
     players: {}[];
     meta: {
         matchClass: typeof MatchView
@@ -69,9 +67,12 @@ export class MatchFactory {
 
             const board = new BoardView(e.board, { ...playerConfig.board, blockSize });
             const player = new PlayerView(e, board, { ...playerConfig.player, blockSize });
+            const effects = new SpellEffectsView({ ...config.layout.effects, blockSize }, e);
 
             player.scene = match;
             player.board.scene = match;
+            effects.scene = match;
+
             board.player = player;
 
             return player;

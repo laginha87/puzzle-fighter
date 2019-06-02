@@ -3,7 +3,7 @@ import { BoardLogic, PieceLogic, EnergyPoolLogic } from 'src/logic';
 import { EventEmitter, Updatable } from 'src/utils';
 import { PlayerController } from 'src/controllers';
 
-export type PLAYER_LOGIC_EVENTS = 'set_next';
+export type PLAYER_LOGIC_EVENTS = 'set_next' | 'cast_spell';
 
 export class PlayerLogic implements Updatable {
     public blockFactory: BlockFactory;

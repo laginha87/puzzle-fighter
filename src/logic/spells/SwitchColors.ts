@@ -3,6 +3,7 @@ import { Spell } from 'src/logic/spells';
 
 export class SwitchColors extends Spell {
     cost: EnergyType[] = ['nature'];
+    name = 'Switch Colors';
 
     private effects: Effect[] = [];
 
@@ -15,7 +16,7 @@ export class SwitchColors extends Spell {
             const i = Math.floor(Math.random() * blocks.length);
             const block = blocks[i];
             blocks.splice(i, 1);
-            if(block.energy_type === 'willpower') {
+            if (block.energy_type === 'willpower') {
                 continue;
             }
 
@@ -28,9 +29,9 @@ export class SwitchColors extends Spell {
     }
 
     public update(time: number, delta: number): boolean {
-        this.effects = this.effects.filter( (effect : Effect) =>  {
-            if(effect.startTime < 0)  {
-                if(effect.duration < 0) {
+        this.effects = this.effects.filter((effect: Effect) => {
+            if (effect.startTime < 0) {
+                if (effect.duration < 0) {
                     effect.block.energy_type = 'willpower';
                     effect.block.notifyChange();
 

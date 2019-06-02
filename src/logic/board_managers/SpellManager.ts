@@ -30,12 +30,18 @@ export class SpellManager extends BoardManager {
     }
 
     update(time: number, delta: number): boolean {
-        return this.activeSpell.update(time, delta);
+        const finished = this.activeSpell.update(time, delta);
+        if(finished) {
+            this.activeSpell.events.emit('spell_finished');
+        }
+
+        return finished;
     }
 
     unqueue() {
         this.activeSpell = this.queue.pop()!;
         this.activeSpell.cast();
+        this.board.player.events.emit('cast_spell', this.activeSpell);
     }
 
     private addBlock(b: BlockLogic) {
