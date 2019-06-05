@@ -1,16 +1,20 @@
 import { ClientGame } from 'src/game/ClientGame';
 import { MatchFactory, MatchConfig } from 'src/factories/MatchFactory';
 import { MatchView } from 'src/view';
+import { SwitchColors } from '~src/logic/spells';
 
 
 
 const game = new ClientGame('#container');
 game.init();
 
-const config : MatchConfig = {
+const config: MatchConfig = {
     layout: {
         players: [
             {
+                board_text: {
+                    origin: { x: 40, y: 40 }
+                },
                 board: {
                     origin: { x: 40, y: 40 }
                 },
@@ -24,7 +28,15 @@ const config : MatchConfig = {
     },
     boardSize: { width: 10, height: 15 },
     players: [
-        {}
+        {
+            spells: [
+                SwitchColors,
+                SwitchColors,
+                SwitchColors,
+                SwitchColors,
+                SwitchColors,
+            ]
+        }
     ],
     game: game.view,
     meta: {

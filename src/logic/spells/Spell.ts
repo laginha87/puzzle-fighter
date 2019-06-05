@@ -14,14 +14,21 @@ export type SpellContext = MatchContext & {
 
 export type SPELL_EVENTS = 'spell_finished';
 
+export interface MetaSpell {
+    new(context: SpellContext): Spell;
+
+    spellName: string;
+    cost: EnergyType[];
+}
+
 export class Spell implements Updatable {
-    public cost!: EnergyType[];
     public events: EventEmitterType<SPELL_EVENTS>;
     protected level!: number;
     protected adversary!: PlayerLogic;
     protected owner!: PlayerLogic;
 
-    public name! : string;
+    public static cost: EnergyType[];
+    public static spellName: string;
 
     constructor(context: SpellContext) {
         Object.assign(this, context);

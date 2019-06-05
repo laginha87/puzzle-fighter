@@ -5,6 +5,7 @@ import { ClientGame } from 'src/game/ClientGame';
 import { MatchFactory } from 'src/factories';
 import { DebugMatchView } from 'debug/game/DebugMatchView';
 import { SpellControls } from 'debug/debug/SpellControls';
+import { SwitchColors } from 'src/logic/spells';
 
 interface State {
     game?: ClientGame;
@@ -27,14 +28,15 @@ class App extends React.Component<any, State> {
 
         const config = {
             layout: {
-                effects: {
-                    origin: {
-                        x: 80,
-                        y: 80
-                    }
-                },
                 players: [
                     {
+                        board_text: {
+                            origin: {
+                                x: 80,
+                                y: 80
+                            }
+                        },
+
                         board: {
                             origin: { x: 40, y: 40 }
                         },
@@ -48,7 +50,9 @@ class App extends React.Component<any, State> {
             },
             boardSize: { width: 10, height: 15 },
             players: [
-                {}
+                {
+                    spells:[SwitchColors]
+                }
             ],
             game: game.view,
             meta: {

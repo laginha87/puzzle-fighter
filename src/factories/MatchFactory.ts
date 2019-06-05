@@ -1,5 +1,6 @@
 import { BoardLogic, MatchLogic, PlayerLogic } from 'src/logic';
-import { BoardView, GameView, MatchView, PlayerView, SpellEffectsView } from 'src/view';
+import { BoardView, GameView, MatchView, PlayerView, BoardTextView } from 'src/view';
+import { MetaSpell } from 'src/logic/spells';
 
 type Position = {
     x: number,
@@ -14,22 +15,24 @@ type Size = {
 export interface MatchConfig {
     game: GameView;
     layout: {
-        effects: {
-            origin: Position
-        },
         players: {
             board: {
                 origin: Position
             };
+            board_text: {
+                origin: Position
+            },
             player: {
                 origin: Position
                 next: Position
-            };
+            }
         }[];
         blockSize: Size;
     };
     boardSize: Size;
-    players: {}[];
+    players: {
+        spells: MetaSpell[]
+    }[];
     meta: {
         matchClass: typeof MatchView
     };
@@ -46,9 +49,9 @@ export class MatchFactory {
     }
 
     static BUILD_LOGIC(config: MatchConfig) {
-        const players = config.players.map((e) => {
+        const players = config.players.map((playerConfig) => {
             const board = new BoardLogic(config.boardSize);
-            const player = new PlayerLogic(board);
+            const player = new PlayerLogic(board, playerConfig.spells);
             board.player = player;
 
             return player;
@@ -67,7 +70,7 @@ export class MatchFactory {
 
             const board = new BoardView(e.board, { ...playerConfig.board, blockSize });
             const player = new PlayerView(e, board, { ...playerConfig.player, blockSize });
-            const effects = new SpellEffectsView({ ...config.layout.effects, blockSize }, e);
+            const effects = new BoardTextView({ ...playerConfig.board_text, blockSize }, e);
 
             player.scene = match;
             player.board.scene = match;

@@ -4,8 +4,9 @@ import { Updatable } from 'src/utils';
 import * as EventEmitterType from 'eventemitter3';
 import { EventEmitter } from 'eventemitter3';
 import { PlayerController } from 'src/controllers';
+import { MetaSpell } from 'src/logic/spells';
 
-export type PLAYER_LOGIC_EVENTS = 'set_next' | 'cast_spell';
+export type PLAYER_LOGIC_EVENTS = 'set_next' | 'cast_spell' | 'spell:not_enough_energy';
 
 export class PlayerLogic implements Updatable {
     public blockFactory: BlockFactory;
@@ -13,9 +14,9 @@ export class PlayerLogic implements Updatable {
     public next!: PieceLogic;
     public _piece!: PieceLogic;
     public _controller!: PlayerController;
-    private energyPool : EnergyPoolLogic;
+    private energyPool: EnergyPoolLogic;
 
-    constructor(public board: BoardLogic) {
+    constructor(public board: BoardLogic, public spells: MetaSpell[]) {
         this.blockFactory = new BlockFactory();
         this.energyPool = new EnergyPoolLogic(this);
         this.events = new EventEmitter();
@@ -42,7 +43,7 @@ export class PlayerLogic implements Updatable {
         _controller.onMoveDown(() => board.piece.moveDown());
         _controller.onFall(() => board.piece.fall());
         _controller.onRotate(() => board.piece.rotate());
-        _controller.onSpell((i) => board.castSpell(i));
+        _controller.onSpell(this.castSpell.bind(this));
     }
 
     public nextPiece() {
@@ -50,6 +51,22 @@ export class PlayerLogic implements Updatable {
         this.board.events.emit('set_piece');
         this.next = new PieceLogic(this.blockFactory.buildPiece(), this.board);
         this.events.emit('set_next');
+    }
+
+    public castSpell(spellNumber: number) {
+        const Spell = this.spells[spellNumber];
+
+        if (!this.board.managers.spells.canCast(Spell)) {
+            this.events.emit('spell:not_enough_energy');
+
+            return;
+        }
+
+        this.board.castSpell(new Spell({
+            owner: this,
+            adversary: this,
+            level: 1
+        }));
     }
 
 }

@@ -1,6 +1,7 @@
 import { BoardManager } from 'src/logic/board_managers';
 import { BlockLogic, BoardLogic, BlockId } from 'src/logic';
-import { Spell } from 'src/logic/spells';
+import { Spell, MetaSpell } from 'src/logic/spells';
+import { EnergyType } from '../BlockLogic';
 
 export type EnergyChain = Set<BlockId>;
 
@@ -25,7 +26,7 @@ export class SpellManager extends BoardManager {
         board.events.on('loosen_blocks', this.removeBlocks.bind(this));
     }
 
-    cast(s : Spell) {
+    enqueue(s : Spell) {
         this.queue.push(s);
     }
 
@@ -42,6 +43,24 @@ export class SpellManager extends BoardManager {
         this.activeSpell = this.queue.pop()!;
         this.activeSpell.cast();
         this.board.player.events.emit('cast_spell', this.activeSpell);
+    }
+
+    canCast(s : MetaSpell) : boolean {
+        return this.findChain(s.cost) != undefined;
+    }
+
+    findChain(cost: EnergyType[]) : EnergyChain | undefined {
+        return Array.from(this.energyChains)
+            .find((e) => {
+                const chainCost = Array.from(e, (ee) => this.board.blocks[ee].energy_type);
+                for (let index = 0; index < cost.length; index++) {
+                    const found = chainCost.findIndex((a) => a == cost[index]);
+                    if(found == -1 ) { return false; }
+                    chainCost.splice(found, 1);
+                }
+
+                return true;
+        });
     }
 
     private addBlock(b: BlockLogic) {

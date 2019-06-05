@@ -2,8 +2,8 @@ import { EnergyType, BlockLogic } from 'src/logic';
 import { Spell } from 'src/logic/spells';
 
 export class SwitchColors extends Spell {
-    cost: EnergyType[] = ['nature'];
-    name = 'Switch Colors';
+    static cost: EnergyType[] = ['nature'];
+    static spellName = 'Switch Colors';
 
     private effects: Effect[] = [];
 

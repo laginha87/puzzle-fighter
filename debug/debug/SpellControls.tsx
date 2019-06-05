@@ -43,7 +43,7 @@ export class SpellControls extends React.Component<Props, State> {
 
     onClick() {
         const { level } = this.state;
-        this.spellManager.cast(new SwitchColors({
+        this.spellManager.enqueue(new SwitchColors({
             level,
             adversary: this.player,
             owner: this.player

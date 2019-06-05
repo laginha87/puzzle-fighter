@@ -5,6 +5,7 @@ import * as EventEmitterType from 'eventemitter3';
 import { EventEmitter } from 'eventemitter3';
 
 import { Position, Size } from 'src/types';
+import { Spell } from './spells';
 
 export type BOARD_LOGIC_EVENTS =
     'set_piece'
@@ -88,6 +89,7 @@ export class BoardLogic implements Updatable {
                     return 'blocks_falling';
                 } else if(this.managers.spells.queue.length > 0) {
                     this.managers.spells.unqueue();
+
                     return 'casting_spells';
                 } else {
                     this.player.nextPiece();
@@ -170,7 +172,7 @@ export class BoardLogic implements Updatable {
         this.activeManager = STATE_TO_MANAGER_MAP[this.state];
     }
 
-    public castSpell(i: number) {
-        console.log(`Cast Spell ${i}`);
+    public castSpell(s : Spell) {
+        this.managers.spells.enqueue(s);
     }
 }
