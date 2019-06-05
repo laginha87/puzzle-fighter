@@ -61,12 +61,13 @@ export class PlayerLogic implements Updatable {
 
             return;
         }
-
-        this.board.castSpell(new Spell({
+        const spell =new Spell({
             owner: this,
             adversary: this,
             level: 1
-        }));
+        });
+        spell.klass = Spell;
+        this.board.castSpell(spell);
     }
 
 }

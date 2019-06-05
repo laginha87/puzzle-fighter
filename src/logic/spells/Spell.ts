@@ -23,12 +23,18 @@ export interface MetaSpell {
 
 export class Spell implements Updatable {
     public events: EventEmitterType<SPELL_EVENTS>;
+    public klass!: MetaSpell;
+
     protected level!: number;
     protected adversary!: PlayerLogic;
     protected owner!: PlayerLogic;
 
     public static cost: EnergyType[];
     public static spellName: string;
+
+    public get name() {
+        return this.klass.spellName;
+    }
 
     constructor(context: SpellContext) {
         Object.assign(this, context);
