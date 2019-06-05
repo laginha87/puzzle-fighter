@@ -5,7 +5,7 @@ import * as EventEmitterType from 'eventemitter3';
 import { EventEmitter } from 'eventemitter3';
 
 import { Position, Size } from 'src/types';
-import { Spell } from './spells';
+import { Spell } from 'src/logic/spells';
 
 export type BOARD_LOGIC_EVENTS =
     'set_piece'

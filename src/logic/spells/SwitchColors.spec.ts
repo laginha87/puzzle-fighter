@@ -3,7 +3,7 @@ import { SwitchColors } from 'src/logic/spells';
 
 test('basic again', () => {
     const b: BoardLogic = new BoardLogic({ width: 5, height: 5 });
-    const p: PlayerLogic = new PlayerLogic(b);
+    const p: PlayerLogic = new PlayerLogic(b, []);
 
     const spell = new SwitchColors({
         owner: p,
