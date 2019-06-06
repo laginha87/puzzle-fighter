@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { SpellManager } from 'src/logic/board_managers';
-import { SwitchColors } from 'src/logic/spells';
+import { default as SPELLS, Pull } from 'src/logic/spells';
 import { PlayerLogic } from 'src/logic';
 import { MatchView } from 'src/view';
 import { NumberInputComponent, Col } from 'debug/components';
@@ -22,6 +22,9 @@ export class SpellControls extends React.Component<Props, State> {
         this.player = props.match.players[0].logic;
         this.spellManager = this.player.board.managers.spells;
         this.setLevel = this.setLevel.bind(this);
+        this.state = {
+            level: 1
+        };
     }
 
     render() {
@@ -32,6 +35,8 @@ export class SpellControls extends React.Component<Props, State> {
                 <Col size={2}>
                     <NumberInputComponent min={1} max={5} onChange={this.setLevel} label='Level' />
                 </Col>
+
+
                 <button
                     className='btn btn-outline-primary'
                     onClick={this.onClick}>
@@ -43,11 +48,13 @@ export class SpellControls extends React.Component<Props, State> {
 
     onClick() {
         const { level } = this.state;
-        this.spellManager.enqueue(new SwitchColors({
+        const spell = new Pull({
             level,
             adversary: this.player,
             owner: this.player
-        }));
+        });
+        spell.klass = Pull;
+        this.spellManager.enqueue(spell);
     }
 
     setLevel(level: number) {
