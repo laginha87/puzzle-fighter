@@ -173,6 +173,10 @@ export class BoardLogic implements Updatable {
     }
 
     public castSpell(s : Spell) {
+        const chain = this.managers.spells.findChain(s.klass.cost);
+        if(chain) {
+            this.managers.destroy.energyBlocks.push(...Array.from(chain, (e) => this.blocks[e]));
+        }
         this.managers.spells.enqueue(s);
     }
 }

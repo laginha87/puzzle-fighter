@@ -2,6 +2,7 @@ import { BoardManager } from 'src/logic/board_managers';
 import { BlockLogic, BoardLogic } from 'src/logic';
 
 export class DestroyManager extends BoardManager {
+    public energyBlocks: BlockLogic[] = [];
     private breakers: BlockLogic[] = [];
 
     constructor(board: BoardLogic) {
@@ -21,6 +22,11 @@ export class DestroyManager extends BoardManager {
         const breakersToDestroy = this.breakers.filter(({ position: { x, y }, energy_type }) =>
             this.board.neighbors(x, y)
                 .some((e) => energy_type === (e || {}).energy_type));
+
+        if(this.energyBlocks.length != 0 ) {
+            this.board.destroyBlocks(this.energyBlocks);
+            this.energyBlocks = [];
+        }
 
         if (breakersToDestroy.length > 0) {
             const blocksToDestroy: BlockLogic[] = [];
