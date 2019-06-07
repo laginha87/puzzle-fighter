@@ -97,7 +97,11 @@ export class BoardLogic implements Updatable {
                     return 'piece_falling';
                 }
             },
-            'casting_spells': 'blocks_falling'
+            'casting_spells': () => {
+                this.managers.falling.checkForFallingBlocks()
+
+                return 'blocks_falling';
+            }
         };
     }
 
@@ -122,7 +126,7 @@ export class BoardLogic implements Updatable {
         const { x, y } = position;
         const { width, height } = this.size;
 
-        return !(x < 0 || x > width || y >= height - 1 || this.grid[Math.ceil(x)][Math.ceil(y)]);
+        return !(x < 0 || x > width - 1 || y > height - 1 || this.grid[Math.ceil(x)][Math.ceil(y)]);
     }
 
     public addBlock(b: BlockLogic) {

@@ -10,26 +10,20 @@ export class Pull extends Spell {
     private board!: BoardLogic;
 
     public cast() {
-        const { board: { grid, size: { width, height } } } = this.adversary;
-        const blocks: BlockLogic[] = [];
+        const { board: { blocks: boardBlocks, size: { width, height } } } = this.adversary;
         this.board = this.adversary.board;
-        for (let index = 0; index < width; index++) {
-            const element = grid[index][height-2];
-            if (element) {
-                blocks.push(element);
-            }
 
-        }
+        const blocks = Object.values(boardBlocks)
         this.adversary.board.loosenBlocks(blocks);
-        blocks.sort((a, b) => a.position.x - b.position.x);
+        blocks.sort((a, b) => b.position.x - a.position.x);
         this.movingBlocks = blocks;
     }
 
     public update(time: number, delta: number): boolean {
         this.movingBlocks = this.movingBlocks.filter((block) => {
             const { position } = block;
-            const x = (position.x - delta * this.board.FALLING_BLOCK_SPEED);
-            if (!this.board.canMoveTo({ x, y: position.y })) {
+            const x = (position.x + delta * this.board.FALLING_BLOCK_SPEED);
+            if (!this.board.canMoveTo({ x: Math.ceil(x), y: position.y })) {
                 position.x = Math.ceil(position.x);
                 this.board.addBlock(block);
 
