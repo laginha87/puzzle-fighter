@@ -13,7 +13,7 @@ export class Pull extends Spell {
         const { board: { blocks: boardBlocks, size: { width, height } } } = this.adversary;
         this.board = this.adversary.board;
 
-        const blocks = Object.values(boardBlocks)
+        const blocks = Object.values(boardBlocks);
         this.adversary.board.loosenBlocks(blocks);
         blocks.sort((a, b) => b.position.x - a.position.x);
         this.movingBlocks = blocks;

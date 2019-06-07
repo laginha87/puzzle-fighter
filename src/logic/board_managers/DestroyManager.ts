@@ -11,7 +11,7 @@ export class DestroyManager extends BoardManager {
             if (b.type == 'breaker') {
                 this.breakers.push(b);
             }
-        })
+        });
         board.events.on('destroy_blocks', (bs: BlockLogic[]) => {
             const breakers = bs.filter(({ type }) => type == 'breaker');
             this.breakers = this.breakers.filter((e) => !breakers.includes(e));

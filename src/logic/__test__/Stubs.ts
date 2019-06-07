@@ -8,7 +8,7 @@ const BoardLogicStub = (): BoardLogic => {
     player.start();
 
     return board;
-}
+};
 
 
 const PlayerLogicStub = (): PlayerLogic => {
@@ -17,7 +17,7 @@ const PlayerLogicStub = (): PlayerLogic => {
     player.start();
 
     return player;
-}
+};
 
 
 const Stubs = {

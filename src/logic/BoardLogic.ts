@@ -98,7 +98,7 @@ export class BoardLogic implements Updatable {
                 }
             },
             'casting_spells': () => {
-                this.managers.falling.checkForFallingBlocks()
+                this.managers.falling.checkForFallingBlocks();
 
                 return 'blocks_falling';
             }
