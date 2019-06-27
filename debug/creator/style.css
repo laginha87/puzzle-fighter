@@ -1,0 +1,56 @@
+.block {
+    background-image: url('../../assets/blocks.png');
+    width: 33px;
+    height: 33px;
+    background-position-x: 0px;
+}
+
+.empty {
+    background-image: none;
+}
+
+.breaker_chaos {
+    background-position-y: 0px;
+}
+.breaker_elemental {
+    background-position-y: -32px;
+}
+.breaker_nature {
+    background-position-y: -64px;
+}
+.breaker_order {
+    background-position-y: -96px;
+}
+.breaker_willpower {
+    background-position-y: -128px;
+}
+.energy_chaos {
+    background-position-y: -160px;
+}
+.energy_elemental {
+    background-position-y: -192px;
+}
+.energy_nature {
+    background-position-y: -224px;
+}
+.energy_order {
+    background-position-y: -256px;
+}
+.energy_willpower {
+    background-position-y: -288px;
+}
+.regular_chaos {
+    background-position-y: -320px;
+}
+.regular_elemental {
+    background-position-y: -352px;
+}
+.regular_nature {
+    background-position-y: -384px;
+}
+.regular_order {
+    background-position-y: -416px;
+}
+.regular_willpower {
+    background-position-y: -448px;
+}
