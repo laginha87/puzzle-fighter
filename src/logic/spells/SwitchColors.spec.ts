@@ -1,9 +1,11 @@
-import { PlayerLogic, BoardLogic } from 'src/logic';
+import { PlayerLogic } from 'src/logic';
 import { SwitchColors } from 'src/logic/spells';
+import { unserializeBoard } from 'src/serializeBoard';
+import 'src/logic/__test__/Helpers';
 
 test('basic again', () => {
-    const b: BoardLogic = new BoardLogic({ width: 5, height: 5 });
-    const p: PlayerLogic = new PlayerLogic(b, []);
+    const board = unserializeBoard('10:10|7:9:c:e|8:9:c:b|9:9:c:r');
+    const p: PlayerLogic = new PlayerLogic(board, []);
 
     const spell = new SwitchColors({
         owner: p,
@@ -13,7 +15,13 @@ test('basic again', () => {
 
     spell.cast();
 
+    spell.update(0, 400);
+    spell.update(0, 400);
+    spell.update(0, 400);
 
-    expect(spell.update(0, 10000))
+    expect(spell.update(0,10))
         .toBe(true);
+
+    expect(board)
+        .toBoardMatch('10:10|7:9:w:e|8:9:w:b|9:9:w:b');
 });
