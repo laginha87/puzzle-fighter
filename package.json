@@ -26,7 +26,8 @@
     "alias": {
         "src": "./src",
         "assets": "./assets",
-        "debug": "./debug"
+        "debug": "./debug",
+        "tests": "./tests"
     },
     "devDependencies": {
         "@types/jest": "^24.0.13",

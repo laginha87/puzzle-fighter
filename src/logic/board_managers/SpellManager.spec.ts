@@ -1,5 +1,4 @@
-import { EnergyPoolLogic } from 'src/logic';
-import Stubs from 'src/logic/__test__/Stubs';
+import Stubs from 'tests/Stubs';
 import { SpellManager } from './SpellManager';
 
 

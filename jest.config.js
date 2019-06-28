@@ -8,6 +8,7 @@ module.exports = {
     },
     "moduleNameMapper": {
       "src/(.*)$": "<rootDir>/src/$1",
-      "assets/(.*)$": "<rootDir>/__mocks__/fileMock.js"
+      "assets/(.*)$": "<rootDir>/__mocks__/fileMock.js",
+      "tests/(.*)$": "<rootDir>/tests/$1"
     }
   }

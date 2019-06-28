@@ -12,7 +12,7 @@ expect.extend({
         }
 
         return {
-            message: () => `Boards didn't match check diff = http://localhost:1234/diff?b1=${serializedBoard}&b2=${expected}`,
+            message: () => `Boards didn't match check diff = http://localhost:1234/diff?b1=${expected}&b2=${serializedBoard}`,
             pass: false
         };
 

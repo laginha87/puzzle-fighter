@@ -1,10 +1,10 @@
 import { PlayerLogic } from 'src/logic';
 import { SwitchColors } from 'src/logic/spells';
 import { unserializeBoard } from 'src/serializeBoard';
-import 'src/logic/__test__/Helpers';
+import 'tests/Helpers';
 
 test('basic again', () => {
-    const board = unserializeBoard('10:10|7:9:c:e|8:9:c:b|9:9:c:r');
+    const board = unserializeBoard('10:10|7:9:c:e|8:9:c:b|9:9:c:b');
     const p: PlayerLogic = new PlayerLogic(board, []);
 
     const spell = new SwitchColors({
