@@ -15,9 +15,7 @@ export class MatchView extends Phaser.Scene {
     }
 
     public preload() {
-        const img = document.createElement('img');
-        img.src = blocksPng;
-        this.textures.addAtlasJSONHash('blocks', img, blocksJson);
+        this.load.atlas('blocks', blocksPng, blocksJson);
         this.players.forEach((e) => {
             const controller = new KeyboardController(this.input);
             e.logic.controller = controller;

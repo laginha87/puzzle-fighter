@@ -1,0 +1,27 @@
+import { PlayerLogic } from 'src/logic';
+import { Pull } from 'src/logic/spells';
+import { unserializeBoard } from 'src/serializeBoard';
+import 'tests/Helpers';
+
+test('basic again', () => {
+    const board = unserializeBoard('10:10|4:7:c:r|4:8:c:r|4:9:c:r');
+    const p: PlayerLogic = new PlayerLogic(board, []);
+
+    const spell = new Pull({
+        owner: p,
+        adversary: p,
+        level: 2
+    });
+
+    spell.cast();
+
+    spell.update(0, 400);
+    spell.update(0, 400);
+    spell.update(0, 400);
+
+    expect(spell.update(0,10))
+        .toBe(true);
+
+    expect(board)
+        .toBoardMatch('10:10|9:7:c:r|9:8:c:r|9:9:c:r');
+});

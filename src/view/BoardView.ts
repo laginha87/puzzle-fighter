@@ -46,9 +46,7 @@ export class BoardView implements SceneState {
     }
 
     public preload() {
-        const img = document.createElement('img');
-        img.src = layoutPng;
-        this.scene.textures.addAtlasJSONHash('layout', img, layoutJson);
+        this.scene.load.atlas('layout', layoutPng, layoutJson);
     }
 
     public create() {

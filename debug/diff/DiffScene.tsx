@@ -6,9 +6,7 @@ export class DiffScene extends Phaser.Scene {
     public boards!: BoardView[];
 
     public preload() {
-        const img = document.createElement('img');
-        img.src = blocksPng;
-        this.textures.addAtlasJSONHash('blocks', img, blocksJson);
+        this.load.atlas('blocks', blocksPng, blocksJson);
         this.boards.forEach( e => e.preload());
     }
 
