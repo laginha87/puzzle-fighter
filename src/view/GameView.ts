@@ -10,8 +10,8 @@ export class GameView {
     public init(elem: HTMLElement) {
         const config: GameConfig = {
             type: Phaser.AUTO,
-            width: 800,
-            height: 600,
+            width: 1280,
+            height: 800,
             physics: {
                 default: 'arcade',
                 arcade: {

@@ -1,5 +1,6 @@
 import blocksJson from 'assets/blocks.json';
 import blocksPng from 'assets/blocks.png';
+import stage from 'assets/stage_1.png';
 import { MatchLogic } from 'src/logic';
 import { PlayerView } from 'src/view';
 import { KeyboardController } from 'src/controllers';
@@ -16,6 +17,7 @@ export class MatchView extends Phaser.Scene {
 
     public preload() {
         this.load.atlas('blocks', blocksPng, blocksJson);
+        this.load.image('stage-1', stage);
         this.players.forEach((e) => {
             const controller = new KeyboardController(this.input);
             e.logic.controller = controller;
@@ -25,6 +27,7 @@ export class MatchView extends Phaser.Scene {
     }
 
     public create() {
+        this.add.image(400,300,'stage-1');
         this.players.forEach(e => e.create());
     }
 
