@@ -15,12 +15,10 @@ test('basic again', () => {
 
     spell.cast();
 
-    spell.update(0, 400);
-    spell.update(0, 400);
-    spell.update(0, 400);
-
-    expect(spell.update(0,10))
-        .toBe(true);
+    let res;
+    do {
+        res = spell.update(0, 100);
+    } while(res === false);
 
     expect(board)
         .toBoardMatch('10:10|9:7:c:r|9:8:c:r|9:9:c:r');
