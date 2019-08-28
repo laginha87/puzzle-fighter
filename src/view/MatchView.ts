@@ -3,7 +3,7 @@ import blocksPng from 'assets/blocks.png';
 import stage1Png from 'assets/stage_1.png';
 import { MatchLogic } from 'src/logic';
 import { PlayerView } from 'src/view';
-import { KeyboardController } from 'src/controllers';
+import { KeyboardController, AiController } from 'src/controllers';
 
 
 export class MatchView extends Phaser.Scene {
@@ -19,7 +19,12 @@ export class MatchView extends Phaser.Scene {
         this.load.atlas('blocks', blocksPng, blocksJson);
         this.load.image('stage-1', stage1Png);
         this.players.forEach((e) => {
-            const controller = new KeyboardController(this.input);
+            let controller;
+            if(e.logic.type === 'ai') {
+                controller = new AiController(this.logic);
+            } else {
+                controller = new KeyboardController(this.input);
+            }
             e.logic.controller = controller;
         });
 

@@ -8,18 +8,32 @@ import { MetaSpell } from 'src/logic/spells';
 
 export type PLAYER_LOGIC_EVENTS = 'set_next' | 'cast_spell' | 'spell:not_enough_energy';
 
+export type PlayerType = 'ai' | 'player';
+
+export interface PlayerLogicConfig {
+    spells: MetaSpell[];
+    board : BoardLogic;
+    type: PlayerType;
+}
+
 export class PlayerLogic implements Updatable {
     public blockFactory: BlockFactory;
     public events: EventEmitterType<PLAYER_LOGIC_EVENTS>;
     public next!: PieceLogic;
     public _piece!: PieceLogic;
     public _controller!: PlayerController;
+    public spells : MetaSpell[];
+    public board: BoardLogic;
+    public type: PlayerType;
     private energyPool: EnergyPoolLogic;
 
-    constructor(public board: BoardLogic, public spells: MetaSpell[]) {
+    constructor(playerConfig: PlayerLogicConfig) {
+        this.board = playerConfig.board;
+        this.type = playerConfig.type;
         this.blockFactory = new BlockFactory();
         this.energyPool = new EnergyPoolLogic(this);
         this.events = new EventEmitter();
+        this.spells = playerConfig.spells;
     }
 
     public start() {

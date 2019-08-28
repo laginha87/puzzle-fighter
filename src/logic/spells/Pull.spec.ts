@@ -5,7 +5,7 @@ import 'tests/Helpers';
 
 test('basic again', () => {
     const board = unserializeBoard('10:10|4:7:c:r|4:8:c:r|4:9:c:r');
-    const p: PlayerLogic = new PlayerLogic(board, []);
+    const p: PlayerLogic = new PlayerLogic({board, spells:[], type:'ai'});
 
     const spell = new Pull({
         owner: p,

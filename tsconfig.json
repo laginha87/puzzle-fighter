@@ -9,6 +9,9 @@
         "target": "es5",
         "strict": true,
         "jsx": "react",
-        "noEmit": true
+        "noEmit": true,
+        "lib": [
+            "webworker"
+        ]
     }
 }

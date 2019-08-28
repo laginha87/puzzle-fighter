@@ -43,12 +43,14 @@ const config: MatchConfig = {
         {
             spells: [
                 Pull
-            ]
+            ],
+            type: 'player'
         },
         {
             spells: [
                 Pull
-            ]
+            ],
+            type: 'ai'
         }
     ],
     game: game.view,
