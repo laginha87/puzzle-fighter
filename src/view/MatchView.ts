@@ -27,7 +27,9 @@ export class MatchView extends Phaser.Scene {
     }
 
     public create() {
-        this.add.image(400,300,'stage-1');
+        const image = this.add.image(1920 / 2, 1080 / 2,'stage-1');
+
+        image.setScale(1920 / image.displayWidth, 1080 / image.displayHeight);
         this.players.forEach(e => e.create());
     }
 

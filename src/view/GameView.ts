@@ -10,8 +10,8 @@ export class GameView {
     public init(elem: HTMLElement) {
         const config: GameConfig = {
             type: Phaser.AUTO,
-            width: 1280,
-            height: 800,
+            width: 1920,
+            height: 1080,
             physics: {
                 default: 'arcade',
                 arcade: {
@@ -19,6 +19,7 @@ export class GameView {
                 },
             },
             parent: elem,
+            zoom: window.innerWidth / 1920
         };
         this.phaser = new Phaser.Game(config);
     }

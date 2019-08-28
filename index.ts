@@ -1,7 +1,7 @@
 import { ClientGame } from 'src/game/ClientGame';
 import { MatchFactory, MatchConfig } from 'src/factories/MatchFactory';
 import { MatchView } from 'src/view';
-import { SwitchColors } from '~src/logic/spells';
+import { SwitchColors, Pull } from '~src/logic/spells';
 
 
 
@@ -13,14 +13,26 @@ const config: MatchConfig = {
         players: [
             {
                 board_text: {
-                    origin: { x: 40, y: 40 }
+                    origin: { x: 210, y: 500 }
                 },
                 board: {
-                    origin: { x: 40, y: 40 }
+                    origin: { x: 210, y: 500 }
                 },
                 player: {
                     origin: { x: 0, y: 0 },
-                    next: { x: 500, y: 40 }
+                    next: { x: 670, y: 500 }
+                }
+            },
+            {
+                board_text: {
+                    origin: { x: 210 + 960, y: 500 }
+                },
+                board: {
+                    origin: { x: 210 + 960, y: 500 }
+                },
+                player: {
+                    origin: { x: 1920 / 2, y: 1080 / 2 },
+                    next: { x: 670 + 960 - 320 * 2, y: 500 }
                 }
             }
         ],
@@ -30,11 +42,12 @@ const config: MatchConfig = {
     players: [
         {
             spells: [
-                SwitchColors,
-                SwitchColors,
-                SwitchColors,
-                SwitchColors,
-                SwitchColors,
+                Pull
+            ]
+        },
+        {
+            spells: [
+                Pull
             ]
         }
     ],
