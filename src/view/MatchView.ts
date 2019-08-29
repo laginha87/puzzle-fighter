@@ -21,7 +21,7 @@ export class MatchView extends Phaser.Scene {
         this.players.forEach((e) => {
             let controller;
             if(e.logic.type === 'ai') {
-                controller = new AiController(this.logic);
+                controller = new AiController(this.logic, e.logic);
             } else {
                 controller = new KeyboardController(this.input);
             }

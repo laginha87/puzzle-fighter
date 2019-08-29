@@ -3,7 +3,7 @@ import { Spell } from 'src/logic/spells';
 import { BoardLogic } from 'src/logic';
 
 export class Pull extends Spell {
-    static cost: EnergyType[] = [''];
+    static cost: EnergyType[] = ['elemental'];
     static spellName = 'Pull';
 
     private movingBlocks: BlockLogic[] = [];

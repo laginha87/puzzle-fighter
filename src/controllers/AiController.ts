@@ -1,20 +1,25 @@
 import { PlayerController } from "./PlayerController";
 import { EventEmitter } from 'eventemitter3';
 import * as EventEmitterType from 'eventemitter3';
-import { MatchLogic } from "~src/logic";
+import { MatchLogic, PlayerLogic } from '~src/logic';
+import { serializeBoard } from "~src/serializeBoard";
 
 export class AiController implements PlayerController {
     worker : Worker;
     events : EventEmitterType<'rotate'|'moveLeft'|'moveRight'|'fall'|'moveDown'|'spell'>;
 
-    constructor(private match : MatchLogic) {
+    constructor(private match : MatchLogic, private player : PlayerLogic) {
         this.worker = new Worker('/src/workers/AiWorker.ts');
         this.worker.onmessage = this.parseMessage.bind(this);
         this.events = new EventEmitter();
+        player.board.events.on('land_block', this.syncBoard.bind(this));
+    }
+
+    syncBoard(){
+        this.worker.postMessage({type: 'sync', board: serializeBoard(this.player.board)});
     }
 
     parseMessage(message : MessageEvent) {
-        console.log(message.type)
         switch(message.data.type) {
             case 'move':
                 return this.events.emit(message.data.direction);

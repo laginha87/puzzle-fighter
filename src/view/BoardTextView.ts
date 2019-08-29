@@ -25,7 +25,7 @@ export class BoardTextView implements SceneState {
 
     castSpell(spell: Spell) {
         const { x, y } = this.layout.origin;
-        const sprite = this.scene.add.text(x, y, spell.name);
+        const sprite = this.scene.add.text(x, y, spell.name, {backgroundColor: 'black'});
         spell.events.once('spell_finished', () => {
             sprite.destroy();
         });
@@ -33,7 +33,7 @@ export class BoardTextView implements SceneState {
 
     notEnoughEnergy() {
         const { x, y } = this.layout.origin;
-        const sprite = this.scene.add.text(x, y, 'Not enough energy');
+        const sprite = this.scene.add.text(x, y, 'Not enough energy', {backgroundColor: 'black'});
         setTimeout(() => sprite.destroy(), 3000);
     }
 }
