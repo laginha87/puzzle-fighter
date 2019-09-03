@@ -2,11 +2,14 @@ import { PlayerLogic } from 'src/logic';
 import { Updatable } from 'src/utils';
 import * as EventEmitterType from 'eventemitter3';
 import { EventEmitter } from 'eventemitter3';
+import { StageLogic } from 'src/logic';
 
 type EVENTS = 'a';
 
 export class MatchLogic implements Updatable {
     public events! : EventEmitterType<EVENTS>;
+    public stage!: StageLogic;
+
     constructor(public players: PlayerLogic[]) {
         this.events = new EventEmitter();
     }

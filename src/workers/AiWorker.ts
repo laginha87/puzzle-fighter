@@ -22,7 +22,6 @@ class Ai {
     }
 
     move() {
-        console.log(this.board)
         postMessage({
             type: 'move',
             direction: actions[Math.floor(Math.random() * actions.length)]

@@ -1,14 +1,15 @@
 import blocksJson from 'assets/blocks.json';
 import blocksPng from 'assets/blocks.png';
-import stage1Png from 'assets/stage_1.png';
 import { MatchLogic } from 'src/logic';
-import { PlayerView } from 'src/view';
+import { PlayerView, StageView } from 'src/view';
 import { KeyboardController, AiController } from 'src/controllers';
 
 
 export class MatchView extends Phaser.Scene {
     public logic!: MatchLogic;
     public players!: PlayerView[];
+    public stage!: StageView;
+
     private started = false;
 
     public init() {
@@ -17,7 +18,7 @@ export class MatchView extends Phaser.Scene {
 
     public preload() {
         this.load.atlas('blocks', blocksPng, blocksJson);
-        this.load.image('stage-1', stage1Png);
+        this.stage.preload();
         this.players.forEach((e) => {
             let controller;
             if(e.logic.type === 'ai') {
@@ -32,9 +33,7 @@ export class MatchView extends Phaser.Scene {
     }
 
     public create() {
-        const image = this.add.image(1920 / 2, 1080 / 2,'stage-1');
-
-        image.setScale(1920 / image.displayWidth, 1080 / image.displayHeight);
+        this.stage.create();
         this.players.forEach(e => e.create());
     }
 
