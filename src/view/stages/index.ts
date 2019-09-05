@@ -1,7 +1,12 @@
-import { SceneState } from 'src/view/types';
+import { StageMap } from 'src/logic/stages';
+import { StageView } from 'src/view/stages/StageView';
+import { MountainStageView } from 'src/view/stages/MountainStageView';
+import { Type } from 'src/utils';
 
-export interface BaseStageView extends SceneState {
-    preload() : void;
-    init(): void;
-    create(): void;
-}
+// tslint:disable-next-line: export-name
+export { StageView } from 'src/view/stages/StageView';
+
+// tslint:disable-next-line: export-name
+export const STAGE_VIEWS : StageMap<Type<StageView>>= {
+    'mountain': MountainStageView
+};

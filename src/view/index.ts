@@ -6,4 +6,3 @@ export * from './PlayerView';
 export * from './types';
 export * from './PieceView';
 export * from './BoardTextView';
-export * from './StageView';

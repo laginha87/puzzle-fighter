@@ -1,12 +1,10 @@
-import { BaseStageView } from 'src/view/stages';
-
 import mountainPng from 'assets/stages/mountain.png';
 import mountainJson from 'assets/stages/mountain.json';
-import { Updatable } from 'src/utils';
-import { EffectChain } from '~src/utils/EffectChain';
-export class MountainStageView implements BaseStageView, Updatable {
-    scene!: Phaser.Scene;
+import { EffectChain } from 'src/utils/EffectChain';
+import { StageView } from 'src/view/stages/StageView';
 
+
+export class MountainStageView extends StageView {
     points!: [number, number, number][];
     shootingPoints!: [number, number, number][];
     sky!: Phaser.GameObjects.Graphics;

@@ -1,10 +1,8 @@
 import { BoardLogic, MatchLogic, PlayerLogic, PlayerType } from 'src/logic';
 import { BoardView, GameView, MatchView, PlayerView, BoardTextView } from 'src/view';
 import { MetaSpell } from 'src/logic/spells';
-import { Stage } from 'src/logic/stages';
-import { StageLogic } from '~src/logic/StageLogic';
-import { StageView } from '~src/view/StageView';
-import { MountainStageView } from '~src/view/stages/MountainStageView';
+import { StageName, STAGE_LOGICS } from 'src/logic/stages';
+import { STAGE_VIEWS } from 'src/view/stages';
 
 type Position = {
     x: number,
@@ -38,7 +36,7 @@ export interface MatchConfig {
         spells: MetaSpell[],
         type: PlayerType,
     }[];
-    stage: Stage;
+    stage: StageName;
     meta: {
         matchClass: typeof MatchView
     };
@@ -63,7 +61,7 @@ export class MatchFactory {
             return player;
         });
         const match = new MatchLogic(players);
-        const stage = new StageLogic(match, config.stage);
+        const stage = new STAGE_LOGICS[config.stage](match);
         match.stage = stage;
 
         return match;
@@ -89,10 +87,7 @@ export class MatchFactory {
 
             return player;
         });
-        const stageView = new MountainStageView();
-        stageView.scene = match;
-        const stage = new StageView(logic.stage, stageView);
-        stage.scene = match;
+        const stage = new STAGE_VIEWS[config.stage](match, logic.stage);
 
         match.players = players;
         match.logic = logic;

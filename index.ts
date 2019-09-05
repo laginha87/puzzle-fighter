@@ -56,7 +56,8 @@ const config: MatchConfig = {
     game: game.view,
     meta: {
         matchClass: MatchView
-    }
+    },
+    stage: 'mountain'
 };
 
 const match = MatchFactory.BUILD(config);
