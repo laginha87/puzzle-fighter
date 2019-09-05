@@ -14,6 +14,7 @@ export class MatchView extends Phaser.Scene {
 
     public init() {
         this.players.forEach(e => e.init());
+        this.stage.init();
     }
 
     public preload() {
@@ -48,5 +49,6 @@ export class MatchView extends Phaser.Scene {
         }
         this.logic.update(time, delta);
         this.players.forEach(e => e.update(time, delta));
+        this.stage.update(time, delta);
     }
 }

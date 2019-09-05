@@ -1,5 +1,5 @@
 { "frames": {
-   "mountain.aseprite": {
+   "mountain (mountain).aseprite": {
     "frame": { "x": 0, "y": 0, "w": 640, "h": 360 },
     "rotated": false,
     "trimmed": false,
@@ -10,15 +10,14 @@
  },
  "meta": {
   "app": "http://www.aseprite.org/",
-  "version": "1.2.10-beta4",
-  "image": "/Users/filipecorreia/Documents/code/puzzle-fighter-ts/assets/stages/mountain.png",
+  "version": "1.2.13",
+  "image": "mountain.png",
   "format": "RGBA8888",
   "size": { "w": 640, "h": 360 },
   "scale": "1",
   "frameTags": [
   ],
   "layers": [
-   { "name": "sky", "opacity": 255, "blendMode": "normal" },
    { "name": "mountain", "opacity": 255, "blendMode": "normal" }
   ],
   "slices": [
