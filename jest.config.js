@@ -10,5 +10,11 @@ module.exports = {
       "src/(.*)$": "<rootDir>/src/$1",
       "assets/(.*)$": "<rootDir>/__mocks__/fileMock.js",
       "tests/(.*)$": "<rootDir>/tests/$1"
+    },
+    "globals": {
+      "ts-jest": {
+        tsConfig: 'tsconfig.json',
+        diagnostics: false
+      }
     }
   }

@@ -18,7 +18,7 @@ export class Creator extends React.Component<any, State>{
         super(props);
 
 
-        let blocks = [];
+        let blocks : any[] = [];
         for (let x = 0; x < width; x++) {
             blocks[x] = Array(height)
                 .fill(null);

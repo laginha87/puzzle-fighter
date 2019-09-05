@@ -1,6 +1,4 @@
-import { BoardLogic, BlockLogic, ENERGIES, EnergyType, Type } from 'src/logic';
-
-const TYPES = ['regular', 'breaker', 'energy'];
+import { BoardLogic, BlockLogic, ENERGIES, EnergyType, Type, BLOCK_TYPES } from 'src/logic';
 
 export function serializeBoard(b: BoardLogic): string {
     const blocks : BlockLogic[]= Object.values(b.blocks);
@@ -21,9 +19,9 @@ export function serializeBoard(b: BoardLogic): string {
 }
 
 
-const TYPE_MAP : {[k:string]: Type } = TYPES.reduce((acc, e) => ({...acc, [e[0]]: e}), {});
+const TYPE_MAP : {[k:string]: Type } = BLOCK_TYPES.reduce((acc, e: Type) => ({...acc, [e[0]]: e}), {});
 
-const ENERGY_MAP : {[k:string] : EnergyType} = ENERGIES.reduce((acc, e) => ({...acc, [e[0]]: e}), {});
+const ENERGY_MAP : {[k:string] : EnergyType} = ENERGIES.reduce((acc, e: EnergyType) => ({...acc, [e[0]]: e}), {});
 
 const parseIntArray = (a : string[]) : number[] => a.map((e) => parseInt(e, 10));
 

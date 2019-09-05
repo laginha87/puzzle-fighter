@@ -1,8 +1,8 @@
-import { PlayerController } from "./PlayerController";
+import { PlayerController } from 'src/controllers/PlayerController';
 import { EventEmitter } from 'eventemitter3';
 import * as EventEmitterType from 'eventemitter3';
 import { MatchLogic, PlayerLogic } from '~src/logic';
-import { serializeBoard } from "~src/serializeBoard";
+import { serializeBoard } from 'src/serializeBoard';
 
 export class AiController implements PlayerController {
     worker : Worker;

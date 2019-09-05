@@ -14,7 +14,7 @@ export class BlockFactory {
     buildN(n: number): BlockLogic[] {
         const acc = [];
         for (let i = 0; i < n; i++) {
-            acc.push(this.build());
+            acc.push(<never>this.build());
         }
 
         return acc;

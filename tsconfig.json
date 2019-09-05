@@ -11,7 +11,10 @@
         "jsx": "react",
         "noEmit": true,
         "lib": [
-            "webworker"
-        ]
-    }
+            "webworker",
+            "dom"
+        ],
+        "noImplicitAny": false
+    },
+    "exclude": ["node_modules/"]
 }

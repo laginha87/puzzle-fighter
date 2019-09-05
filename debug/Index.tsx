@@ -2,7 +2,7 @@ import * as ReactDOM from 'react-dom';
 import * as React from 'react';
 import { LayerControls, SpeedControls, SessionControls } from 'debug/debug';
 import { ClientGame } from 'src/game/ClientGame';
-import { MatchFactory } from 'src/factories';
+import { MatchFactory, MatchConfig } from 'src/factories';
 import { DebugMatchView } from 'debug/game/DebugMatchView';
 import { SpellControls } from 'debug/debug/SpellControls';
 import { SwitchColors } from 'src/logic/spells';
@@ -26,7 +26,7 @@ export class Index extends React.Component<any, State> {
         const game = new ClientGame('#container');
         game.init();
 
-        const config = {
+        const config : MatchConfig = {
             layout: {
                 players: [
                     {
@@ -51,13 +51,15 @@ export class Index extends React.Component<any, State> {
             boardSize: { width: 10, height: 15 },
             players: [
                 {
-                    spells:[SwitchColors]
+                    spells:[SwitchColors],
+                    type: 'player'
                 }
             ],
             game: game.view,
             meta: {
                 matchClass: DebugMatchView
-            }
+            },
+            stage: 'mountain'
         };
         const match = MatchFactory.BUILD(config) as DebugMatchView;
         game.view.phaser.scene.add('match', match);

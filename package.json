@@ -6,7 +6,7 @@
     "scripts": {
         "serve": "parcel index.html",
         "gen-assets": "/Applications/Aseprite.app/Contents/MacOS/aseprite *.ase  --sheet tiles.png  --data tiles.json",
-        "lint": "yarn tsc --noEmit && yarn tslint src/**/*.ts index.ts",
+        "lint": "yarn tsc --skipLibCheck && yarn tslint src/**/*.ts index.ts",
         "lint-fix": "yarn tslint src/**/*.ts index.ts --fix",
         "debug": "parcel debug/index.html",
         "test": "jest"

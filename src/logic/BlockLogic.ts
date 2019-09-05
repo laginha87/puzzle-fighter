@@ -1,9 +1,11 @@
 import { Position, Size } from 'src/types';
 import { BlockView } from 'src/view/BlockView';
 
-
+// @ts-ignore
 export const ENERGIES = <const>['chaos', 'elemental', 'nature', 'order', 'willpower'];
-export type Type = 'regular' | 'breaker' | 'energy';
+// @ts-ignore
+export const BLOCK_TYPES = <const>['regular', 'breaker', 'energy'];
+export type Type = typeof BLOCK_TYPES[number];
 export type EnergyType = typeof ENERGIES[number];
 export type BlockId = number;
 

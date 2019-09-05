@@ -20,7 +20,7 @@ export class MountainStageView extends StageView {
     init(): void {
         this.points = Array(750)
             .fill(undefined)
-            .map(() => [
+            .map((): [number, number, number] => [
                 Math.floor(Math.random() * 1920),
                 Math.floor(Math.random() * 1080),
                 Math.floor(Math.random() * 4 + 2)
@@ -28,7 +28,7 @@ export class MountainStageView extends StageView {
 
         this.shootingPoints = Array(100)
             .fill(undefined)
-            .map(() => [
+            .map((): [number, number, number] => [
                 Math.floor(Math.random() * 1920),
                 Math.floor(Math.random() * 1080),
                 Math.floor(Math.random() * 4 + 2)

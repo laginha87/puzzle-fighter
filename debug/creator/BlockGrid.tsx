@@ -1,16 +1,15 @@
 import * as  React from 'react';
-import { BlockLogic, EnergyType, ENERGIES, Type } from 'src/logic';
+import { BlockLogic, EnergyType, ENERGIES, Type, BLOCK_TYPES } from 'src/logic';
 
 interface Props {
     grid: (BlockLogic | null)[][];
     removeBlock: (x : number, y: number) => void;
     addBlock: (block : BlockLogic) => void;
 }
-const TYPES = ['regular' , 'breaker' , 'energy'];
 
 interface State {
     energy_type: EnergyType;
-    type: 'regular' | 'breaker' | 'energy';
+    type:  Type;
 }
 
 export class BlockGrid extends React.Component<Props, State> {
@@ -39,11 +38,11 @@ export class BlockGrid extends React.Component<Props, State> {
             </div>
             <div className='col-6'>
                 <select onChange={this.onEnergyTypeChange}>
-                    {ENERGIES.map(e => (<option value={e}>{e}</option>))}
+                    {ENERGIES.map((e : EnergyType) => (<option value={e}>{e}</option>))}
                 </select>
 
                 <select onChange={this.onTypeChange}>
-                    {TYPES.map(e => (<option value={e}>{e}</option>))}
+                    {BLOCK_TYPES.map((e : Type) => (<option value={e}>{e}</option>))}
                 </select>
 
             </div>
@@ -51,15 +50,15 @@ export class BlockGrid extends React.Component<Props, State> {
         </div>;
     }
 
-    onEnergyTypeChange(e : React.ChangeEvent<HTMLSelectElement>) {
-        this.setState({energy_type: e.currentTarget.value });
+    onEnergyTypeChange(e : React.ChangeEvent<any>) {
+        this.setState({energy_type: e.target.value });
     }
 
-    onTypeChange(e : React.ChangeEvent<HTMLSelectElement>) {
+    onTypeChange(e : React.ChangeEvent<any>) {
         this.setState({type: e.currentTarget.value as Type});
     }
 
-    onClick(e: React.MouseEvent<HTMLDivElement>) {
+    onClick(e: React.MouseEvent<any>) {
         const x = e.currentTarget.getAttribute('data-x') as unknown as number;
         const y = e.currentTarget.getAttribute('data-y') as unknown  as number;
 

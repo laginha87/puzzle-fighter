@@ -1,6 +1,6 @@
 import { Effect, callEffect, EffectI } from 'src/utils/Effect';
-import { debounce } from './debounce';
-import { TimedEffect, timedEffect } from './timedEffect';
+import { debounce } from 'src/utils/debounce';
+import { timedEffect } from 'src/utils/timedEffect';
 
 export class EffectChain implements EffectI {
     constructor(private effects : Effect[]) {
