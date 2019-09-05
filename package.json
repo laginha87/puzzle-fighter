@@ -21,7 +21,8 @@
         "phaser": "^3.16.1",
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
-        "react-router-dom": "^5.0.1"
+        "react-router-dom": "^5.0.1",
+        "terminal-image": "^0.2.0"
     },
     "alias": {
         "src": "./src",
