@@ -2,8 +2,8 @@
     "compilerOptions": {
         "baseUrl": ".",
         "paths": {
-            "~*": [
-                "./*"
+            "~src/*": [
+                "src/*"
             ]
         },
         "target": "es5",
@@ -14,6 +14,8 @@
             "webworker",
             "dom"
         ],
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
         "noImplicitAny": false
     },
     "exclude": ["node_modules/"]

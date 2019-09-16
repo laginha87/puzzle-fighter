@@ -1,4 +1,4 @@
-import { BlockLogic, ENERGIES, Type as BlockType, EnergyType } from 'src/logic';
+import { BlockLogic, ENERGIES, Type as BlockType, EnergyType } from '~src/logic';
 
 export class BlockFactory {
     private id = 0;

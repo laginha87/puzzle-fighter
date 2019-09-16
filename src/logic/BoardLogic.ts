@@ -1,11 +1,11 @@
-import { BlockLogic, PlayerLogic, PieceLogic, BlockId } from 'src/logic';
-import { DestroyManager, FallingBlocksManager, PieceManager, SpellManager } from 'src/logic/board_managers';
-import { Updatable } from 'src/utils';
+import { BlockLogic, PlayerLogic, PieceLogic, BlockId } from '~src/logic';
+import { DestroyManager, FallingBlocksManager, PieceManager, SpellManager } from '~src/logic/board_managers';
+import { Updatable } from '~src/utils';
 import * as EventEmitterType from 'eventemitter3';
 import { EventEmitter } from 'eventemitter3';
 
-import { Position, Size } from 'src/types';
-import { Spell } from 'src/logic/spells';
+import { Position, Size } from '~src/types';
+import { Spell } from '~src/logic/spells';
 
 export type BOARD_LOGIC_EVENTS =
     'set_piece'

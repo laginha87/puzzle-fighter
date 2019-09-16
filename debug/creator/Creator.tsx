@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { BlockLogic, BoardLogic } from 'src/logic';
+import { BlockLogic, BoardLogic } from '~src/logic';
 import { BlockGrid } from 'debug/creator/BlockGrid';
-import { serializeBoard } from 'src/serializeBoard';
+import { serializeBoard } from '~src/serializeBoard';
 
 
 interface State {

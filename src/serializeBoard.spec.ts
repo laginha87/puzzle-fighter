@@ -1,5 +1,5 @@
-import { serializeBoard, unserializeBoard } from 'src/serializeBoard';
-import { BoardLogic, BlockLogic } from 'src/logic';
+import { serializeBoard, unserializeBoard } from '~src/serializeBoard';
+import { BoardLogic, BlockLogic } from '~src/logic';
 
 test('serializeBoard', () => {
     const board = new BoardLogic({ width: 5, height: 10 });

@@ -1,4 +1,4 @@
-import { MatchView } from 'src/view';
+import { MatchView } from '~src/view';
 import { Debug } from 'debug/debug';
 
 export class DebugMatchView extends MatchView {

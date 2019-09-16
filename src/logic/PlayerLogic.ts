@@ -1,10 +1,10 @@
-import { BlockFactory } from 'src/factories/BlockFactory';
-import { BoardLogic, PieceLogic, EnergyPoolLogic } from 'src/logic';
-import { Updatable } from 'src/utils';
+import { BlockFactory } from '~src/factories/BlockFactory';
+import { BoardLogic, PieceLogic, EnergyPoolLogic } from '~src/logic';
+import { Updatable } from '~src/utils';
 import * as EventEmitterType from 'eventemitter3';
 import { EventEmitter } from 'eventemitter3';
-import { PlayerController } from 'src/controllers';
-import { MetaSpell } from 'src/logic/spells';
+import { PlayerController } from '~src/controllers';
+import { MetaSpell } from '~src/logic/spells';
 
 export type PLAYER_LOGIC_EVENTS = 'set_next' | 'cast_spell' | 'spell:not_enough_energy';
 

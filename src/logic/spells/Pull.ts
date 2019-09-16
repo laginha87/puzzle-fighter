@@ -1,6 +1,6 @@
-import { EnergyType, BlockLogic } from 'src/logic';
-import { Spell } from 'src/logic/spells';
-import { BoardLogic } from 'src/logic';
+import { EnergyType, BlockLogic } from '~src/logic';
+import { Spell } from '~src/logic/spells';
+import { BoardLogic } from '~src/logic';
 
 export class Pull extends Spell {
     static cost: EnergyType[] = ['elemental'];

@@ -1,4 +1,4 @@
-import { Effect, callEffect } from 'src/utils/Effect';
+import { Effect, callEffect } from '~src/utils/Effect';
 
 export const timedEffect = ( effect :  Effect, time: number) => {
     let total = 0;

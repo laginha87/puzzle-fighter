@@ -1,5 +1,5 @@
 import * as  React from 'react';
-import { BlockLogic, EnergyType, ENERGIES, Type, BLOCK_TYPES } from 'src/logic';
+import { BlockLogic, EnergyType, ENERGIES, Type, BLOCK_TYPES } from '~src/logic';
 
 interface Props {
     grid: (BlockLogic | null)[][];

@@ -1,7 +1,7 @@
-import { SceneState } from 'src/view/types';
-import { MatchView } from 'src/view';
-import { Updatable } from 'src/utils';
-import { StageLogic } from 'src/logic/stages';
+import { SceneState } from '~src/view/types';
+import { MatchView } from '~src/view';
+import { Updatable } from '~src/utils';
+import { StageLogic } from '~src/logic/stages';
 
 export abstract class StageView implements SceneState, Updatable {
     constructor(public scene: MatchView, private logic: StageLogic) {

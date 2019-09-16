@@ -1,6 +1,6 @@
-import { PlayerLogic } from 'src/logic';
-import { Pull } from 'src/logic/spells';
-import { unserializeBoard } from 'src/serializeBoard';
+import { PlayerLogic } from '~src/logic';
+import { Pull } from '~src/logic/spells';
+import { unserializeBoard } from '~src/serializeBoard';
 import 'tests/Helpers';
 
 test('basic again', async () => {

@@ -1,4 +1,4 @@
-import { StageLogic } from 'src/logic/stages/StageLogic';
+import { StageLogic } from '~src/logic/stages/StageLogic';
 
 export class MountainStageLogic extends StageLogic {
 

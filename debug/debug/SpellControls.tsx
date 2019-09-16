@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { SpellManager } from 'src/logic/board_managers';
-import { default as SPELLS, Pull } from 'src/logic/spells';
-import { PlayerLogic } from 'src/logic';
-import { MatchView } from 'src/view';
+import { SpellManager } from '~src/logic/board_managers';
+import { default as SPELLS, Pull } from '~src/logic/spells';
+import { PlayerLogic } from '~src/logic';
+import { MatchView } from '~src/view';
 import { NumberInputComponent, Col } from 'debug/components';
 
 interface Props {

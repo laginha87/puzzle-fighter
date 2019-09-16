@@ -1,4 +1,4 @@
-import { Effect, callEffect, EffectI } from 'src/utils/Effect';
+import { Effect, callEffect, EffectI } from '~src/utils/Effect';
 
 export class ParallelEffect implements EffectI {
     constructor(private effects : Effect[]) {

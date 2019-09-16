@@ -1,6 +1,6 @@
-import { BoardManager } from 'src/logic/board_managers';
-import { BlockLogic, BoardLogic, BlockId } from 'src/logic';
-import { Spell, MetaSpell } from 'src/logic/spells';
+import { BoardManager } from '~src/logic/board_managers';
+import { BlockLogic, BoardLogic, BlockId } from '~src/logic';
+import { Spell, MetaSpell } from '~src/logic/spells';
 import { EnergyType } from '../BlockLogic';
 
 export type EnergyChain = Set<BlockId>;

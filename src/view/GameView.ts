@@ -1,5 +1,5 @@
 import * as Phaser from 'phaser';
-import { GameLogic } from 'src/logic';
+import { GameLogic } from '~src/logic';
 
 export class GameView {
     public phaser!: Phaser.Game;

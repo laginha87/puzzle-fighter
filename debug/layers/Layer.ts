@@ -1,5 +1,5 @@
-import { Updatable } from 'src/utils';
-import { MatchView } from 'src/view';
+import { Updatable } from '~src/utils';
+import { MatchView } from '~src/view';
 
 export class Layer implements Updatable {
     public name!: string;

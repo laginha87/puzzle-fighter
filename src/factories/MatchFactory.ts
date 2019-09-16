@@ -1,8 +1,8 @@
-import { BoardLogic, MatchLogic, PlayerLogic, PlayerType } from 'src/logic';
-import { BoardView, GameView, MatchView, PlayerView, BoardTextView } from 'src/view';
-import { MetaSpell } from 'src/logic/spells';
-import { StageName, STAGE_LOGICS } from 'src/logic/stages';
-import { STAGE_VIEWS } from 'src/view/stages';
+import { BoardLogic, MatchLogic, PlayerLogic, PlayerType } from '~src/logic';
+import { BoardView, GameView, MatchView, PlayerView, BoardTextView } from '~src/view';
+import { MetaSpell } from '~src/logic/spells';
+import { StageName, STAGE_LOGICS } from '~src/logic/stages';
+import { STAGE_VIEWS } from '~src/view/stages';
 
 type Position = {
     x: number,

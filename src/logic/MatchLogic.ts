@@ -1,8 +1,8 @@
-import { PlayerLogic } from 'src/logic';
-import { Updatable } from 'src/utils';
+import { PlayerLogic } from '~src/logic';
+import { Updatable } from '~src/utils';
 import * as EventEmitterType from 'eventemitter3';
 import { EventEmitter } from 'eventemitter3';
-import { StageLogic } from 'src/logic/stages';
+import { StageLogic } from '~src/logic/stages';
 
 type EVENTS = 'a';
 

@@ -1,4 +1,4 @@
-import { Updatable } from 'src/utils';
+import { Updatable } from '~src/utils';
 import { Layer } from 'debug/layers';
 
 export class Debug  implements Updatable {

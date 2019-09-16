@@ -1,4 +1,4 @@
-import { BoardView, BlockView } from 'src/view';
+import { BoardView, BlockView } from '~src/view';
 import blocksJson from 'assets/blocks.json';
 import blocksPng from 'assets/blocks.png';
 

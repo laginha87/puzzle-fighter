@@ -1,7 +1,7 @@
 import layoutJson from 'assets/layout.json';
 import layoutPng from 'assets/layout.png';
-import { BoardLogic, BlockLogic } from 'src/logic';
-import { SceneState, PieceView, BlockView, PlayerView, LayoutConfig } from 'src/view';
+import { BoardLogic, BlockLogic } from '~src/logic';
+import { SceneState, PieceView, BlockView, PlayerView, LayoutConfig } from '~src/view';
 
 export class BoardView implements SceneState {
     public scene!: Phaser.Scene;

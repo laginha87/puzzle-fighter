@@ -1,6 +1,6 @@
-import { BoardLogic, BlockLogic } from 'src/logic';
-import { Position } from 'src/types';
-import { Updatable } from 'src/utils';
+import { BoardLogic, BlockLogic } from '~src/logic';
+import { Position } from '~src/types';
+import { Updatable } from '~src/utils';
 
 import * as EventEmitterType from 'eventemitter3';
 import { EventEmitter } from 'eventemitter3';

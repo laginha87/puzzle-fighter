@@ -1,7 +1,7 @@
-import { Updatable } from 'src/utils';
+import { Updatable } from '~src/utils';
 import * as EventEmitterType from 'eventemitter3';
 import { EventEmitter } from 'eventemitter3';
-import { EnergyType, PlayerLogic } from 'src/logic';
+import { EnergyType, PlayerLogic } from '~src/logic';
 
 export interface MatchContext {
     adversary: PlayerLogic;

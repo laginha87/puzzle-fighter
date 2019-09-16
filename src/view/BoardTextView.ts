@@ -1,7 +1,7 @@
-import { SceneState } from 'src/view';
-import { LayoutConfig } from 'src/view/types';
-import { PlayerLogic } from 'src/logic';
-import { Spell } from 'src/logic/spells';
+import { SceneState } from '~src/view';
+import { LayoutConfig } from '~src/view/types';
+import { PlayerLogic } from '~src/logic';
+import { Spell } from '~src/logic/spells';
 
 export class BoardTextView implements SceneState {
     public scene!: Phaser.Scene;

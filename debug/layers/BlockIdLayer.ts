@@ -1,5 +1,5 @@
 import { Layer } from 'debug/layers';
-import { BoardLogic, BlockLogic, BlockId } from 'src/logic';
+import { BoardLogic, BlockLogic, BlockId } from '~src/logic';
 
 export class BlockIdLayer extends Layer {
     protected board!: BoardLogic;

@@ -1,5 +1,5 @@
-import { BlockLogic, PieceLogic } from 'src/logic';
-import { BoardManager } from 'src/logic/board_managers';
+import { BlockLogic, PieceLogic } from '~src/logic';
+import { BoardManager } from '~src/logic/board_managers';
 
 export class FallingBlocksManager extends BoardManager {
     private fallingBlocks: BlockLogic[] = [];

@@ -1,11 +1,11 @@
 import * as ReactDOM from 'react-dom';
 import * as React from 'react';
 import { LayerControls, SpeedControls, SessionControls } from 'debug/debug';
-import { ClientGame } from 'src/game/ClientGame';
-import { MatchFactory, MatchConfig } from 'src/factories';
+import { ClientGame } from '~src/game/ClientGame';
+import { MatchFactory, MatchConfig } from '~src/factories';
 import { DebugMatchView } from 'debug/game/DebugMatchView';
 import { SpellControls } from 'debug/debug/SpellControls';
-import { SwitchColors } from 'src/logic/spells';
+import { SwitchColors } from '~src/logic/spells';
 
 interface State {
     game?: ClientGame;

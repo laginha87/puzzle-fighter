@@ -1,4 +1,4 @@
-import { BoardLogic, BlockLogic, ENERGIES, EnergyType, Type, BLOCK_TYPES } from 'src/logic';
+import { BoardLogic, BlockLogic, ENERGIES, EnergyType, Type, BLOCK_TYPES } from '~src/logic';
 
 export function serializeBoard(b: BoardLogic): string {
     const blocks : BlockLogic[]= Object.values(b.blocks);

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { PieceLogic } from 'src/logic';
+import { PieceLogic } from '~src/logic';
 import { DebugMatchView } from '~debug/game/DebugMatchView';
 
 type Props = { match: DebugMatchView;  };

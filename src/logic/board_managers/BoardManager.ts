@@ -1,5 +1,5 @@
-import { Updatable } from 'src/utils';
-import { BoardLogic } from 'src/logic';
+import { Updatable } from '~src/utils';
+import { BoardLogic } from '~src/logic';
 
 export abstract class BoardManager implements Updatable {
     constructor(protected board: BoardLogic) {

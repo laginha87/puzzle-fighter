@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { ClientGame } from 'src/game/ClientGame';
+import { ClientGame } from '~src/game/ClientGame';
 import { DiffScene } from 'debug/diff/DiffScene';
-import { unserializeBoard } from 'src/serializeBoard';
-import { BoardView } from 'src/view';
+import { unserializeBoard } from '~src/serializeBoard';
+import { BoardView } from '~src/view';
 import * as queryString from 'query-string';
 
 

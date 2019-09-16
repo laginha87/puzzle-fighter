@@ -1,4 +1,4 @@
-import { Spell, MatchContext } from 'src/logic/spells';
+import { Spell, MatchContext } from '~src/logic/spells';
 
 
 export class SpellFactory {

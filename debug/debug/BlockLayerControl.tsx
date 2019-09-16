@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DebugMatchView } from 'debug/game/DebugMatchView';
 import { Layer } from 'debug/layers';
-import { MatchView } from 'src/view';
+import { MatchView } from '~src/view';
 
 
 interface ILayerClass {

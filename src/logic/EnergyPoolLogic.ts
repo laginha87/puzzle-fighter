@@ -1,5 +1,5 @@
-import { PlayerLogic, EnergyType, ENERGIES, BlockLogic } from 'src/logic';
-import { BlockFactory } from 'src/factories';
+import { PlayerLogic, EnergyType, ENERGIES, BlockLogic } from '~src/logic';
+import { BlockFactory } from '~src/factories';
 
 
 type Pool = { [k in EnergyType]: number };

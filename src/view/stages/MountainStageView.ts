@@ -1,7 +1,7 @@
 import mountainPng from 'assets/stages/mountain.png';
 import mountainJson from 'assets/stages/mountain.json';
-import { EffectChain } from 'src/utils/EffectChain';
-import { StageView } from 'src/view/stages/StageView';
+import { EffectChain } from '~src/utils/EffectChain';
+import { StageView } from '~src/view/stages/StageView';
 
 
 export class MountainStageView extends StageView {

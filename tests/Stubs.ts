@@ -1,4 +1,4 @@
-import { PlayerLogic, BoardLogic } from 'src/logic';
+import { PlayerLogic, BoardLogic } from '~src/logic';
 
 
 const BoardLogicStub = (): BoardLogic => {

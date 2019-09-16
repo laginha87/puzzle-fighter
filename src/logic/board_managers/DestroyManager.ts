@@ -1,5 +1,5 @@
-import { BoardManager } from 'src/logic/board_managers';
-import { BlockLogic, BoardLogic } from 'src/logic';
+import { BoardManager } from '~src/logic/board_managers';
+import { BlockLogic, BoardLogic } from '~src/logic';
 
 export class DestroyManager extends BoardManager {
     public energyBlocks: BlockLogic[] = [];

@@ -1,4 +1,4 @@
-import { PlayerController } from 'src/controllers';
+import { PlayerController } from '~src/controllers';
 
 type noop = () => void;
 export class KeyboardController implements PlayerController {

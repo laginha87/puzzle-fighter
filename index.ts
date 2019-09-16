@@ -1,6 +1,6 @@
-import { ClientGame } from 'src/game/ClientGame';
-import { MatchFactory, MatchConfig } from 'src/factories/MatchFactory';
-import { MatchView } from 'src/view';
+import { ClientGame } from '~src/game/ClientGame';
+import { MatchFactory, MatchConfig } from '~src/factories/MatchFactory';
+import { MatchView } from '~src/view';
 import { SwitchColors, Pull } from '~src/logic/spells';
 
 

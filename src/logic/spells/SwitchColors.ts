@@ -1,5 +1,5 @@
-import { EnergyType, BlockLogic } from 'src/logic';
-import { Spell } from 'src/logic/spells';
+import { EnergyType, BlockLogic } from '~src/logic';
+import { Spell } from '~src/logic/spells';
 
 export class SwitchColors extends Spell {
     static cost: EnergyType[] = ['nature'];
@@ -32,7 +32,7 @@ export class SwitchColors extends Spell {
         this.effects = this.effects.filter((effect: Effect) => {
             if (effect.startTime < 0) {
                 if (effect.duration < 0) {
-                    effect.block.energy_type = 'willpower';
+                    effect.block.energy_type = 'elemental';
                     effect.block.notifyChange();
 
                     return false;
