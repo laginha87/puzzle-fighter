@@ -32,7 +32,7 @@ export class SwitchColors extends Spell {
         this.effects = this.effects.filter((effect: Effect) => {
             if (effect.startTime < 0) {
                 if (effect.duration < 0) {
-                    effect.block.energy_type = 'elemental';
+                    effect.block.energy_type = 'willpower';
                     effect.block.notifyChange();
 
                     return false;

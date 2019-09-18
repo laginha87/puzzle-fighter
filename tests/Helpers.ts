@@ -14,7 +14,7 @@ const imagifyBoard = async (board : BoardLogic) => {
     Object.values(board.blocks).forEach((block) => {
         const spriteName = [block.type, block.energy_type].join('_');
         const {x,y,w,h} = blocksJson.frames[`${spriteName}.ase`].frame;
-        image.composite(blocks.crop(x,y,w,h),block.position.x * 32, block.position.y * 32);
+        image.composite(blocks.clone().crop(x,y,w,h), block.position.x * 32, block.position.y * 32);
     });
 
     for (let i = 0; i < board.size.height; i++) {
