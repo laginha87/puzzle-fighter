@@ -1,30 +1,34 @@
 import { StageLogic } from '~src/logic/stages/StageLogic';
-import { ENERGIES, EnergyType } from 'src/logic';
+import { ENERGIES, EnergyType } from '~src/logic';
 import { getRandom } from '~src/utils';
 import { EffectI } from '~src/utils/Effect';
 import { EffectChain } from '~src/utils/EffectChain';
 import { fromEvent, merge } from 'rxjs';
 import { first } from 'rxjs/operators';
 
-
+type State = 'loading' | 'waiting';
 
 export class MountainStageLogic extends StageLogic {
-
+    state?: State;
+    energy?: EnergyType;
     effect!: EffectI;
 
-    start(): void {
-
+    start(initialColor = <EnergyType>getRandom(<any>ENERGIES)): void {
         this.waitForUser = this.waitForUser.bind(this);
-        this.enqueueColorRequest(getRandom(<any>ENERGIES));
+        this.enqueueColorRequest(initialColor);
     }
 
     update(time: number, delta: number): void {
         this.effect.update(time, delta);
     }
 
-    private enqueueColorRequest( color: EnergyType) {
+    private enqueueColorRequest( energy: EnergyType) {
+        this.state = 'loading';
+        this.energy = energy;
         this.effect = new EffectChain([])
-            .wait(3000)
+            .debounce(() => {
+                this.state = 'waiting';
+            }, 3000)
             .do(this.waitForUser)
             .wait(1000000);
     }
