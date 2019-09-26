@@ -4,8 +4,6 @@ export const debounce = (callback : () => void, wait : number) => {
 
     return (time : number, delta: number) => {
         total += delta;
-        console.log(total);
-        console.log(total >= wait);
         if(!called) {
             callback();
             called = true;

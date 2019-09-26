@@ -1,5 +1,6 @@
 import { Effect, callEffect, EffectI } from '~src/utils/Effect';
 import { debounce } from '~src/utils/debounce';
+import { wait } from '~src/utils/wait';
 import { timedEffect } from '~src/utils/timedEffect';
 
 export class EffectChain implements EffectI {
@@ -21,6 +22,18 @@ export class EffectChain implements EffectI {
 
     debounce(callback : () => void, wait : number) {
         this.effects.push(debounce(callback, wait));
+
+        return this;
+    }
+
+    wait(w : number) {
+        this.effects.push(wait(w));
+
+        return this;
+    }
+
+    do(effect : Effect) {
+        this.effects.push(effect);
 
         return this;
     }
