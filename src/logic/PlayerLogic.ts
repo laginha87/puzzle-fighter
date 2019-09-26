@@ -6,7 +6,16 @@ import { EventEmitter } from 'eventemitter3';
 import { PlayerController } from '~src/controllers';
 import { MetaSpell } from '~src/logic/spells';
 
-export type PLAYER_LOGIC_EVENTS = 'set_next' | 'cast_spell' | 'spell:not_enough_energy';
+export type PLAYER_LOGIC_EVENTS =
+    'set_next'
+    | 'cast_spell'
+    | 'spell:not_enough_energy'
+    | 'action:move_right'
+    | 'action:move_left'
+    | 'action:move_down'
+    | 'action:fall'
+    | 'action:rotate'
+    | 'action:spell';
 
 export type PlayerType = 'ai' | 'player';
 
@@ -52,11 +61,26 @@ export class PlayerLogic implements Updatable {
     public set controller(_controller: PlayerController) {
         this._controller = _controller;
         const { board } = this;
-        _controller.onMoveRight(() => board.piece.moveRight());
-        _controller.onMoveLeft(() => board.piece.moveLeft());
-        _controller.onMoveDown(() => board.piece.moveDown());
-        _controller.onFall(() => board.piece.fall());
-        _controller.onRotate(() => board.piece.rotate());
+        _controller.onMoveRight(() => {
+            board.piece.moveRight();
+            this.events.emit('action:move_right');
+        });
+        _controller.onMoveLeft(() => {
+            board.piece.moveLeft();
+            this.events.emit('action:move_left');
+        });
+        _controller.onMoveDown(() => {
+            board.piece.moveDown();
+            this.events.emit('action:move_down');
+        });
+        _controller.onFall(() => {
+            board.piece.fall();
+            this.events.emit('action:fall');
+        });
+        _controller.onRotate(() => {
+            board.piece.rotate();
+            this.events.emit('action:rotate');
+        });
         _controller.onSpell(this.castSpell.bind(this));
     }
 
