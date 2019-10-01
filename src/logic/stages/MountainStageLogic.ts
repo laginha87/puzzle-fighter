@@ -1,45 +1,70 @@
 import { StageLogic } from '~src/logic/stages/StageLogic';
-import { ENERGIES, EnergyType } from '~src/logic';
+import { ENERGIES, EnergyType, PlayerLogic } from '~src/logic';
 import { getRandom } from '~src/utils';
-import { EffectI } from '~src/utils/Effect';
-import { EffectChain } from '~src/utils/EffectChain';
-import { fromEvent, merge } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { fromEvent, merge, Subject, Observable, of } from 'rxjs';
+import { first, reduce, filter, mapTo, delay, concatMap, concatMapTo, take, tap } from 'rxjs/operators';
+import { Spell, SpellContext } from '../spells';
 
-type State = 'loading' | 'waiting';
+type State = 'loading' | 'waiting' | 'atacking';
+
+class MountainStageSpell extends Spell {
+    constructor(context : SpellContext, private stage: MountainStageLogic) {
+        super(context);
+    }
+
+    cast(){
+        of(null).pipe(
+            concatMapTo(this.stage.generateWaitStream(3000)),
+
+        )
+    }
+}
 
 export class MountainStageLogic extends StageLogic {
     state?: State;
     energy?: EnergyType;
-    effect!: EffectI;
+    gameTime$!: Subject<number>;
 
     start(initialColor = <EnergyType>getRandom(<any>ENERGIES)): void {
-        this.waitForUser = this.waitForUser.bind(this);
+        this.gameTime$ = new Subject();
         this.enqueueColorRequest(initialColor);
     }
 
     update(time: number, delta: number): void {
-        this.effect.update(time, delta);
+        this.gameTime$.next(time);
     }
 
     private enqueueColorRequest( energy: EnergyType) {
-        this.state = 'loading';
-        this.energy = energy;
-        this.effect = new EffectChain([])
-            .debounce(() => {
-                this.state = 'waiting';
-            }, 3000)
-            .do(this.waitForUser)
-            .wait(1000000);
+
+        const playersDropAction$ = merge(
+            ...this.match.players.map(p =>
+                fromEvent(<any>p.events, 'set_next')
+                    .pipe(mapTo(p)
+                )
+            )
+        );
+
+        of(null)
+            .pipe(
+                concatMapTo(this.generateWaitStream(3000)),
+                tap(() => {
+                    this.state = 'waiting';
+                    this.energy = energy;
+                }),
+                concatMap(() => playersDropAction$.pipe(first())),
+                tap((p: PlayerLogic) => {
+                    this.state = 'atacking';
+                }),
+                concatMapTo(this.generateWaitStream(3000))
+            )
+            .subscribe({ next: () => { }});
     }
 
-    private waitForUser(time: number, delta: number) : boolean {
-        merge(this.match.players.map(e => fromEvent(<any>e.events, 'set_next')))
-        .pipe(first())
-        .subscribe((e) => {
-            this.effect
-        });
-
-        return true;
+    public generateWaitStream(time : number) {
+        return this.gameTime$.pipe(
+            reduce((acc, value) => value + acc),
+            filter((e) => e > time),
+            first()
+        );
     }
 }

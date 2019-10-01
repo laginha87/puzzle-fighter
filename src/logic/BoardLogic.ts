@@ -183,4 +183,8 @@ export class BoardLogic implements Updatable {
         }
         this.managers.spells.enqueue(s);
     }
+
+    public enqueueSpell(s: Spell) {
+        this.managers.spells.enqueue(s);
+    }
 }
