@@ -1,5 +1,5 @@
 import { PlayerLogic, MatchLogic } from '~src/logic';
-import { unserializeBoard } from '~src/serializeBoard';
+import { unserializeBoard, debugBoard } from '~src/serializeBoard';
 import 'tests/Helpers';
 import { MountainStageLogic } from '~src/logic/stages/MountainStageLogic';
 import { TestPlayerController } from 'tests/TestPlayerController';
@@ -43,12 +43,12 @@ test('when user sets block he takes a hit', async () => {
 
     p.start();
     stage.start('elemental');
-    p.board.piece.blocks.forEach((e) => {e.energy_type = 'chaos', e.type = 'regular'});
+    p.board.piece.blocks.forEach((e, i ) => {e.energy_type = 'chaos', e.type = 'regular', e.position.y = i; e.id = 50 + i;});
     p.board.player = p;
     const piece = p.board.piece;
 
     while(p.board.piece === piece) {
-        match.update(0, 10);
+        match.update(0, 20);
     }
 
     testController.events.emit('onFall');

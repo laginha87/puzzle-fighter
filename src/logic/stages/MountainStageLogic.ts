@@ -2,7 +2,7 @@ import { StageLogic } from '~src/logic/stages/StageLogic';
 import { ENERGIES, EnergyType, PlayerLogic } from '~src/logic';
 import { getRandom } from '~src/utils';
 import { fromEvent, merge, Subject, Observable, of } from 'rxjs';
-import { first, reduce, filter, mapTo, delay, concatMap, concatMapTo, take, tap } from 'rxjs/operators';
+import { first, scan, filter, mapTo, delay, concatMap, concatMapTo, take, tap } from 'rxjs/operators';
 import { Spell, SpellContext } from '../spells';
 
 type State = 'loading' | 'waiting' | 'atacking';
@@ -31,7 +31,7 @@ export class MountainStageLogic extends StageLogic {
     }
 
     update(time: number, delta: number): void {
-        this.gameTime$.next(time);
+        this.gameTime$.next(delta);
     }
 
     private enqueueColorRequest( energy: EnergyType) {
@@ -46,10 +46,10 @@ export class MountainStageLogic extends StageLogic {
 
         of(null)
             .pipe(
+                tap(() => { this.energy = energy; })
                 concatMapTo(this.generateWaitStream(3000)),
                 tap(() => {
                     this.state = 'waiting';
-                    this.energy = energy;
                 }),
                 concatMap(() => playersDropAction$.pipe(first())),
                 tap((p: PlayerLogic) => {
@@ -57,12 +57,12 @@ export class MountainStageLogic extends StageLogic {
                 }),
                 concatMapTo(this.generateWaitStream(3000))
             )
-            .subscribe({ next: () => { }});
+            .subscribe({ next: () => {}});
     }
 
     public generateWaitStream(time : number) {
         return this.gameTime$.pipe(
-            reduce((acc, value) => value + acc),
+            scan((acc, value) => value + acc),
             filter((e) => e > time),
             first()
         );

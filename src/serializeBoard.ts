@@ -18,6 +18,15 @@ export function serializeBoard(b: BoardLogic): string {
         .join('|');
 }
 
+export function debugBoard(...b: BoardLogic[]): string {
+    const boards = b
+        .map((e, i) => [`b${i+1}=`, serializeBoard(e)].join(''))
+        .join('&');
+    const msg = `${encodeURI(`http://localhost:1234/diff?${boards}`)}`;
+    console.log(msg);
+
+    return msg;
+}
 
 const TYPE_MAP : {[k:string]: Type } = BLOCK_TYPES.reduce((acc, e: Type) => ({...acc, [e[0]]: e}), {});
 
