@@ -6,6 +6,7 @@ import 'tests/Helpers';
 test('basic again', async () => {
     const board = unserializeBoard('10:10|4:7:c:r|4:8:c:r|4:9:c:r');
     const p: PlayerLogic = new PlayerLogic({board, spells:[], type:'ai'});
+    board.player = p;
 
     const spell = new Pull({
         owner: p,
@@ -13,12 +14,16 @@ test('basic again', async () => {
         level: 2
     });
 
-    spell.cast();
+    spell.klass = Pull;
 
-    let res;
+    board.castSpell(spell);
+    board.managers.effects.activate();
+    Object.assign(board, {activeManager: 'effects'});
+
     do {
-        res = spell.update(0, 100);
-    } while(res === false);
+        board.update(0, 100);
+    // tslint:disable-next-line: no-string-literal
+    } while(board['activeManager'] === 'effects' );
 
     await expect(board)
         .toBoardMatch('10:10|9:7:c:r|9:8:c:r|9:9:c:r');

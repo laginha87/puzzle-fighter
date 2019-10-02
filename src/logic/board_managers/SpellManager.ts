@@ -8,7 +8,6 @@ export type EnergyChain = Set<BlockId>;
 export class SpellManager extends BoardManager {
     private energyChains: Set<EnergyChain> = new Set();
     private blockIdByChains: { [k in BlockId]: EnergyChain } = {};
-    private activeSpell! : Spell;
     public queue : Spell[];
 
     constructor(board: BoardLogic) {
@@ -26,23 +25,8 @@ export class SpellManager extends BoardManager {
         board.events.on('loosen_blocks', this.removeBlocks.bind(this));
     }
 
-    enqueue(s : Spell) {
-        this.queue.push(s);
-    }
-
     update(time: number, delta: number): boolean {
-        const finished = this.activeSpell.update(time, delta);
-        if(finished) {
-            this.activeSpell.events.emit('spell_finished');
-        }
-
-        return finished;
-    }
-
-    unqueue() {
-        this.activeSpell = this.queue.pop()!;
-        this.activeSpell.cast();
-        this.board.player.events.emit('cast_spell', this.activeSpell);
+        return true;
     }
 
     canCast(s : MetaSpell) : boolean {

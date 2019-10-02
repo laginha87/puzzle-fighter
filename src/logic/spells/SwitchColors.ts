@@ -1,58 +1,41 @@
 import { EnergyType, BlockLogic } from '~src/logic';
 import { Spell } from '~src/logic/spells';
+import { Observable, of } from 'rxjs';
+import { scan, take, concatMap, mapTo, tap, takeLast, first } from 'rxjs/operators';
 
 export class SwitchColors extends Spell {
     static cost: EnergyType[] = ['nature'];
     static spellName = 'Switch Colors';
 
-    private effects: Effect[] = [];
-
-    public cast() {
+    public cast(gameTime$: Observable<number>) {
 
         const numberOfBlocks = this.level * 2;
         const blocks = Object.values(this.owner.board.blocks);
-
-        while (this.effects.length < numberOfBlocks && blocks.length !== 0) {
+        let blocksToChange : BlockLogic[]= [];
+        while (blocksToChange.length < numberOfBlocks && blocks.length !== 0) {
             const i = Math.floor(Math.random() * blocks.length);
             const block = blocks[i];
             blocks.splice(i, 1);
-            if (block.energy_type === 'willpower') {
-                continue;
+            if (block.energy_type !== 'willpower') {
+                blocksToChange.push(block);
             }
-
-            this.effects.push({
-                duration: 300,
-                startTime: 200 * this.effects.length,
-                block,
-            });
         }
+
+        return of(...blocksToChange)
+                .pipe(
+                    concatMap((block) =>
+                        gameTime$.pipe(
+                            scan((acc, rec) => acc + rec),
+                            first((e) => e > 200),
+                            mapTo(block)
+                        )),
+                    tap((block) => {
+                        block.energy_type = 'willpower';
+                        block.notifyChange();
+                    }),
+                    take(numberOfBlocks),
+                    takeLast(1),
+                    mapTo(null)
+                );
     }
-
-    public update(time: number, delta: number): boolean {
-        this.effects = this.effects.filter((effect: Effect) => {
-            if (effect.startTime < 0) {
-                if (effect.duration < 0) {
-                    effect.block.energy_type = 'willpower';
-                    effect.block.notifyChange();
-
-                    return false;
-                } else {
-                    effect.duration -= delta;
-                }
-            } else {
-                effect.startTime -= delta;
-            }
-
-            return true;
-        });
-
-        return this.effects.length == 0;
-    }
-
-}
-
-interface Effect {
-    startTime: number;
-    duration: number;
-    block: BlockLogic;
 }

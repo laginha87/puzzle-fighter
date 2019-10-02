@@ -6,6 +6,7 @@ import { EventEmitter } from 'eventemitter3';
 
 import { Position, Size } from '~src/types';
 import { Spell } from '~src/logic/spells';
+import { EffectManager } from './board_managers/EffectManager';
 
 export type BOARD_LOGIC_EVENTS =
     'set_piece'
@@ -22,7 +23,7 @@ type BoardState =
     'piece_falling'
     | 'blocks_falling'
     | 'destroy_blocks'
-    | 'casting_spells';
+    | 'after_drop_effects';
 
 type StateToManagerMap = {
     [k in BoardState]: BoardManagerName
@@ -34,15 +35,16 @@ type StateMachine = {
 
 const STATE_TO_MANAGER_MAP: StateToManagerMap = {
     'blocks_falling': 'falling',
-    'casting_spells': 'spells',
     'destroy_blocks': 'destroy',
-    'piece_falling': 'piece'
+    'piece_falling': 'piece',
+    'after_drop_effects': 'effects',
 };
 interface BoardManagers {
     piece: PieceManager;
     falling: FallingBlocksManager;
     destroy: DestroyManager;
     spells: SpellManager;
+    effects: EffectManager;
 }
 
 export class BoardLogic implements Updatable {
@@ -78,7 +80,8 @@ export class BoardLogic implements Updatable {
             destroy: new DestroyManager(this),
             falling: new FallingBlocksManager(this),
             piece: new PieceManager(this),
-            spells: new SpellManager(this)
+            spells: new SpellManager(this),
+            effects: new EffectManager(this)
         };
 
         this.stateMachine = {
@@ -87,17 +90,17 @@ export class BoardLogic implements Updatable {
             'destroy_blocks': () => {
                 if (this.managers.falling.isActive) {
                     return 'blocks_falling';
-                } else if(this.managers.spells.queue.length > 0) {
-                    this.managers.spells.unqueue();
+                } else if(this.managers.effects.hasEffects()) {
+                    this.managers.effects.activate();
 
-                    return 'casting_spells';
+                    return 'after_drop_effects';
                 } else {
                     this.player.nextPiece();
 
                     return 'piece_falling';
                 }
             },
-            'casting_spells': () => {
+            'after_drop_effects': () => {
                 this.managers.falling.checkForFallingBlocks();
 
                 return 'blocks_falling';
@@ -181,10 +184,7 @@ export class BoardLogic implements Updatable {
         if(chain) {
             this.managers.destroy.energyBlocks.push(...Array.from(chain, (e) => this.blocks[e]));
         }
-        this.managers.spells.enqueue(s);
-    }
 
-    public enqueueSpell(s: Spell) {
-        this.managers.spells.enqueue(s);
+        this.managers.effects.enqueue(s.cast.bind(s));
     }
 }

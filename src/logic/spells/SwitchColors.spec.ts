@@ -6,6 +6,7 @@ import 'tests/Helpers';
 test('basic again', async () => {
     const board = unserializeBoard('10:10|7:9:c:e|8:9:c:b|9:9:c:b');
     const p: PlayerLogic = new PlayerLogic({board, spells: [], type: 'ai'});
+    board.player = p;
 
     const spell = new SwitchColors({
         owner: p,
@@ -13,14 +14,15 @@ test('basic again', async () => {
         level: 2
     });
 
-    spell.cast();
+    spell.klass = SwitchColors;
 
-    spell.update(0, 400);
-    spell.update(0, 400);
-    spell.update(0, 400);
+    board.castSpell(spell);
+    board.managers.effects.activate();
+    Object.assign(board, {activeManager: 'effects'});
 
-    expect(spell.update(0,10))
-        .toBe(true);
+    board.update(0, 400);
+    board.update(0, 400);
+    board.update(0, 400);
 
     await expect(board)
         .toBoardMatch('10:10|7:9:w:e|8:9:w:b|9:9:w:b');

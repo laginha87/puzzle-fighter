@@ -3,8 +3,7 @@ import { unserializeBoard, debugBoard } from '~src/serializeBoard';
 import 'tests/Helpers';
 import { MountainStageLogic } from '~src/logic/stages/MountainStageLogic';
 import { TestPlayerController } from 'tests/TestPlayerController';
-import { PieceLogic } from '../PieceLogic';
-import { BlockLogic } from '../BlockLogic';
+
 
 test('it starts', async () => {
     const board = unserializeBoard('10:10|7:9:c:e|8:9:c:b|9:9:c:b');
