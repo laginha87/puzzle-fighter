@@ -76,6 +76,7 @@ export class MatchFactory {
             const playerConfig = playerLayouts[i];
 
             const board = new BoardView(e.board, { ...playerConfig.board, blockSize });
+            e.board.view = board;
             const player = new PlayerView(e, board, { ...playerConfig.player, blockSize });
             const effects = new BoardTextView({ ...playerConfig.board_text, blockSize }, e);
 
@@ -87,7 +88,8 @@ export class MatchFactory {
 
             return player;
         });
-        const stage = new STAGE_VIEWS[config.stage](match, logic.stage);
+        const stage = new STAGE_VIEWS[config.stage](match, logic.stage, {blockSize});
+        stage.scene = match;
 
         match.players = players;
         match.logic = logic;

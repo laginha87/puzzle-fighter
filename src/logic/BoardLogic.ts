@@ -8,6 +8,7 @@ import { Position, Size } from '~src/types';
 import { Spell } from '~src/logic/spells';
 import { EffectManager } from './board_managers/EffectManager';
 import { Observable } from 'rxjs';
+import { BoardView } from '~src/view';
 
 export type BOARD_LOGIC_EVENTS =
     'set_piece'
@@ -56,6 +57,7 @@ export class BoardLogic implements Updatable {
     public grid: (BlockLogic | undefined)[][];
     public blocks: { [k in BlockId]: BlockLogic };
     public managers: BoardManagers;
+    public view!: BoardView;
 
 
     private activeManager: BoardManagerName;
@@ -134,8 +136,11 @@ export class BoardLogic implements Updatable {
     }
 
     public addBlock(b: BlockLogic) {
-        const { position: { x, y }, type } = b;
-        this.grid[Math.ceil(x)][Math.ceil(y)] = b;
+        let { position: { x, y }, type } = b;
+        x = Math.ceil(x);
+        y = Math.ceil(y);
+        Object.assign(b.position, {x, y});
+        this.grid[x][y] = b;
         this.blocks[b.id] = b;
         this.events.emit('land_block', b);
     }

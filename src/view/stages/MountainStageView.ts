@@ -2,22 +2,53 @@ import mountainPng from 'assets/stages/mountain.png';
 import mountainJson from 'assets/stages/mountain.json';
 import { EffectChain } from '~src/utils/EffectChain';
 import { StageView } from '~src/view/stages/StageView';
+import { MountainStageLogic } from '~src/logic/stages/MountainStageLogic';
+import { BlockLogic, BoardLogic, EnergyType } from '~src/logic';
+import { BlockView } from '..';
+import { Size } from '~src/types';
+import { Observable, fromEvent, Subject } from 'rxjs';
+import { tap, concatMap, switchMap, switchMapTo, takeUntil, concatMapTo, takeWhile, scan } from 'rxjs/operators';
 
+
+const Colors : { [x in EnergyType]: number} = {
+    "chaos":,
+    "elemental":,
+    "nature":,
+    "order":,
+
+};
 
 export class MountainStageView extends StageView {
     points!: [number, number, number][];
+    config!: { blockSize: Size };
     shootingPoints!: [number, number, number][];
     sky!: Phaser.GameObjects.Graphics;
     shootingStars!: Phaser.GameObjects.Graphics;
     chain! : EffectChain;
-
     last: number = 0;
+    logic! : MountainStageLogic;
+    blocks: BlockView[] = [];
+    gameTime$!: Subject<number>;
 
     preload(): void {
         this.scene.load.atlas('mountain', mountainPng, mountainJson);
     }
 
     init(): void {
+        this.gameTime$ = new Subject<number>();
+
+        this.logic.events.on('add_falling_blocks', (blocks : BlockLogic[], board : BoardLogic) => {
+            this.blocks = [];
+            blocks.forEach((e) => {
+                const view = new BlockView(e, this.config.blockSize);
+                view.scene = this.scene;
+                view.create();
+                e.view = view;
+                board.view.container.add(view.sprite);
+                view.refresh();
+                this.blocks.push(view);
+            });
+        });
         this.points = Array(750)
             .fill(undefined)
             .map((): [number, number, number] => [
@@ -34,10 +65,15 @@ export class MountainStageView extends StageView {
                 Math.floor(Math.random() * 4 + 2)
             ]);
 
-        this.chain = new EffectChain([])
-            .debounce(this.paintShootingStars.bind(this), 1000)
-            .debounce(this.startShootingStars.bind(this), 10)
-            .timedEffect(this.moveShootingStars.bind(this), 3000);
+        fromEvent(<any>this.logic.events, 'waiting').pipe(
+            tap(() => this.paintShootingStars(this.logic.energy))),
+            switchMapTo(fromEvent(<any>this.logic.events, 'attacking')),
+            tap(() => this.startShootingStars(this.logic.energy)),
+            concatMapTo(
+                this.gameTime$.pipe(scan((acc, e) => [acc[0] + e, e], [0, 0]), takeWhile((e) => e[1] < 3000))
+            ),
+            tap((acc_delta) => this.moveShootingStars(acc_delta[0], acc_delta[1]))
+        ).subscribe(() => console.log("YEYE"));
     }
 
     create(): void {
@@ -56,7 +92,7 @@ export class MountainStageView extends StageView {
         this.sky.fillRect(0, 0, 1920, 1080);
         this.sky.fillStyle(0xffffff);
         this.points.forEach((point_struct) => { this.sky.fillPoint(...point_struct); } );
-        this.shootingPoints.forEach((point_struct) => { this.shootingStars.fillPoint(...point_struct)});
+        this.shootingPoints.forEach((point_struct) => { this.shootingStars.fillPoint(...point_struct);});
 
 
         const image = this.scene.add.sprite(1920 / 2, 1080 / 2, 'mountain', 'mountain.aseprite');
@@ -67,15 +103,16 @@ export class MountainStageView extends StageView {
     }
 
     update(time: number, delta: number): void {
-        this.chain.update(time, delta);
+        this.blocks.forEach((e) => e.update(time,delta));
+        this.gameTime$.next(delta);
     }
 
-    paintShootingStars() {
+    paintShootingStars(energy : EnergyType) {
         this.shootingStars.fillStyle(0xff0000);
         this.shootingPoints.forEach((point_struct) => { this.shootingStars.fillPoint(...point_struct); } );
     }
 
-    startShootingStars() {
+    startShootingStars(energy : EnergyType) {
         this.shootingStars.clear();
         this.shootingStars.fillStyle(0xff0000);
         this.shootingPoints.forEach(([x,y, size]) => {
@@ -89,9 +126,7 @@ export class MountainStageView extends StageView {
     }
 
     moveShootingStars(time : number, delta: number) {
-        this.shootingStars.setY(this.shootingStars.y - 10);
-
-        return false;
+        this.shootingStars.setY(this.shootingStars.y - 0.6 * delta);
     }
 
     resetShootingStars() {

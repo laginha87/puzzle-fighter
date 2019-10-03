@@ -42,11 +42,11 @@ test('when user sets block he takes a hit', async () => {
     match.stage = stage;
 
     p.start();
-    stage.start('elemental');
+    stage.start('nature');
     p.board.piece.blocks.forEach((e, i ) => {e.energy_type = 'chaos', e.type = 'regular', e.position.y = i; e.id = 50 + i;});
     p.board.player = p;
     const piece = p.board.piece;
-
+    stage.update(0, 4000);
     testController.events.emit('onFall');
 
     while(p.board.piece === piece) {
