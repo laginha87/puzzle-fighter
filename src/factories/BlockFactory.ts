@@ -4,17 +4,21 @@ export class BlockFactory {
     private id = 0;
     public energyPool : EnergyType[] = [];
 
-    build(): BlockLogic {
-        const energy = ENERGIES[Math.floor(Math.random() * (ENERGIES.length - 2) + 1)];
-        const type: BlockType = Math.random() > 0.8 ? 'breaker' : 'regular';
+    build(energy : EnergyType | null = null, type : BlockType | null = null ): BlockLogic {
+        if(!energy) {
+            energy = ENERGIES[Math.floor(Math.random() * (ENERGIES.length - 2) + 1)];
+        }
+        if(!type) {
+            type = Math.random() > 0.8 ? 'breaker' : 'regular';
+        }
 
         return new BlockLogic(energy, { x: 0, y: 0 }, type, this.id++);
     }
 
-    buildN(n: number): BlockLogic[] {
+    buildN(n: number, energy : EnergyType | null = null, type : BlockType | null = null): BlockLogic[] {
         const acc = [];
         for (let i = 0; i < n; i++) {
-            acc.push(<never>this.build());
+            acc.push(<never>this.build(energy, type));
         }
 
         return acc;

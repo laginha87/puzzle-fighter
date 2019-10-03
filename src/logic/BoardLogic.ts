@@ -7,6 +7,7 @@ import { EventEmitter } from 'eventemitter3';
 import { Position, Size } from '~src/types';
 import { Spell } from '~src/logic/spells';
 import { EffectManager } from './board_managers/EffectManager';
+import { Observable } from 'rxjs';
 
 export type BOARD_LOGIC_EVENTS =
     'set_piece'
@@ -186,5 +187,9 @@ export class BoardLogic implements Updatable {
         }
 
         this.managers.effects.enqueue(s.cast.bind(s));
+    }
+
+    public enqueueEffect(effect : (game$ : Observable<number>) => Observable<null>) {
+        this.managers.effects.enqueue(effect);
     }
 }

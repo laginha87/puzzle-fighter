@@ -16,9 +16,11 @@ export class MatchLogic implements Updatable {
 
     public start() {
         this.players.forEach(e => e.start());
+        this.stage.start();
     }
 
     public update(time: number, delta: number): void {
         this.players.forEach((p) => p.update(time, delta));
+        this.stage.update(time, delta);
     }
 }
