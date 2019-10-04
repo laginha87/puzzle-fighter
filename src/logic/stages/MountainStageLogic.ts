@@ -36,13 +36,12 @@ export class MountainStageLogic extends StageLogic {
                 )
             )
         );
-
         of(null)
             .pipe(
                 tap(() => { this.energy = energy; }),
                 concatMapTo(this.generateWaitStream(3000)),
                 tap(() => {
-                    this.events.emit('waiting', this.energy)
+                    this.events.emit('waiting', this.energy);
                 }),
                 concatMap(() => playersDropAction$.pipe(first()))
             )
@@ -91,7 +90,10 @@ export class MountainStageLogic extends StageLogic {
                             );
                         }),
                         takeLast(1),
-                        mapTo(null)
+                        mapTo(null),
+                        tap(() => {
+                            this.enqueueColorRequest(<EnergyType>getRandom(<any>ENERGIES))
+                        })
                     )
                 );
             }});

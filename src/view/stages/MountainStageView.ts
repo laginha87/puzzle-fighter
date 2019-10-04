@@ -11,10 +11,11 @@ import { tap, concatMap, switchMap, switchMapTo, takeUntil, concatMapTo, takeWhi
 
 
 const Colors : { [x in EnergyType]: number} = {
-    "chaos":,
-    "elemental":,
-    "nature":,
-    "order":,
+    chaos: 0x793a80,
+    elemental: 0xfa6a0a,
+    nature: 0x14a02e,
+    order: 0xfef3c0,
+    willpower: 0x249fde
 
 };
 
@@ -66,14 +67,14 @@ export class MountainStageView extends StageView {
             ]);
 
         fromEvent(<any>this.logic.events, 'waiting').pipe(
-            tap(() => this.paintShootingStars(this.logic.energy))),
+            tap(() => this.paintShootingStars(this.logic.energy!)),
             switchMapTo(fromEvent(<any>this.logic.events, 'attacking')),
-            tap(() => this.startShootingStars(this.logic.energy)),
+            tap(() => this.startShootingStars(this.logic.energy!)),
             concatMapTo(
                 this.gameTime$.pipe(scan((acc, e) => [acc[0] + e, e], [0, 0]), takeWhile((e) => e[1] < 3000))
             ),
             tap((acc_delta) => this.moveShootingStars(acc_delta[0], acc_delta[1]))
-        ).subscribe(() => console.log("YEYE"));
+        ).subscribe(() => null);
     }
 
     create(): void {
@@ -108,19 +109,19 @@ export class MountainStageView extends StageView {
     }
 
     paintShootingStars(energy : EnergyType) {
-        this.shootingStars.fillStyle(0xff0000);
+        this.shootingStars.fillStyle(Colors[energy]);
         this.shootingPoints.forEach((point_struct) => { this.shootingStars.fillPoint(...point_struct); } );
     }
 
     startShootingStars(energy : EnergyType) {
         this.shootingStars.clear();
-        this.shootingStars.fillStyle(0xff0000);
+        this.shootingStars.fillStyle(Colors[energy]);
         this.shootingPoints.forEach(([x,y, size]) => {
-            this.shootingStars.fillStyle(0xff0000, .3);
+            this.shootingStars.fillStyle(Colors[energy], .3);
             this.shootingStars.fillRect(x - size, y, size, size);
-            this.shootingStars.fillStyle(0xff0000, .5);
+            this.shootingStars.fillStyle(Colors[energy], .5);
             this.shootingStars.fillRect(x - size, y - size, size, size);
-            this.shootingStars.fillStyle(0xff0000);
+            this.shootingStars.fillStyle(Colors[energy]);
             this.shootingStars.fillRect(x - size, y - size * 2, size, size);
         } );
     }
