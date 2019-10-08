@@ -24,11 +24,13 @@ export class BoardTextView implements SceneState {
     }
 
     castSpell(spell: Spell) {
-        const { x, y } = this.layout.origin;
-        const sprite = this.scene.add.text(x, y, spell.name, {backgroundColor: 'black'});
-        spell.events.once('spell_finished', () => {
-            sprite.destroy();
-        });
+        // Todo add back the board text
+
+        // const { x, y } = this.layout.origin;
+        // const sprite = this.scene.add.text(x, y, spell.name, {backgroundColor: 'black'});
+        // spell.events.once('spell_finished', () => {
+        //     sprite.destroy();
+        // });
     }
 
     notEnoughEnergy() {

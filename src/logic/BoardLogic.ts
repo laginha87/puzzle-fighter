@@ -1,12 +1,10 @@
 import { BlockLogic, PlayerLogic, PieceLogic, BlockId } from '~src/logic';
-import { DestroyManager, FallingBlocksManager, PieceManager, SpellManager } from '~src/logic/board_managers';
+import { DestroyManager, FallingBlocksManager, PieceManager, SpellManager, EffectManager } from '~src/logic/board_managers';
 import { Updatable } from '~src/utils';
-import * as EventEmitterType from 'eventemitter3';
-import { EventEmitter } from 'eventemitter3';
+import eventemitter3  from 'eventemitter3';
 
 import { Position, Size } from '~src/types';
 import { Spell } from '~src/logic/spells';
-import { EffectManager } from './board_managers/EffectManager';
 import { Observable } from 'rxjs';
 import { BoardView } from '~src/view';
 
@@ -52,7 +50,7 @@ interface BoardManagers {
 export class BoardLogic implements Updatable {
     public _piece!: PieceLogic;
     public player!: PlayerLogic;
-    public events: EventEmitterType<BOARD_LOGIC_EVENTS>;
+    public events: eventemitter3<BOARD_LOGIC_EVENTS>;
     public FALLING_BLOCK_SPEED = 0.01;
     public grid: (BlockLogic | undefined)[][];
     public blocks: { [k in BlockId]: BlockLogic };
@@ -76,7 +74,7 @@ export class BoardLogic implements Updatable {
         this.state = 'piece_falling';
         this.activeManager = STATE_TO_MANAGER_MAP[this.state];
 
-        this.events = new EventEmitter();
+        this.events = new eventemitter3();
         this.onPieceHit = this.onPieceHit.bind(this);
         this.startPoint = { x: size.width / 2, y: -2 };
         this.managers = {

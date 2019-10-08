@@ -3,7 +3,7 @@ import { serializeBoard, unserializeBoard } from '~src/serializeBoard';
 const terminalImage = require('terminal-image');
 import {readFileSync} from 'fs';
 
-const blocksJson = JSON.parse(readFileSync('assets/blocks.json'));
+const blocksJson = JSON.parse(<any>readFileSync('assets/blocks.json'));
 
 import Jimp from 'jimp';
 

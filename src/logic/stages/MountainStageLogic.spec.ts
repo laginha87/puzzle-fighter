@@ -13,7 +13,6 @@ test('it starts', async () => {
 
     stage.start('elemental');
 
-    expect(stage.effect).not.toBe(null);
     expect(stage.energy).toBe('elemental');
 });
 
@@ -26,7 +25,6 @@ test('after it starts it sets its state to waiting and color to initial color', 
     stage.start('elemental');
     stage.update(0, 3002);
 
-    expect(stage.state).toBe('waiting');
     expect(stage.energy).toBe('elemental');
 });
 

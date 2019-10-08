@@ -1,11 +1,11 @@
 import { PlayerController } from '~src/controllers';
-import EventEmitter = require('eventemitter3');
+import eventemitter3 from 'eventemitter3';
 
 type EVENTS = 'onRotate' | 'onMoveLeft' | 'onMoveRight' | 'onFall' | 'onMoveDown' | 'onSpell';
 export class TestPlayerController implements PlayerController {
-    events: EventEmitter<EVENTS>;
+    events: eventemitter3<EVENTS>;
     constructor() {
-        this.events = new EventEmitter();
+        this.events = new eventemitter3();
     }
 
     onRotate(cb: () => void): void {

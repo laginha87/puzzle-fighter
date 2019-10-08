@@ -1,17 +1,16 @@
 import { PlayerController } from '~src/controllers/PlayerController';
-import { EventEmitter } from 'eventemitter3';
-import * as EventEmitterType from 'eventemitter3';
+import eventemitter3  from 'eventemitter3';
 import { MatchLogic, PlayerLogic } from '~src/logic';
 import { serializeBoard } from '~src/serializeBoard';
 
 export class AiController implements PlayerController {
     worker : Worker;
-    events : EventEmitterType<'rotate'|'moveLeft'|'moveRight'|'fall'|'moveDown'|'spell'>;
+    events : eventemitter3<'rotate'|'moveLeft'|'moveRight'|'fall'|'moveDown'|'spell'>;
 
     constructor(private match : MatchLogic, private player : PlayerLogic) {
         this.worker = new Worker('/src/workers/AiWorker.ts');
         this.worker.onmessage = this.parseMessage.bind(this);
-        this.events = new EventEmitter();
+        this.events = new eventemitter3();
         player.board.events.on('land_block', this.syncBoard.bind(this));
     }
 

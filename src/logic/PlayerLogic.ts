@@ -1,8 +1,7 @@
 import { BlockFactory } from '~src/factories/BlockFactory';
 import { BoardLogic, PieceLogic, EnergyPoolLogic } from '~src/logic';
 import { Updatable } from '~src/utils';
-import * as EventEmitterType from 'eventemitter3';
-import { EventEmitter } from 'eventemitter3';
+import eventemitter3 from 'eventemitter3';
 import { PlayerController } from '~src/controllers';
 import { MetaSpell } from '~src/logic/spells';
 
@@ -27,7 +26,7 @@ export interface PlayerLogicConfig {
 
 export class PlayerLogic implements Updatable {
     public blockFactory: BlockFactory;
-    public events: EventEmitterType<PLAYER_LOGIC_EVENTS>;
+    public events: eventemitter3<PLAYER_LOGIC_EVENTS>;
     public next!: PieceLogic;
     public _piece!: PieceLogic;
     public _controller!: PlayerController;
@@ -41,7 +40,7 @@ export class PlayerLogic implements Updatable {
         this.type = playerConfig.type;
         this.blockFactory = new BlockFactory();
         this.energyPool = new EnergyPoolLogic(this);
-        this.events = new EventEmitter();
+        this.events = new eventemitter3();
         this.spells = playerConfig.spells;
     }
 
