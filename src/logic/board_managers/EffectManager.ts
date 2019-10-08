@@ -19,6 +19,7 @@ export class EffectManager extends BoardManager {
     activate() {
         const active$ = concat(...this.effects);
         this.effects = [];
+        this.finished = false;
 
         active$.subscribe(() => this.finished = true);
     }

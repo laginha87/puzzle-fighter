@@ -7,7 +7,7 @@ import { BlockLogic, BoardLogic, EnergyType } from '~src/logic';
 import { BlockView } from '..';
 import { Size } from '~src/types';
 import { Observable, fromEvent, Subject } from 'rxjs';
-import { tap, concatMap, switchMap, switchMapTo, takeUntil, concatMapTo, takeWhile, scan } from 'rxjs/operators';
+import { tap, concatMap, switchMap, switchMapTo, takeUntil, concatMapTo, takeWhile, scan, reduce } from 'rxjs/operators';
 
 
 const Colors : { [x in EnergyType]: number} = {
@@ -66,15 +66,21 @@ export class MountainStageView extends StageView {
                 Math.floor(Math.random() * 4 + 2)
             ]);
 
-        fromEvent(<any>this.logic.events, 'waiting').pipe(
+        fromEvent(<any>this.logic.events, 'waiting')
+        .pipe(
             tap(() => this.paintShootingStars(this.logic.energy!)),
             switchMapTo(fromEvent(<any>this.logic.events, 'attacking')),
             tap(() => this.startShootingStars(this.logic.energy!)),
             concatMapTo(
-                this.gameTime$.pipe(scan((acc, e) => [acc[0] + e, e], [0, 0]), takeWhile((e) => e[1] < 3000))
+                this.gameTime$.pipe(
+                    scan((acc, e) => [acc[0] + e, e], [0, 0]),
+                    takeWhile((e) => e[0] < 3000),
+                    tap((acc_delta) => this.moveShootingStars(acc_delta[0], acc_delta[1])),
+                    reduce(<any>(()=> null))
+                )
             ),
-            tap((acc_delta) => this.moveShootingStars(acc_delta[0], acc_delta[1]))
-        ).subscribe(() => null);
+        )
+        .subscribe({ next: () => this.resetShootingStars() });
     }
 
     create(): void {

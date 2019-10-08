@@ -58,7 +58,6 @@ export class MountainStageLogic extends StageLogic {
 
                             let movingBlocks = player.blockFactory.buildN(2 * width, this.energy, 'regular');
 
-
                             movingBlocks.forEach((e, i) => {
                                 Object.assign(e, { id: e.id + 20, position: { x: Math.floor(i / 2), y: i % 2 }});
                             });
