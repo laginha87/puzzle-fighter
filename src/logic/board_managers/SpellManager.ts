@@ -78,6 +78,9 @@ export class SpellManager extends BoardManager {
                 return;
             }
             const chain = this.blockIdByChains[e.id];
+            if(!chain) {
+                return;
+            }
             chain.delete(e.id);
             chainsToClean.add(chain);
             delete this.blockIdByChains[e.id];

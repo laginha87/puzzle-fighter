@@ -7,14 +7,15 @@ import { MetaSpell } from '~src/logic/spells';
 
 export type PLAYER_LOGIC_EVENTS =
     'set_next'
-    | 'cast_spell'
-    | 'spell:not_enough_energy'
     | 'action:move_right'
     | 'action:move_left'
     | 'action:move_down'
     | 'action:fall'
     | 'action:rotate'
-    | 'action:spell';
+    | 'action:spell'
+    | 'spell:not_enough_energy'
+    | 'spell:cast'
+    | 'spell:finished';
 
 export type PlayerType = 'ai' | 'player';
 

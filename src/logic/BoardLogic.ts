@@ -5,8 +5,9 @@ import eventemitter3  from 'eventemitter3';
 
 import { Position, Size } from '~src/types';
 import { Spell } from '~src/logic/spells';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { BoardView } from '~src/view';
+import { tap, concatMap, concatMapTo } from 'rxjs/operators';
 
 export type BOARD_LOGIC_EVENTS =
     'set_piece'
@@ -183,13 +184,19 @@ export class BoardLogic implements Updatable {
         this.activeManager = STATE_TO_MANAGER_MAP[this.state];
     }
 
-    public castSpell(s : Spell) {
-        const chain = this.managers.spells.findChain(s.klass.cost);
+    public castSpell(spell : Spell) {
+        const chain = this.managers.spells.findChain(spell.klass.cost);
         if(chain) {
             this.managers.destroy.energyBlocks.push(...Array.from(chain, (e) => this.blocks[e]));
         }
 
-        this.managers.effects.enqueue(s.cast.bind(s));
+        this.managers.effects.enqueue((game$ : Observable<number>) =>
+            of(null).pipe(
+                tap(() => this.player.events.emit('spell:cast', spell)),
+                concatMapTo(spell.cast(game$)),
+                tap(() => this.player.events.emit('spell:finished', spell))
+            )
+        );
     }
 
     public enqueueEffect(effect : (game$ : Observable<number>) => Observable<null>) {

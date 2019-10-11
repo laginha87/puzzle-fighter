@@ -7,7 +7,7 @@ export class BoardTextView implements SceneState {
     public scene!: Phaser.Scene;
 
     constructor(private layout: LayoutConfig, private player: PlayerLogic) {
-        player.events.on('cast_spell', this.castSpell.bind(this));
+        player.events.on('spell:cast', this.castSpell.bind(this));
         player.events.on('spell:not_enough_energy', this.notEnoughEnergy.bind(this));
     }
 
@@ -24,13 +24,12 @@ export class BoardTextView implements SceneState {
     }
 
     castSpell(spell: Spell) {
-        // Todo add back the board text
 
-        // const { x, y } = this.layout.origin;
-        // const sprite = this.scene.add.text(x, y, spell.name, {backgroundColor: 'black'});
-        // spell.events.once('spell_finished', () => {
-        //     sprite.destroy();
-        // });
+        const { x, y } = this.layout.origin;
+        const sprite = this.scene.add.text(x, y, spell.name, {backgroundColor: 'black'});
+        this.player.events.once('spell:finished', () => {
+            sprite.destroy();
+        });
     }
 
     notEnoughEnergy() {

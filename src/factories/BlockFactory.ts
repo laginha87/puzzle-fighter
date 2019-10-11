@@ -6,7 +6,7 @@ export class BlockFactory {
 
     build(energy : EnergyType | null = null, type : BlockType | null = null ): BlockLogic {
         if(!energy) {
-            energy = ENERGIES[Math.floor(Math.random() * (ENERGIES.length - 2) + 1)];
+            energy = ENERGIES[Math.floor(Math.random() * ENERGIES.length)];
         }
         if(!type) {
             type = Math.random() > 0.8 ? 'breaker' : 'regular';

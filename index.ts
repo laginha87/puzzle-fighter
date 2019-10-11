@@ -42,7 +42,8 @@ const config: MatchConfig = {
     players: [
         {
             spells: [
-                Pull
+                Pull,
+                SwitchColors
             ],
             type: 'player'
         },

@@ -5,10 +5,12 @@
     "version": "0.2.0",
     "configurations": [
     {
-        "type": "node",
+        "type": "chrome",
         "request": "attach",
         "name": "Attach",
-        "port": 45478
+        "port": 9222,
+        "url": "http://localhost:1234",
+        "webRoot": "${workspaceFolder}/dist"
     }
 
     ]

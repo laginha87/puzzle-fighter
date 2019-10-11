@@ -11,11 +11,11 @@ export class AiController implements PlayerController {
         this.worker = new Worker('/src/workers/AiWorker.ts');
         this.worker.onmessage = this.parseMessage.bind(this);
         this.events = new eventemitter3();
-        player.board.events.on('land_block', this.syncBoard.bind(this));
+        // player.board.events.on('land_block', this.syncBoard.bind(this));
     }
 
     syncBoard(){
-        this.worker.postMessage({type: 'sync', board: serializeBoard(this.player.board)});
+        // this.worker.postMessage({type: 'sync', board: serializeBoard(this.player.board)});
     }
 
     parseMessage(message : MessageEvent) {
