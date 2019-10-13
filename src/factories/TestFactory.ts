@@ -1,6 +1,6 @@
-import { BoardLogic, PlayerLogic, MatchLogic } from "~src/logic";
-import { STAGE_LOGICS, StageName } from "~src/logic/stages";
-import { SpellName, SPELL_LOGICS } from "~src/logic/spells";
+import { BoardLogic, PlayerLogic, MatchLogic } from '~src/logic';
+import { STAGE_LOGICS, StageName } from '~src/logic/stages';
+import { SpellName, SPELL_LOGICS } from '~src/logic/spells';
 
 const TEST_CONFIG ={
     players: [
@@ -12,7 +12,7 @@ const TEST_CONFIG ={
         width: 10,
         height: 20
     }
-}
+};
 
 export class TestFactory {
     static BUILD(stageName: StageName = 'mountain', spells: SpellName[] = []) {
