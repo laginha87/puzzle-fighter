@@ -1,7 +1,5 @@
-import { PlayerLogic, MatchLogic } from '~src/logic';
-import { unserializeBoard } from '~src/serializeBoard';
 import 'tests/Helpers';
-import { MountainStageLogic } from '~src/logic/stages/MountainStageLogic';
+
 import { TestBlockFactory } from './TestBlockFactory';
 
 describe('TestBlockFactory', () => {
@@ -52,4 +50,11 @@ describe('TestBlockFactory', () => {
             expect(block.type).toBe('energy');
         });
     });
+
+    it('starts ids off at 1000', () => {
+        const factory = new TestBlockFactory('w:e');
+        const block = factory.build();
+
+        expect(block.id).toEqual(1000);
+    })
 });
