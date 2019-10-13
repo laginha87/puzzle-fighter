@@ -1,7 +1,7 @@
 import { BlockLogic, ENERGIES, Type as BlockType, EnergyType } from '~src/logic';
 
 export class BlockFactory {
-    private id = 0;
+    protected id = 0;
     public energyPool : EnergyType[] = [];
 
     build(energy : EnergyType | null = null, type : BlockType | null = null ): BlockLogic {

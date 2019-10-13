@@ -28,9 +28,9 @@ export function debugBoard(...b: BoardLogic[]): string {
     return msg;
 }
 
-const TYPE_MAP : {[k:string]: Type } = BLOCK_TYPES.reduce((acc, e: Type) => ({...acc, [e[0]]: e}), {});
+export const TYPE_MAP : {[k:string]: Type } = BLOCK_TYPES.reduce((acc, e: Type) => ({...acc, [e[0]]: e}), {});
 
-const ENERGY_MAP : {[k:string] : EnergyType} = ENERGIES.reduce((acc, e: EnergyType) => ({...acc, [e[0]]: e}), {});
+export const ENERGY_MAP : {[k:string] : EnergyType} = ENERGIES.reduce((acc, e: EnergyType) => ({...acc, [e[0]]: e}), {});
 
 const parseIntArray = (a : string[]) : number[] => a.map((e) => parseInt(e, 10));
 

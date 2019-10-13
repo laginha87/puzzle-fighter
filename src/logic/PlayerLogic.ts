@@ -23,6 +23,7 @@ export interface PlayerLogicConfig {
     spells: MetaSpell[];
     board : BoardLogic;
     type: PlayerType;
+    blockFactory?: BlockFactory;
 }
 
 export class PlayerLogic implements Updatable {
@@ -39,7 +40,7 @@ export class PlayerLogic implements Updatable {
     constructor(playerConfig: PlayerLogicConfig) {
         this.board = playerConfig.board;
         this.type = playerConfig.type;
-        this.blockFactory = new BlockFactory();
+        this.blockFactory = playerConfig.blockFactory || new BlockFactory();
         this.energyPool = new EnergyPoolLogic(this);
         this.events = new eventemitter3();
         this.spells = playerConfig.spells;

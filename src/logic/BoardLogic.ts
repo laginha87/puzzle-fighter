@@ -191,10 +191,11 @@ export class BoardLogic implements Updatable {
         }
 
         this.managers.effects.enqueue((game$ : Observable<number>) =>
-            of(null).pipe(
-                tap(() => this.player.events.emit('spell:cast', spell)),
-                concatMapTo(spell.cast(game$)),
-                tap(() => this.player.events.emit('spell:finished', spell))
+            of(null)
+                .pipe(
+                    tap(() => this.player.events.emit('spell:cast', spell)),
+                    concatMapTo(spell.cast(game$)),
+                    tap(() => this.player.events.emit('spell:finished', spell))
             )
         );
     }
