@@ -3,6 +3,7 @@ import { STAGE_LOGICS, StageName } from '~src/logic/stages';
 import { SpellName, SPELL_LOGICS } from '~src/logic/spells';
 import { BlockFactory } from '~src/factories';
 import { Size } from '~src/types';
+import { TestPlayerController } from 'tests/TestPlayerController';
 
 type TestConfig = Partial<{
     stageName: StageName;
@@ -14,11 +15,18 @@ type TestConfig = Partial<{
     boardSize: Size
 }>;
 
+interface TestPlayer extends PlayerLogic {
+    _controller: TestPlayerController;
+}
+interface TestMatch extends MatchLogic{
+    players: TestPlayer[];
+}
+
 export class TestFactory {
-    static BUILD(config : Partial<TestConfig>) {
+    static BUILD(config : TestConfig) : TestMatch {
         const stageName = config.stageName || 'mountain';
         const playersConfig = config.players || [{type: 'ai'}];
-        const boardSize = config.boardSize || { width: 10, height: 20 };
+        const boardSize = config.boardSize || { width: 10, height: 10 };
         const players = playersConfig.map(({type, spells, blockFactory}) => {
             type  = type || 'ai';
             blockFactory = blockFactory || new BlockFactory();
@@ -26,11 +34,12 @@ export class TestFactory {
 
             const board = new BoardLogic(boardSize);
             const player = new PlayerLogic({ board, spells: spells.map((e) => SPELL_LOGICS[e]), type, blockFactory});
+            player.controller = new TestPlayerController();
             board.player = player;
 
-            return player;
+            return <TestPlayer>player;
         });
-        const match = new MatchLogic(players);
+        const match = <TestMatch>(new MatchLogic(players));
         const stage = new STAGE_LOGICS[stageName](match);
         match.stage = stage;
 

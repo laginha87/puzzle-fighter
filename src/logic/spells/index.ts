@@ -1,11 +1,10 @@
-import { Pull } from '~src/logic/spells/Pull';
 import { MetaSpell } from '~src/logic/spells/Spell';
+import { Pull } from '~src/logic/spells/Pull';
 import { SwitchColors } from '~src/logic/spells/SwitchColors';
 
 export * from './Spell';
 export * from './SpellFactory';
-export { SwitchColors } from '~src/logic/spells/SwitchColors';
-export { Pull } from '~src/logic/spells/Pull';
+
 const index = [
     Pull,
     SwitchColors

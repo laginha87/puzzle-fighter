@@ -1,5 +1,5 @@
 import { PlayerLogic } from '~src/logic';
-import { SwitchColors } from '~src/logic/spells';
+import { SwitchColors } from '~src/logic/spells/SwitchColors';
 import { unserializeBoard } from '~src/serializeBoard';
 import 'tests/Helpers';
 

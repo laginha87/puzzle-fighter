@@ -1,5 +1,5 @@
 import { PlayerLogic } from '~src/logic';
-import { Pull } from '~src/logic/spells';
+import { Pull } from '~src/logic/spells/Pull';
 import { unserializeBoard } from '~src/serializeBoard';
 import 'tests/Helpers';
 

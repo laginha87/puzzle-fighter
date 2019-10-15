@@ -8,7 +8,7 @@
         "semicolon": true,
         "linebreak-style": true,
         "newline-before-return": true,
-        "newline-per-chained-call": true,
+        "newline-per-chained-call": false,
         "no-string-literal": true,
         "quotemark": [ true, "single" ],
         "insecure-random": false,

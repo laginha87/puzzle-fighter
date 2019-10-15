@@ -1,9 +1,8 @@
 import { EnergyType } from '~src/logic';
-import { Spell } from '~src/logic/spells';
-import { BoardLogic } from '~src/logic';
+import { Spell } from '~src/logic/spells/Spell';
+import { BoardLogic, BlockLogic } from '~src/logic';
 import { Observable, of } from 'rxjs';
 import { takeWhile, tap, mapTo, takeLast, concatMapTo } from 'rxjs/operators';
-import { BlockLogic } from '../BlockLogic';
 
 export class Pull extends Spell {
     static cost: EnergyType[] = ['elemental'];

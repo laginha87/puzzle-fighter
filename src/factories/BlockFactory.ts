@@ -26,6 +26,8 @@ export class BlockFactory {
 
     buildPiece(): BlockLogic[] {
         const blocks = this.buildN(2);
+        blocks.forEach((e,i)=> e.position.y = i);
+
         if(this.energyPool.length > 0) {
             const block = blocks[Math.floor(Math.random() * 2)];
             block.energy_type = this.energyPool.pop()!;

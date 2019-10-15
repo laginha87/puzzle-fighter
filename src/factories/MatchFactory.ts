@@ -1,6 +1,6 @@
 import { BoardLogic, MatchLogic, PlayerLogic, PlayerType } from '~src/logic';
 import { BoardView, GameView, MatchView, PlayerView, BoardTextView } from '~src/view';
-import { MetaSpell } from '~src/logic/spells';
+import { SpellName, SPELL_LOGICS } from '~src/logic/spells';
 import { StageName, STAGE_LOGICS } from '~src/logic/stages';
 import { STAGE_VIEWS } from '~src/view/stages';
 
@@ -33,7 +33,7 @@ export interface MatchConfig {
     };
     boardSize: Size;
     players: {
-        spells: MetaSpell[],
+        spells: SpellName[],
         type: PlayerType,
     }[];
     stage: StageName;
@@ -55,7 +55,7 @@ export class MatchFactory {
     static BUILD_LOGIC(config: MatchConfig) {
         const players = config.players.map((playerConfig) => {
             const board = new BoardLogic(config.boardSize);
-            const player = new PlayerLogic({ board, spells: playerConfig.spells, type: playerConfig.type});
+            const player = new PlayerLogic({ board, spells: playerConfig.spells.map((e) => SPELL_LOGICS[e]), type: playerConfig.type});
             board.player = player;
 
             return player;

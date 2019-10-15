@@ -1,26 +1,128 @@
-import { MatchFactory } from '~src/factories/MatchFactory';
+import { TestFactory } from '~src/factories/TestFactory';
+import { TestBlockFactory } from '~src/factories/TestBlockFactory';
+import { updateUntil } from 'tests/updateUntil';
+import 'tests/Helpers';
 
 describe('Game', () => {
-    it('', async () => {
-        // const p = new PlayerLogic({board, spells: [], type: 'ai'});
-        // const testController = new TestPlayerController();
-        // p.controller = testController;
-        // const match = new MatchLogic([p]);
-        // const stage = new MountainStageLogic(match);
-        // match.stage = stage;
+    describe('simple controls', () => {
+        it('falls a block', async () => {
+            const blockFactory = new TestBlockFactory('w:r|c:b');
+            const match = TestFactory.BUILD({players:[{
+                blockFactory
+            }]}),
+            {players: [{board}]} = match;
 
-        // p.start();
-        // stage.start('nature');
-        // p.board.piece.blocks.forEach((e, i ) => {e.energy_type = 'chaos', e.type = 'regular', e.position.y = i; e.id = 50 + i;});
-        // p.board.player = p;
-        // const piece = p.board.piece;
-        // stage.update(0, 4000);
-        // testController.events.emit('onFall');
+            match.start();
+            const firstPiece = board.piece;
 
-        // while(p.board.piece === piece) {
-        //     match.update(0, 20);
-        // }
+            updateUntil(match, () => board.piece === firstPiece);
 
-        // await expect(board).toBoardMatch('10:10|0:7:n:r|0:8:n:r|0:9:e:r|1:6:n:r|1:7:n:r|1:8:e:r|1:9:e:r|2:7:n:r|2:8:n:r|2:9:e:e|3:7:n:r|3:8:n:r|3:9:w:e|4:7:n:r|4:8:n:r|4:9:o:e|5:5:n:r|5:6:n:r|5:7:c:r|5:8:c:r|5:9:o:r|6:5:n:r|6:6:n:r|6:7:o:r|6:8:o:r|6:9:o:r|7:8:n:r|7:9:n:r|8:8:n:r|8:9:n:r|9:7:n:r|9:8:n:r|9:9:c:r');
+            await expect(board).toBoardMatch('10:10|5:8:w:r|5:9:c:b');
+        });
+
+        it('moves left', async () => {
+            const blockFactory = new TestBlockFactory('w:r|c:b');
+            const match = TestFactory.BUILD({players:[{
+                blockFactory
+            }]}),
+
+            { players: [{_controller: controller, board}] } = match;
+
+
+            match.start();
+            const firstPiece = board.piece;
+
+            controller.left();
+            updateUntil(match, () => board.piece === firstPiece);
+
+            await expect(board).toBoardMatch('10:10|4:8:w:r|4:9:c:b');
+        });
+
+        it('moves right', async () => {
+            const blockFactory = new TestBlockFactory('w:r|c:b');
+            const match = TestFactory.BUILD({players:[{
+                blockFactory
+            }]}),
+
+            { players: [{_controller: controller, board}] } = match;
+
+
+            match.start();
+            const firstPiece = board.piece;
+
+            controller.right();
+            updateUntil(match, () => board.piece === firstPiece);
+
+            await expect(board).toBoardMatch('10:10|6:8:w:r|6:9:c:b');
+        });
+
+        it('moves all the way to the right', async () => {
+            const blockFactory = new TestBlockFactory('w:r|c:b');
+            const match = TestFactory.BUILD({players:[{
+                blockFactory
+            }]}),
+
+            { players: [{_controller: controller, board}] } = match;
+
+
+            match.start();
+            const firstPiece = board.piece;
+
+            controller.right();
+            controller.right();
+            controller.right();
+            controller.right();
+            controller.right();
+
+            updateUntil(match, () => board.piece === firstPiece);
+
+            await expect(board).toBoardMatch('10:10|9:8:w:r|9:9:c:b');
+        });
+
+
+        it('moves all the way to the left', async () => {
+            const blockFactory = new TestBlockFactory('w:r|c:b');
+            const match = TestFactory.BUILD({players:[{
+                blockFactory
+            }]}),
+
+            { players: [{_controller: controller, board}] } = match;
+
+
+            match.start();
+            const firstPiece = board.piece;
+
+            controller.left();
+            controller.left();
+            controller.left();
+            controller.left();
+            controller.left();
+            controller.left();
+
+            updateUntil(match, () => board.piece === firstPiece);
+
+            await expect(board).toBoardMatch('10:10|0:8:w:r|0:9:c:b');
+        });
+
+
+        it('rotates a block', async () => {
+            const blockFactory = new TestBlockFactory('w:r|c:b');
+            const match = TestFactory.BUILD({players:[{
+                blockFactory
+            }]}),
+
+            { players: [{_controller: controller, board}] } = match;
+
+
+            match.start();
+            const firstPiece = board.piece;
+
+            controller.rotate();
+            controller.rotate();
+
+            updateUntil(match, () => board.piece === firstPiece);
+
+            await expect(board).toBoardMatch('10:10|5:8:c:b|5:9:w:r');
+        });
     });
 });

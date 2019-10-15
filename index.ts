@@ -1,7 +1,6 @@
 import { ClientGame } from '~src/game/ClientGame';
 import { MatchFactory, MatchConfig } from '~src/factories/MatchFactory';
 import { MatchView } from '~src/view';
-import { SwitchColors, Pull } from '~src/logic/spells';
 
 
 
@@ -42,14 +41,14 @@ const config: MatchConfig = {
     players: [
         {
             spells: [
-                Pull,
-                SwitchColors
+                'pull',
+                'switch-colors'
             ],
             type: 'player'
         },
         {
             spells: [
-                Pull
+                'pull'
             ],
             type: 'ai'
         }

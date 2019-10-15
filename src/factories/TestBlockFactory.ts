@@ -4,6 +4,7 @@ import { ENERGY_MAP, TYPE_MAP } from '~src/serializeBoard';
 
 export class TestBlockFactory extends BlockFactory {
     protected id = 1000;
+    public finished = false;
     public energyPool : EnergyType[] = [];
     private blocks : BlockLogic[];
     constructor(template : String) {
@@ -22,7 +23,20 @@ export class TestBlockFactory extends BlockFactory {
         });
     }
 
-    build(){
-        return this.blocks.shift()!;
+    build() : BlockLogic {
+        if(this.blocks.length === 0 ) {
+            this.finished = true;
+
+            return super.build();
+        } else {
+            return this.blocks.shift()!;
+        }
+    }
+
+    buildPiece() {
+        const blocks = this.buildN(2);
+        blocks.forEach((e,i)=> e.position.y = i);
+
+        return blocks;
     }
 }

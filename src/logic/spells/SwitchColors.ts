@@ -1,5 +1,5 @@
 import { EnergyType, BlockLogic } from '~src/logic';
-import { Spell } from '~src/logic/spells';
+import { Spell } from '~src/logic/spells/Spell';
 import { Observable, of } from 'rxjs';
 import { scan, take, concatMap, mapTo, tap, takeLast, first } from 'rxjs/operators';
 

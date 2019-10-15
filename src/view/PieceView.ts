@@ -12,7 +12,6 @@ export class PieceView implements SceneState {
     create() {
         this.container = <any>this.scene.add.container(0, 0);
         this.blocks = this.logic.blocks.map((e, i) => {
-            e.position.y = i;
             const view = new BlockView(e, this.config.blockSize);
             view.scene = this.scene;
             view.create();

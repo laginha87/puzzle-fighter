@@ -1,5 +1,6 @@
 import 'tests/Helpers';
 
+// tslint:disable-next-line: no-relative-imports
 import { TestBlockFactory } from './TestBlockFactory';
 
 describe('TestBlockFactory', () => {
@@ -56,5 +57,38 @@ describe('TestBlockFactory', () => {
         const block = factory.build();
 
         expect(block.id).toEqual(1000);
-    })
+    });
+
+    it('ignores the energy pool when building pieces', () => {
+        const factory = new TestBlockFactory('w:r|c:b');
+        factory.energyPool = ['chaos', 'chaos'];
+
+        const piece = factory.buildPiece();
+
+        expect(piece[0].energy_type).toBe('willpower');
+        expect(piece[0].type).toBe('regular');
+
+        expect(piece[1].energy_type).toBe('chaos');
+        expect(piece[1].type).toBe('breaker');
+    });
+
+    it('doesn\'t blow up when it reaches the end', () => {
+        const factory = new TestBlockFactory('w:r');
+
+        const blocks = factory.buildN(3);
+
+        expect(blocks[0].energy_type).toBe('willpower');
+        expect(blocks[0].type).toBe('regular');
+        expect(blocks[1]).not.toBe(undefined);
+    });
+
+    it('signals when it\'s done', () => {
+        const factory = new TestBlockFactory('w:r');
+
+        expect(factory.finished).toBe(false);
+
+        factory.buildN(3);
+
+        expect(factory.finished).toBe(true);
+    });
 });

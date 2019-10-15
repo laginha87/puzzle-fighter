@@ -8,6 +8,12 @@ export class TestPlayerController implements PlayerController {
         this.events = new eventemitter3();
     }
 
+    rotate() { this.events.emit('onRotate'); }
+    left() { this.events.emit('onMoveLeft'); }
+    right() { this.events.emit('onMoveRight'); }
+    fall() { this.events.emit('onFall'); }
+    down() { this.events.emit('onMoveDown'); }
+
     onRotate(cb: () => void): void {
         this.events.on('onRotate', cb);
     }
