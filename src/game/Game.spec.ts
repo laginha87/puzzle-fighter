@@ -1,7 +1,8 @@
 import { TestFactory } from '~src/factories/TestFactory';
 import { TestBlockFactory } from '~src/factories/TestBlockFactory';
-import { updateUntil } from 'tests/updateUntil';
+import { updateWhile } from 'tests/updateWhile';
 import 'tests/Helpers';
+import { testSequence } from 'tests/testSequence';
 
 describe('Game', () => {
     describe('simple controls', () => {
@@ -15,7 +16,7 @@ describe('Game', () => {
             match.start();
             const firstPiece = board.piece;
 
-            updateUntil(match, () => board.piece === firstPiece);
+            updateWhile(match, () => board.piece === firstPiece);
 
             await expect(board).toBoardMatch('10:10|5:8:w:r|5:9:c:b');
         });
@@ -33,7 +34,7 @@ describe('Game', () => {
             const firstPiece = board.piece;
 
             controller.left();
-            updateUntil(match, () => board.piece === firstPiece);
+            updateWhile(match, () => board.piece === firstPiece);
 
             await expect(board).toBoardMatch('10:10|4:8:w:r|4:9:c:b');
         });
@@ -51,7 +52,7 @@ describe('Game', () => {
             const firstPiece = board.piece;
 
             controller.right();
-            updateUntil(match, () => board.piece === firstPiece);
+            updateWhile(match, () => board.piece === firstPiece);
 
             await expect(board).toBoardMatch('10:10|6:8:w:r|6:9:c:b');
         });
@@ -60,9 +61,9 @@ describe('Game', () => {
             const blockFactory = new TestBlockFactory('w:r|c:b');
             const match = TestFactory.BUILD({players:[{
                 blockFactory
-            }]}),
+            }]}),;
 
-            { players: [{_controller: controller, board}] } = match;
+            const { players: [{_controller: controller, board}] } = match;
 
 
             match.start();
@@ -74,7 +75,7 @@ describe('Game', () => {
             controller.right();
             controller.right();
 
-            updateUntil(match, () => board.piece === firstPiece);
+            updateWhile(match, () => board.piece === firstPiece);
 
             await expect(board).toBoardMatch('10:10|9:8:w:r|9:9:c:b');
         });
@@ -99,7 +100,7 @@ describe('Game', () => {
             controller.left();
             controller.left();
 
-            updateUntil(match, () => board.piece === firstPiece);
+            updateWhile(match, () => board.piece === firstPiece);
 
             await expect(board).toBoardMatch('10:10|0:8:w:r|0:9:c:b');
         });
@@ -120,9 +121,25 @@ describe('Game', () => {
             controller.rotate();
             controller.rotate();
 
-            updateUntil(match, () => board.piece === firstPiece);
+            updateWhile(match, () => board.piece === firstPiece);
 
             await expect(board).toBoardMatch('10:10|5:8:c:b|5:9:w:r');
+        });
+    });
+
+    describe('advanced examples', () => {
+        it('fall then left', async () => {
+            const blockFactory = new TestBlockFactory('w:r|c:b|e:r|o:b');
+            const match = TestFactory.BUILD({players:[{
+                blockFactory
+            }]});
+
+            const { players: [{board}]} = match;
+
+            match.start();
+
+            testSequence(match, [['fall'], ['left','left']]);
+            await expect(board).toBoardMatch('10:10|3:8:e:r|3:9:o:b|5:8:w:r|5:9:c:b');
         });
     });
 });

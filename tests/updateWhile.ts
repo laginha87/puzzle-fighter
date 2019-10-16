@@ -1,4 +1,4 @@
-export function updateUntil(updateable, cond : () => boolean) {
+export function updateWhile(updateable, cond : () => boolean) {
     let totalTime = 0;
     while(cond()) {
         let delta = Math.floor(Math.random() * 10) + 30;
